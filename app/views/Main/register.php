@@ -63,13 +63,13 @@
             width: 500px;
             height: 55px;
             border-radius: 10px;
-            margin-top: 40px;
-            padding-left: 30px;
+            margin-top: 8%;
+            padding-left: 3%;
         }
 
         /* To change the margin of the password input  */
         #passwordInput {
-            margin-top: 8px !important;
+            margin-top: 1% !important;
         }
         
         /* To change the design of the register button  */
@@ -77,7 +77,7 @@
             background-color: #e168bf !important;
             width: 400px;
             border-radius: 15px;
-            margin-top: 40px;
+            margin-top: 5%;
         }
 
 
