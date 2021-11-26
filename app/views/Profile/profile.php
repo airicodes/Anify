@@ -113,6 +113,10 @@
             font-weight: bold;
         }
 
+        .file {
+            color: white;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -132,7 +136,7 @@
                     <!-- Where the user input his bio -->
                     <textarea name="bio" class="input" cols="70" rows="30" style="resize:none; height: 30%" placeholder="Enter your bio..."></textarea>
                     <!-- Where the user input his password -->
-                    <input class="input" type="file" name="password" placeholder="password">
+                    <input class="input file" type="file" name="password" placeholder="password">
                     <button name="action" id="loginButton" type="submit" class="btn btn-secondary btn-lg">Create profile</button>
                 </form>
             </div>

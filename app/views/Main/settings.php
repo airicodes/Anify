@@ -138,7 +138,7 @@
             <!-- the user information box -->
             <div id="userInformationBox" class="col-3 mt-5">
                 <!-- Profile Picture -->
-                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="jeremie.jpg" data-rendered="true">
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="/app/background/jeremie.jpg" data-rendered="true">
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
                 <!-- Edit and delete button -->
@@ -160,13 +160,13 @@
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularIndex">posts</a>
                         <!-- Anime List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
                         <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">manga list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">messages</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="#">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">settings</a>
                       </div>
                     </div>
                 </nav>
@@ -206,7 +206,7 @@
                                     <div class="col-12 d-flex flex-column align-items-end mt-3">
                                         <!-- Log out -->
                                         <!-- When the users clicks on it, the user will be logout -->
-                                        <h1><a class="text-danger" style="text-decoration: none;" href="">Log out</a></h1>
+                                        <h1><a class="text-danger" style="text-decoration: none;" href="<?=BASE?>Main/logout">Log out</a></h1>
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +220,7 @@
     <!-- Footer -->
     <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
 </body>

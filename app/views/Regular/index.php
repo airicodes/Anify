@@ -145,7 +145,7 @@
                         <!-- Manga List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="#">manga list</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Main/settings">settings</a>
                       </div>
                     </div>
                 </nav>

@@ -90,4 +90,8 @@ class Main extends \app\core\Controller {
 		header("location:".BASE."Main/login");
 	}
 
+    public function settings() {
+        $this->view("Main/settings");
+    }
+
 }
