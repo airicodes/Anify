@@ -108,6 +108,11 @@
             }
         }
 
+        #error_messages {
+            color: red;
+            font-weight: bold;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -150,14 +155,20 @@
                     <br>
                     <button name="action" id="loginButton" type="submit" class="btn btn-secondary btn-lg">Login</button>
                 </form>
-                <br>
-                <br>
                 <!-- A link to create an account -->
                 <a class="text-decoration-none text-light" href="<?=BASE?>Main/register">Create an account</a>
                 <br>
                 <!-- A link for forgot password -->
                 <a class="text-decoration-none text-light" href="#">Forgot password</a>
             </div>
+            <br>
+            <center>
+                <h4 id="error_messages">
+                <?php
+                    echo $data;
+                ?>
+                </h4>
+            </center>
         </div>
     </div>
 </body>

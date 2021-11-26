@@ -4,14 +4,41 @@ namespace app\controllers;
 
 class Main extends \app\core\Controller {
 
-    // public function login
+    // the function to log into an account.
     public function login() {
 
+        if (isset($_POST["action"])) {
+            $username = trim($_POST["username"]);
+            $password = trim($_POST["password"]);
 
+            if (empty($username) || empty($password)) {
+                $this->view("Main/login", "One or both fields are empty");
+                return;
+            }
 
-        $this->view("Main/login");
+            $user = new \app\models\User();
+            $user = $user->getUserByUsername($_POST['username']);
+
+            if ($user != false && password_verify($_POST["password"], $user->hash)) {
+                $_SESSION["user_id"] = $user->user_id;
+                $_SESSION["username"] = $user->username;
+                $_SESSION["role"] = $user->role;
+
+                if ($user->role == "admin") {
+                    header("location:".BASE."User/adminIndex");
+                } else if ($user->role == "regular") {
+                    header("location:".BASE."User/regularIndex");
+                }
+            } else {
+                $this->view('Main/login', 'Wrong username and password combination');
+            }
+        } else {
+            $this->view("Main/login");
+        }
+
     }
 
+    // the function to register a new user. 
     public function register() {
         if (isset($_POST["action"])) {
             // trimming to make sure they do not just enter spaces.

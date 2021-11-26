@@ -138,6 +138,10 @@
                     
                     <button name="action" id="registerButton" type="submit" class="btn btn-secondary btn-lg">Register</button>
                 </form>
+                <br>
+                <!-- Go back to login page -->
+                <a class="text-decoration-none text-light" href="<?=BASE?>Main/login">Log in instead</a>
+                <br>
             </div>
             <br>
             <center>

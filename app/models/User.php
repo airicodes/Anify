@@ -32,4 +32,13 @@ class User extends \app\core\Model {
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\User");
 		return $STMT->fetchAll();
     }
+
+     // get one user by their username.
+     public function getUserByUsername($username) {
+        $SQL = 'SELECT * FROM user WHERE username LIKE :username';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['username' => $username]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\User');
+		return $STMT->fetch();
+    }
 }

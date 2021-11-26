@@ -117,7 +117,7 @@
             <!-- the user information box -->
             <div id="userInformationBox" class="col-3 mt-5">
                 <!-- Profile Picture -->
-                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="jeremie.jpg" data-rendered="true">
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="/app/background/jeremie.jpg" data-rendered="true">
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
                 <!-- Edit and delete button -->
@@ -178,7 +178,7 @@
     <!-- Footer -->
     <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
 </body>
