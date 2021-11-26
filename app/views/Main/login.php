@@ -33,7 +33,6 @@
             left: 0;
             right: 0;
             margin: auto;
-
         }
 
         /*  The design of the box in the middle */
@@ -43,6 +42,10 @@
             background-color: #03050D;
             border-radius: 25px;
             opacity: 80%;
+        }
+
+        .anchors a:hover {
+            color:red;
         }
 
         /* To change the font size of anify */ 
@@ -109,10 +112,31 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body id="body">
-    <img id="problemSolversImage" class="mt-2 mx-1" src="/background/ProblemSolversLogo.png" alt="">
+    <!-- code to make the alert registration successful pop up alert -->
+    <?php
+    if (isset($_SESSION["register_status"])) {
+                    ?>
 
+                <script>
+                    swal({
+                        title: "Registration Successful!",
+                        text: "",
+                        icon: "success",
+                        button:"ok"
+                    });
+                </script>
+
+
+            <?php
+                    unset($_SESSION["register_status"]);
+                }
+            ?>
+
+    <img id="problemSolversImage" class="mt-2 mx-1" src="/background/ProblemSolversLogo.png" alt="">
+    
 
     <div id="center">
         <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
@@ -127,7 +151,7 @@
                 <br>
                 <br>
                 <!-- A link to create an account -->
-                <a class="text-decoration-none text-light" href="#">Create an account</a>
+                <a class="text-decoration-none text-light" href="<?=BASE?>Main/register">Create an account</a>
                 <br>
                 <!-- A link for forgot password -->
                 <a class="text-decoration-none text-light" href="#">Forgot password</a>

@@ -110,6 +110,10 @@
             }
         }
 
+        #error_messages {
+            color: red;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -118,21 +122,30 @@
 <body id="body">
     <img id="problemSolversImage" class="mt-2 mx-1" src="/background/ProblemSolversLogo.png" alt="">
 
-
     <div id="center">
         <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
         <div id="loginBox" class="mx-4"> 
             <div class="text-center">
-                <!-- Where the user input his username -->
-                <input class="input" type="text" name="username" placeholder="username">
-                <p class="text-light">20 characters minimum</p>
-                <!-- Where the user  input his password-->
-                <input id="passwordInput" class="input" type="text" name="password" placeholder="password">
-                <!-- Confirming the password -->
-                <input class="input" type="text" name="confirmPassword" placeholder="confirm password">
-                
-                <button id="registerButton" type="button" class="btn btn-secondary btn-lg">Register</button>
+                <form action="" method="POST">
+                    <!-- Where the user input his username -->
+                    <input class="input" type="text" name="username" placeholder="username">
+                    <p class="text-light">20 characters minimum</p>
+                    <!-- Where the user  input his password-->
+                    <input id="passwordInput" class="input" type="password" name="password" placeholder="password">
+                    <!-- Confirming the password -->
+                    <input class="input" type="password" name="confirmPassword" placeholder="confirm password">
+                    
+                    <button name="action" id="registerButton" type="submit" class="btn btn-secondary btn-lg">Register</button>
+                </form>
             </div>
+            <br>
+            <center>
+                <h4 id="error_messages">
+                <?php
+                    echo $data;
+                ?>
+                </h4>
+            </center>
         </div>
     </div>
 </body>
