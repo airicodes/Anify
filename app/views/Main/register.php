@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -121,7 +120,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body id="body">
-    <img id="problemSolversImage" class="mt-2 mx-1" src="/background/ProblemSolversLogo.png" alt="">
+    <img id="problemSolversImage" class="mt-2 mx-1" src="/app/background/ProblemSolversLogo.png" alt="">
 
     <div id="center">
         <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
@@ -138,7 +137,6 @@
                     
                     <button name="action" id="registerButton" type="submit" class="btn btn-secondary btn-lg">Register</button>
                 </form>
-                <br>
                 <!-- Go back to login page -->
                 <a class="text-decoration-none text-light" href="<?=BASE?>Main/login">Log in instead</a>
                 <br>

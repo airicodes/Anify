@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -140,7 +139,7 @@
                 }
             ?>
 
-    <img id="problemSolversImage" class="mt-2 mx-1" src="/background/ProblemSolversLogo.png" alt="">
+    <img id="problemSolversImage" class="mt-2 mx-1" src="\app/background/ProblemSolversLogo.png" alt="">
     
 
     <div id="center">

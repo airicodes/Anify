@@ -12,4 +12,8 @@ class User extends \app\core\Controller {
     public function adminIndex() {
         $this->view("Admin/index");
     }
+
+    public function profile() {
+        $this->view("Profile/profile");
+    }
 }
