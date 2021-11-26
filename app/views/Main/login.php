@@ -140,14 +140,16 @@
 
     <div id="center">
         <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
-        <div id="loginBox" class="mx-4"> 
+        <div id="loginBox" class="mx-4">
             <div class="text-center">
-                <!-- Where the user input his username -->
-                <input class="input" type="text" name="username" placeholder="username">
-                <!-- Where the user input his password -->
-                <input class="input" type="text" name="password" placeholder="password">
-                <br>
-                <button id="loginButton" type="button" class="btn btn-secondary btn-lg">Login</button>
+                <form action="" method="POST">
+                    <!-- Where the user input his username -->
+                    <input class="input" type="text" name="username" placeholder="username">
+                    <!-- Where the user input his password -->
+                    <input class="input" type="text" name="password" placeholder="password">
+                    <br>
+                    <button name="action" id="loginButton" type="submit" class="btn btn-secondary btn-lg">Login</button>
+                </form>
                 <br>
                 <br>
                 <!-- A link to create an account -->

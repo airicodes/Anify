@@ -112,6 +112,7 @@
 
         #error_messages {
             color: red;
+            font-weight:1000;
         }
 
     </style>
