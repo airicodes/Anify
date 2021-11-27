@@ -133,7 +133,8 @@
                 <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
                 <!-- admin logo -->
                 <div class="d-flex flex-column">
-                <button id="adminlogo" class="btn btn-danger align-self-center disabled">administrator</button>
+                    <!-- If we make this disabled it will make the button darker -->
+                <button id="adminlogo" class="btn btn-danger align-self-center">administrator</button>
                 <!-- Edit and delete button -->
                 </div>
                 <div class="mt-3 d-flex flex-row">
@@ -164,7 +165,7 @@
                       </div>
                     </div>
                 </nav>
-
+                
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
