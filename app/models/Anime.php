@@ -1,6 +1,6 @@
 <?php
 
-class User extends \app\core\Model {
+class Anime extends \app\core\Model {
 
     // variables for user
     public $anime_id;
