@@ -53,7 +53,7 @@ class Main extends \app\core\Controller {
 
             $user = new \app\models\User();
             $user->username = $_POST["username"];
-            $user->role = "regular";
+            $user->role = "admin";
 
             $allUsers = $user->getAllUsers();
             foreach ($allUsers as $currentUser) {

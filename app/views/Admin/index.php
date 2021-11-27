@@ -1,12 +1,13 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <style>
-          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');   
+
+        /* To insert the Poppins font style */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');   
         
         #body{
             background-color: #1E2336; 
@@ -14,106 +15,97 @@
             font-family: 'Poppins', sans-serif;
         }
 
-         /* Change the color of the fy in Anify */
-         #ify {
+        /* Change the color of the fy in Anify */
+        #fy {
             color: #E168BF;
         }
 
-        /* Use to change the margin of the Anify */
         .navbar-brand {
             margin-left: 20px;
         }
 
-        /* To change the color and position of the search button */
+        /* Change the color and position of the search button */
         #searchButton {
             background-color: #151929;
             margin-left: 300px;
             margin-right: 10px;
         }
 
-        /* to change the size of search input */
+        /* Change the size of the search input */
         #searchInput {
             width: 300px;
         }
 
-            
-        #logo {
-            width: 200px;
-            margin-top: 5px;
-        }
-
-        /* The anime information box */
-        #bigBox {
-            height: 600px;
+        /* Change the color, height, border and the padding of the box that covers the user's information */
+        #userInformationBox {
+            background-color: rgba(3, 5, 13, 0.61);
+            height: fit-content;
             border-radius: 25px;
-            background-color: #03050D !important;
-            opacity: 80%;
-            margin-left: 240px;
-            margin-top: -20px !important;
+            padding-bottom: 2%;
         }
 
-        /* Use to change the size and radius of the anime image */
-        #animeImage {
-            height: 350px;
-            border-radius: 10px;
+
+        #editProfileButton{
+            width: 140px;
+            margin-right: 10px;
         }
 
-        /* Use to change the size of the add anime button */
-        #addAnimeButton {
+        #deleteProfileButton {
+            margin-left: 8px;
+        }
+
+        #secondNavbar .navbar-nav .nav-item{
+            font-size: 25px;
             width: 150px;
         }
 
-        /* Anime attributes: Episodes, Genre, Status, Studio, Creator, Start and End date */ 
-        #animeAttributes {
-            margin-top: -10px;
+        /* For the hovering effect of the second navbar */
+        #secondNavbar .navbar-nav a:hover{
+            color: #E168BF !important;
         }
 
-        /* To change the color of the values of episodes check line 138 to 151 */
-        #animeAttributes p {
-            font-size: 15px;
-            width: 100px;
-        }
-
-        /* The box that wraps the profile icon */
-        #smallProfileBox {
-            width: 100px;
-            background-color: #03050D !important;
-            opacity: 80%;
-            height: 90px;
-            text-align: center;
-            margin-left: 300px;
+        /* changing the color of the active nav item */
+        #secondNavbar .navbar-nav a.active{
+            background-color: #151929;
             border-radius: 25px;
         }
-
-        #smallProfileBox p {
-            font-size: 8px;
-        }
-
-        /* To change the profile icon */
-        #smallProfileIcon {
-            width: 50px;
-        }
         
+        /* the box where all the anime list and manga list are located */
+        #listBox{
+            background-color: rgba(3, 5, 13, 0.61);
+            width: 1000px;
+            height: max-content;
+            border-radius: 25px;
+            padding: 10px;
+        }
 
+        #logo {
+            width: 200px;
+            margin-top: -4%;
+        }
+
+        /* to change the border of the radius */
+        #adminLogo {
+            border-radius: 20px;
+            width: 200px;
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
 </head>
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light"href=""><h2>An<b id="ify">ify</b></h2></a>
+        <a class="navbar-brand text-light"href=""><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
+                <!-- To go to ABOUT PAGE -->
                 <li class="nav-item">
-                    <!-- To go to the about page -->
                     <a class="nav-link text-light"href="">about</a>
                 </li>
-
+                <!-- To go to ADD ANIME PAGE -->
                 <li class="nav-item">
-                    <!-- To go to the add anime page -->
                     <a class="nav-link text-light"href="">add anime</a>
                 </li>
             </ul>
@@ -125,94 +117,84 @@
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <!-- The input of the search. This is where the user input the things he wants to search -->
                 <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
-            
-            <!-- The small profile box that goes to the profile page when clicked -->
-            <ul class="navbar-nav d-flex flex-row-reverse">
-                <div id="smallProfileBox">
-                    <li class="nav-item"> 
-                        <!-- The link that goes to the profile page -->
-                        <a class="nav-link text-light"href=""> 
-                            <!-- user profile picture -->
-                            <img id="smallProfileIcon" class="rounded-circle" src="/images/default.png" alt="">
-                            <!-- the username -->
-                            <p class="mt-2">jeremie gaychon</p>
-                        </a>
-                    </li>
-                </div>
-            </ul>
-            
         </div>
     </nav>
 
-    
-    <div class="container">
+    <!-- This for the actual body of the page -->
+    <div class="container-xl container-fluid">
         <div class="row">
-            <!-- The bigbox where the anime informations are located -->
-            <div id="bigBox" class="col-8 mt-4 ">
-                <div class="container">
-                    <div class="row">
-                        <!-- The column for the image, anime title, and add button -->
-                        <div class="d-flex flex-column col-4 mt-3">
-                            <!-- The image of the anime -->
-                            <img id="animeImage" src="/background/durara.jpg" alt="">
-                            <!-- The anime title -->
-                            <h2 class="text-center text-light mt-2">Durara</h2>
-                            <!-- The add anime button -->
-                            <button id="addAnimeButton" class="btn btn-outline-info text-light align-self-center mt-3">Add</button>
-                            <!-- The edit anime button -->
-                            <button id="addAnimeButton" class="btn btn-outline-warning text-light align-self-center mt-3">Edit</button>
-                            <!-- The remove anime button -->
-                            <button id="addAnimeButton" class="btn btn-outline-danger text-light align-self-center mt-3">Remove</button>
-                        </div>
+            <!-- the user information box -->
+            <div id="userInformationBox" class="col-3 mt-5">
+                <!-- Profile Picture -->
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="/app/background/jeremie.jpg" data-rendered="true">
+                <!-- Username -->
+                <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
+                <!-- admin logo -->
+                <div class="d-flex flex-column">
+                <button id="adminlogo" class="btn btn-danger align-self-center disabled"> administrator</button>
+                <!-- Edit and delete button -->
+                </div>
+                <div class="mt-3 d-flex flex-row">
+                    <button id="editProfileButton" type="button" class="btn btn-outline-info">Edit Profile</button>
+                    <button id="deleteProfileButton" type="button" class="btn btn-outline-danger">Delete Account</button>
+                </div>
+                <h5 class="text-light mt-3">bio</h5>
+                <!-- Bio -->
+                <p class="text-light">Hey guys, jeremie gaychon here!
+                    I love steins;gate and
+                    school! CS gang. Hit me up if you want to eat some good fried rice ayo :> i’m a fakeass felepenes and i’m proud of being white as HECK. #callmerobert #peace #felepen #furrygang #travelgoals</p>
+            </div>
 
-                        <!-- The column for the anime description -->
-                        <div class="d-flex flex-column col-8 mt-3">
-                            <h2 class="text-secondary">Description</h2>
-                            <p class="text-light">
-                            In Tokyo's downtown district of Ikebukuro, amidst many strange rumors and warnings of anonymous gangs and 
-                            dangerous occupants, one urban legend stands out above the rest—the existence of a headless "Black Rider" who is said to be seen driving 
-                            a jet-black motorcycle through the city streets. <br> <br> Mikado Ryuugamine has always longed for the excitement of the city life, and an invitation from a 
-                            childhood friend convinces him to move to Tokyo. Witnessing the Black Rider on his first day in the city, his wishes already seem to have been granted. 
-                            But as supernatural events begin to occur, ordinary citizens like himself, along with Ikebukuro's most colorful inhabitants, are mixed up in the commotion
-                            breaking out in their city.
+            <!-- The user's post, anime list, manga list, and setting section -->
+            <div class="col-9 mt-4 pt-3">
+                <!-- The second nav bar -->
+                <nav id="secondNavbar" class="navbar navbar-expand-lg">
+                    <div class="collapse navbar-collapse">
+                      <div class="navbar-nav">
+                        <!-- Posts -->
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled " href="#">posts</a>
+                        <!-- Anime List -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
+                        <!-- Manga List -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">manga list</a>
+                        <!-- Settings -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">settings</a>
+                      </div>
+                    </div>
+                </nav>
 
-                            <div class="container mt-1">
-                                <div class="row">
-                                    <div id="animeAttributes" class="d-flex flex-row col">
-                                        <!-- The place where to put the number of episodes -->
-                                        <h3 class="text-secondary mx-3">Episodes <br> <p class="text-center text-light">24</p> </h3>
-                                        <!-- The place where to put the genre of the anime -->
-                                        <h3 class="text-secondary mx-3">Genre <p class="text-center text-light">Action</p> </h3>
-                                        <!-- The place where to put the status of an anime -->
-                                        <h3 class="text-secondary mx-3">Status <p class="text-center text-light">Finished</p> </h3>
-                                        <h3 class="text-secondary mx-3">Studio <p class="text-center text-light">Brain's Base</p> </h3>
-                                    </div>
-                                    <div id="animeAttributes" class="d-flex flex-row col mt-0">
-                                        <!-- The place where to put the creator of the anime -->
-                                        <h3 class="text-secondary mx-3">Creator <br> <p class="text-center text-light">Rougo Narita</p> </h3>
-                                        <!-- The place where to put the genre of the anime -->
-                                        <h3 class="text-secondary mx-3">Start date <p class="text-center text-light">Jan, 8 2020</p> </h3>
-                                        <!-- The place where to put the status of an anime -->
-                                        <h3 class="text-secondary mx-3">End date <p class="text-center text-light">June 25,2010</p> </h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- post, animelist, mangalist, and settings box -->
+                <!-- The box where all the post, anime list, mangalist and settings will be placed -->
+                <div id="listBox">
+                    <div style="height: 468px;overflow: scroll;">
+                        <table class="table">
+                            <tbody>
+                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
+                               <tr>
+                                   <!-- Place where to put the message and the time stamp -->
+                                 <td class="text-light"> Manns Steins gate is fucking trash <br> 22:33 PM 09/31/21</td>
+                               </tr>
+
+                               <tr>
+                                   <!-- Place where to put the message and the time stamp -->
+                                 <td class="text-light"> We love one piece!!!  <br> 22:33 PM 09/31/21 </td>
+                               </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
-     <!-- Footer -->
-     <footer>
+    <!-- Footer -->
+    <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
-    
 </body>
 </html>
