@@ -64,6 +64,7 @@
             border-radius: 10px;
             margin-top: 8%;
             padding-left: 3%;
+            padding-right: 3%;
         }
 
         /* To change the margin of the password input  */

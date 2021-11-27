@@ -1,4 +1,3 @@
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +40,7 @@
             background-color: rgba(3, 5, 13, 0.61);
             height: fit-content;
             border-radius: 25px;
-            padding-bottom: 2%;
+            padding-bottom: 20px;
         }
 
 
@@ -81,14 +80,36 @@
 
         #logo {
             width: 200px;
-            margin-top: -4%;
+            margin-top: 30px;
         }
 
-        /* to change the border of the radius */
-        #adminLogo {
+        /* Change the  border and height of the input inside the change password box */ 
+        #changePassBox input {
+            border-radius: 4px;
+            height: 40px;
+            width: 300px;
+            padding: 2%;
+        }
+
+        /* Change the size and the border radius of the confirm button */ 
+        #confirmButton {
+            border-radius: 15px;
+            width: 160px;
+            margin-left: 16%;
+        }
+
+        /* Change the size and the border radius of the send button */ 
+        #sendButton {
+            width: 120px;
+            border-radius: 15px;
+        }
+
+         /* to change the border of the radius */
+         #adminLogo {
             border-radius: 20px;
             width: 200px;
         }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -97,16 +118,14 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light"href=""><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <!-- To go to ABOUT PAGE -->
                 <li class="nav-item">
-                    <a class="nav-link text-light"href="">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
                 </li>
-                <!-- To go to ADD ANIME PAGE -->
                 <li class="nav-item">
-                    <a class="nav-link text-light"href="">add anime</a>
+                    <a class="nav-link text-light" href="">add anime</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -133,9 +152,9 @@
                 <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
                 <!-- admin logo -->
                 <div class="d-flex flex-column">
-                <button id="adminlogo" class="btn btn-danger align-self-center disabled"> administrator</button>
-                <!-- Edit and delete button -->
+                <button id="adminlogo" class="btn btn-danger align-self-center disabled">administrator</button>
                 </div>
+                <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
                     <button id="editProfileButton" type="button" class="btn btn-outline-info">Edit Profile</button>
                     <button id="deleteProfileButton" type="button" class="btn btn-outline-danger">Delete Account</button>
@@ -154,13 +173,13 @@
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled " href="#">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminIndex">posts</a>
                         <!-- Anime List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
                         <!-- Manga List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="#">manga list</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">settings</a>
                       </div>
                     </div>
                 </nav>
@@ -168,25 +187,35 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
-                        <table class="table">
-                            <tbody>
-                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
-                               <tr>
-                                   <!-- Place where to put the message and the time stamp -->
-                                 <td class="text-light"> Manns Steins gate is fucking trash <br> 22:33 PM 09/31/21</td>
-                               </tr>
-
-                               <tr>
-                                   <!-- Place where to put the message and the time stamp -->
-                                 <td class="text-light"> We love one piece!!!  <br> 22:33 PM 09/31/21 </td>
-                               </tr>
-                            </tbody>
-                        </table>
+                    <div style="height: 468px;">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Change password section -->
+                                <div id="changePassBox" class="col-12 d-flex flex-column">
+                                    <h2 class="text-light mt-5 text-center">Change password</h2>
+                                    <!-- Old password  -->
+                                    <input class="mt-1 align-self-center" type="text" name="oldPassword" placeholder="Old password">
+                                    <br>
+                                    <!-- New password  -->
+                                    <input class="mt-1 align-self-center" type="text" name="newPassword" placeholder="New password">
+                                    <br>
+                                    <!-- New password confirmation  -->
+                                    <input class="mt-1 align-self-center" type="text" name="newPassConfirmation" placeholder="Confirm password">
+                                    <br>
+                                    <button id="confirmButton" class="btn btn-outline-info mt-0 align-self-center">Confirm</button>
+                                </div>
+                                <div class="container mt-5">
+                                    <div class="col-12 d-flex flex-column align-items-end mt-3">
+                                        <!-- Log out -->
+                                        <!-- When the users clicks on it, the user will be logout -->
+                                        <h1><a class="text-danger" style="text-decoration: none;" href="<?=BASE?>Main/logout">Log out</a></h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

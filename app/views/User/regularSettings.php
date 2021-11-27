@@ -83,6 +83,27 @@
             width: 200px;
             margin-top: 30px;
         }
+
+        /* Change the  border and height of the input inside the change password box */ 
+        #changePassBox input {
+            border-radius: 4px;
+            height: 40px;
+            width: 300px;
+            padding: 2%;
+        }
+
+        /* Change the size and the border radius of the confirm button */ 
+        #confirmButton {
+            border-radius: 15px;
+            width: 160px;
+        }
+
+        /* Change the size and the border radius of the send button */ 
+        #sendButton {
+            width: 120px;
+            border-radius: 15px;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -91,11 +112,11 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light"href=""><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-light"href="">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -139,13 +160,13 @@
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled " href="#">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularIndex">posts</a>
                         <!-- Anime List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
                         <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">manga list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">messages</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Main/settings">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">settings</a>
                       </div>
                     </div>
                 </nav>
@@ -153,25 +174,46 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
-                        <table class="table">
-                            <tbody>
-                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
-                               <tr>
-                                   <!-- Place where to put the message and the time stamp -->
-                                 <td class="text-light"> Manns Steins gate is fucking trash <br> 22:33 PM 09/31/21</td>
-                               </tr>
+                    <div style="height: 468px;">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Change password section -->
+                                <div id="changePassBox" class="col-6 d-flex flex-column">
+                                    <h2 class="text-light mt-2" >Change password</h2>
+                                    <!-- Old password  -->
+                                    <input class="mt-1" type="text" name="oldPassword" placeholder="Old password">
+                                    <br>
+                                    <!-- New password  -->
+                                    <input class="mt-1" type="text" name="newPassword" placeholder="New password">
+                                    <br>
+                                    <!-- New password confirmation  -->
+                                    <input class="mt-1" type="text" name="newPassConfirmation" placeholder="Confirm password">
+                                    <br>
+                                    <button id="confirmButton" class="btn btn-outline-info mt-0 align-self-center">Confirm</button>
+                                </div>
 
-                               <tr>
-                                   <!-- Place where to put the message and the time stamp -->
-                                 <td class="text-light"> We love one piece!!!  <br> 22:33 PM 09/31/21 </td>
-                               </tr>
-                            </tbody>
-                        </table>
+                                <!-- Send feedback section -->
+                                <div class="col-6 d-flex flex-column">
+                                    <h2 class="text-light mt-2" >Send us a feedback</h2>
+                                    <!-- Feedback textarea -->
+                                    <textarea name="feedback" id="" cols="30" rows="10" style="resize: none;" ></textarea>
+                                    <!-- Send button -->
+                                    <!-- Sends the feedback -->
+                                    <button id="sendButton" class="btn btn-outline-info mt-0 align-self-end mt-3">Send</button>
+                                </div>
+
+                                <div class="container mt-5">
+                                    <div class="col-12 d-flex flex-column align-items-end mt-3">
+                                        <!-- Log out -->
+                                        <!-- When the users clicks on it, the user will be logout -->
+                                        <h1><a class="text-danger" style="text-decoration: none;" href="<?=BASE?>Main/logout">Log out</a></h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

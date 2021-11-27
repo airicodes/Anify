@@ -67,6 +67,7 @@
             border-radius: 10px;
             margin-top: 10%;
             padding-left: 30px;
+            padding-right: 30px;
         }
         
         /* To change the color, radius and the margin top of the log in button */
@@ -150,7 +151,7 @@
                     <!-- Where the user input his username -->
                     <input class="input" type="text" name="username" placeholder="username">
                     <!-- Where the user input his password -->
-                    <input class="input" type="text" name="password" placeholder="password">
+                    <input class="input" type="password" name="password" placeholder="password">
                     <br>
                     <button name="action" id="loginButton" type="submit" class="btn btn-secondary btn-lg">Login</button>
                 </form>
@@ -160,9 +161,8 @@
                 <!-- A link for forgot password -->
                 <a class="text-decoration-none text-light" href="#">Forgot password</a>
             </div>
-            <br>
             <center>
-                <h4 id="error_messages">
+                <h4 class="mt-3" id="error_messages">
                 <?php
                     echo $data;
                 ?>
