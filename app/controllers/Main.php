@@ -5,6 +5,7 @@ namespace app\controllers;
 class Main extends \app\core\Controller {
 
     // the function to log into an account.
+    #[\app\filters\SessionCheck]
     public function login() {
 
         if (isset($_POST["action"])) {
@@ -24,7 +25,10 @@ class Main extends \app\core\Controller {
                 $_SESSION["username"] = $user->username;
                 $_SESSION["role"] = $user->role;
 
-                if ($user->profile_id == null) {
+                $doesProfileExist = new \app\models\Profile();
+                $doesProfileExist = $doesProfileExist->getProfile($_SESSION["user_id"]);
+
+                if (!$doesProfileExist) {
                     header("location:".BASE."Profile/profile");
                 } else if ($user->role == "admin") {
                     header("location:".BASE."User/adminIndex");
@@ -40,7 +44,8 @@ class Main extends \app\core\Controller {
 
     }
 
-    // the function to register a new user. 
+    // the function to register a new user.
+    #[\app\filters\SessionCheck]
     public function register() {
         if (isset($_POST["action"])) {
             // trimming to make sure they do not just enter spaces.
@@ -55,7 +60,7 @@ class Main extends \app\core\Controller {
 
             $user = new \app\models\User();
             $user->username = $_POST["username"];
-            $user->role = "admin";
+            $user->role = "regular";
 
             $allUsers = $user->getAllUsers();
             foreach ($allUsers as $currentUser) {
@@ -91,9 +96,5 @@ class Main extends \app\core\Controller {
 		session_destroy();
 		header("location:".BASE."Main/login");
 	}
-
-    public function settings() {
-        $this->view("Main/settings");
-    }
 
 }

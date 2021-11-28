@@ -39,7 +39,7 @@
         /* Change the color, height, border and the padding of the box that covers the user's information */
         #userInformationBox {
             background-color: rgba(3, 5, 13, 0.61);
-            height: fit-content;
+            height: 34.5rem;
             border-radius: 25px;
             padding-bottom: 2%;
         }
@@ -89,6 +89,10 @@
             border-radius: 20px;
             width: 200px;
         }
+
+        .pfp {
+            width: 60%;
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -128,13 +132,13 @@
             <!-- the user information box -->
             <div id="userInformationBox" class="col-3 mt-5">
                 <!-- Profile Picture -->
-                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="/app/background/jeremie.jpg" data-rendered="true">
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp" src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
                 <!-- Username -->
-                <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
+                <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- admin logo -->
                 <div class="d-flex flex-column">
                     <!-- If we make this disabled it will make the button darker -->
-                <button id="adminlogo" class="btn btn-danger align-self-center">administrator</button>
+                <button id="adminlogo" class="btn btn-danger align-self-center" disabled>administrator</button>
                 <!-- Edit and delete button -->
                 </div>
                 <div class="mt-3 d-flex flex-row">
@@ -143,9 +147,11 @@
                 </div>
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->
-                <p class="text-light">Hey guys, jeremie gaychon here!
-                    I love steins;gate and
-                    school! CS gang. Hit me up if you want to eat some good fried rice ayo :> i’m a fakeass felepenes and i’m proud of being white as HECK. #callmerobert #peace #felepen #furrygang #travelgoals</p>
+                <p class="text-light">
+                    <?php
+                    echo $data["profile"]->bio;
+                    ?>
+                </p>
             </div>
 
             <!-- The user's post, anime list, manga list, and setting section -->

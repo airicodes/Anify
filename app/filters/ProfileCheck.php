@@ -7,11 +7,11 @@ namespace app\filters;
 class ProfileCheck extends \app\core\Model {
 
 	function execute() {
-        $user_id = $_SESSION['user_id'];
+		$user_id = $_SESSION['user_id'];
         $SQL = "SELECT COUNT(profile_id) FROM profile WHERE user_id = $user_id";
         $STMT = self::$_connection->query($SQL)->fetch();
 		 if ($STMT[0] == 0) {
-			header('location:/Profile/createProfile');
+			header('location:/Profile/profile');
 			return true;
 		}
 		return false;

@@ -1,8 +1,9 @@
 <?php
 
 namespace app\filters;
-//definition of an attribute
-//it needs to be applied to be functional
+
+// This filter is to check if a user is logged in or not. 
+// If not, put them back to the login page.
 #[\Attribute]
 class Login	{
 	function execute(){

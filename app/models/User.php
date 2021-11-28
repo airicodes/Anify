@@ -25,6 +25,15 @@ class User extends \app\core\Model {
 		$STMT->execute(['username'=>$this->username,'password_hash'=>$this->hash, "role" => $this->role]);
 	}
 
+    // get a user by getting the user id.
+    public function getUser($user_id) {
+        $SQL = 'SELECT * FROM user WHERE user_id = :user_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['user_id' => $user_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\User');
+		return $STMT->fetch();
+    }
+
     // get all of the users in the database.
     public function getAllUsers() {
         $SQL = "SELECT * FROM user";
