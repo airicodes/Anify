@@ -41,4 +41,11 @@ class User extends \app\core\Model {
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\User');
 		return $STMT->fetch();
     }
+
+    // add profile_id to user
+    public function insertProfileId() {
+        $SQL = 'UPDATE user SET profile_id = :profile_id WHERE user_id = :user_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['profile_id' => $this->profile_id, "user_id" => $this->user_id]);
+    }
 }

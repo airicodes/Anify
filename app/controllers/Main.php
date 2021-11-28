@@ -24,7 +24,9 @@ class Main extends \app\core\Controller {
                 $_SESSION["username"] = $user->username;
                 $_SESSION["role"] = $user->role;
 
-                if ($user->role == "admin") {
+                if ($user->profile_id == null) {
+                    header("location:".BASE."Profile/profile");
+                } else if ($user->role == "admin") {
                     header("location:".BASE."User/adminIndex");
                 } else if ($user->role == "regular") {
                     header("location:".BASE."User/regularIndex");
