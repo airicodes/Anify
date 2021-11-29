@@ -102,15 +102,6 @@
 </head>
 <body id="body">
 
-        <script>
-            swal({
-                        title: "Registration Successful!",
-                        text: "",
-                        icon: "success",
-                        button:"ok",
-                    });
-        </script>
-
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
         <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
@@ -154,8 +145,12 @@
                 <!-- Edit and delete button -->
                 </div>
                 <div class="mt-3 d-flex flex-row">
-                    <button id="editProfileButton" type="button" class="btn btn-outline-info">Edit Profile</button>
-                    <button name="deleteAccount" id="deleteProfileButton" type="button" class="btn btn-outline-danger">Delete Account</button>
+                    <form action="" method="POST">
+                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
+                    </form>
+                    <form action="/User/deleteAccountButton" method="POST">
+                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
+                    </form>
                 </div>
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->

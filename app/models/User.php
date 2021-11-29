@@ -44,7 +44,7 @@ class User extends \app\core\Model {
 
      // get one user by their username.
      public function getUserByUsername($username) {
-        $SQL = 'SELECT * FROM user WHERE username LIKE :username';
+        $SQL = 'SELECT * FROM user WHERE username = :username';
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['username' => $username]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\User');
@@ -58,10 +58,18 @@ class User extends \app\core\Model {
 		$STMT->execute(['profile_id' => $this->profile_id, "user_id" => $this->user_id]);
     }
 
+    // method to update a users password
     public function updatePassword() {
         $this->hash = password_hash($this->password, PASSWORD_DEFAULT);
 		$SQL = 'UPDATE user SET hash = :hash WHERE user_id = :user_id';
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['hash'=>$this->hash, 'user_id'=>$this->user_id]);
+    }
+
+    // method to delete a user from the database
+    public function deleteUser() {
+        $SQL = "DELETE FROM user WHERE user_id = :user_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["user_id" => $this->user_id]);
     }
 }

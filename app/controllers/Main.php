@@ -64,7 +64,7 @@ class Main extends \app\core\Controller {
 
             $allUsers = $user->getAllUsers();
             foreach ($allUsers as $currentUser) {
-                if ($currentUser->username == $user->username) {
+                if (strtolower($currentUser->username) == strtolower($user->username)) {
                     $this->view("Main/register", "This username already exists");
                     return;
                 }

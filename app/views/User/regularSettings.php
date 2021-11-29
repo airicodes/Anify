@@ -195,8 +195,12 @@
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
-                    <button id="editProfileButton" type="button" class="btn btn-outline-info">Edit Profile</button>
-                    <button id="deleteProfileButton" type="button" class="btn btn-outline-danger">Delete Account</button>
+                    <form action="" method="POST">
+                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
+                    </form>
+                    <form action="/User/deleteAccountButton" method="POST">
+                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
+                    </form>
                 </div>
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->

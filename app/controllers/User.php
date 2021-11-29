@@ -34,6 +34,7 @@ class User extends \app\core\Controller {
     // go to regular index
     #[\app\filters\Admin]
     public function regularIndex() {
+
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
         $profile = new \app\models\Profile();
@@ -55,6 +56,7 @@ class User extends \app\core\Controller {
             $newPass = trim($_POST["newPassword"]);
             $confirmNewPass = trim($_POST["confirmNewPassword"]);
 
+            // check if any textbox is empty
             if (empty($oldPass) || empty($newPass) || empty($confirmNewPass)) {
                 $this->view("User/adminSettings", ["error" => "One or more fields are empty", "user" => $user, "profile" => $profile]);
                 return;
@@ -171,5 +173,66 @@ class User extends \app\core\Controller {
     #[\app\filters\Admin]
     public function regularAbout() {
         $this->view("User/regularAbout");
+    }
+
+    // Method that is called whenever the delete account button is pressed on any screen.
+    public function deleteAccountButton() {
+        if ($_SESSION["role"] == "admin") {
+            header("location:".BASE."User/adminDeleteAccount");
+        } else if ($_SESSION["role"] == "regular") {
+            header("location:".BASE."User/regularDeleteAccount");
+        }
+    }
+
+    #[\app\filters\Regular]
+    public function adminDeleteAccount() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        
+        if (isset($_POST["cancel"])) {
+
+            $profile = new \app\models\Profile();
+            $profile = $profile->getProfile($_SESSION["user_id"]);
+
+            $this->view("User/adminIndex", ["user" => $user, "profile" => $profile]);
+            return;
+        }
+
+        if (isset($_POST["delete"])) {
+            $user->deleteUser();
+            session_destroy();
+            session_start();
+            $_SESSION["deletedUser"] = "deleted";
+            header("location:".BASE."Main/login");
+            return;
+        }
+
+        $this->view("User/adminDeleteAccount");
+    }
+
+    #[\app\filters\Admin]
+    public function regularDeleteAccount() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        
+        if (isset($_POST["cancel"])) {
+
+            $profile = new \app\models\Profile();
+            $profile = $profile->getProfile($_SESSION["user_id"]);
+
+            $this->view("User/regularIndex", ["user" => $user, "profile" => $profile]);
+            return;
+        }
+
+        if (isset($_POST["delete"])) {
+            $user->deleteUser();
+            session_destroy();
+            session_start();
+            $_SESSION["deletedUser"] = "deleted";
+            header("location:".BASE."Main/login");
+            return;
+        }
+
+        $this->view("User/regularDeleteAccount");
     }
 }

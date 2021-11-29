@@ -140,6 +140,25 @@
                 }
             ?>
 
+    <?php
+    if (isset($_SESSION["deletedUser"])) {
+                    ?>
+
+                <script>
+                    swal({
+                        title: "Account Deleted",
+                        text: "The account does not exist anymore...",
+                        icon: "info",
+                        button:"ok"
+                    });
+                </script>
+
+
+            <?php
+                    unset($_SESSION["deletedUser"]);
+                }
+            ?>
+
     <img id="problemSolversImage" class="mt-2 mx-1" src="\app/background/ProblemSolversLogo.png" alt="">
     
 
