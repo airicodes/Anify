@@ -126,10 +126,10 @@
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
-                    <form action="" method="POST">
+                    <form action="<?=BASE?>User/editProfileButton" method="POST">
                         <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
                     </form>
-                    <form action="/User/deleteAccountButton" method="POST">
+                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
                         <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
                     </form>
                 </div>
@@ -151,9 +151,9 @@
                         <!-- Posts -->
                         <a class="nav-item mx-1 text-center nav-link text-light active disabled">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularAnimeList">anime list</a>
                         <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">messages</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularMessages">messages</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularSettings">settings</a>
                       </div>

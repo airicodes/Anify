@@ -13,7 +13,6 @@
             background-color: #1E2336; 
             padding: 20px;
             font-family: 'Poppins', sans-serif;
-            height: 100%;
         }
 
         /* Change the color of the fy in Anify */
@@ -40,9 +39,9 @@
         /* Change the color, height, border and the padding of the box that covers the user's information */
         #userInformationBox {
             background-color: rgba(3, 5, 13, 0.61);
-            height: fit-content;
+            height: 34.5rem;
             border-radius: 25px;
-            padding-bottom: 20px;
+            padding-bottom: 2%;
         }
 
 
@@ -55,12 +54,6 @@
             margin-left: 8px;
         }
 
-        /* Change the location of the second nav bar */
-        #secondNavbar {
-            margin-top: -2%;
-        }
-
-        /* Change the size the of nav item */
         #secondNavbar .navbar-nav .nav-item{
             font-size: 25px;
             width: 150px;
@@ -86,12 +79,31 @@
             padding: 10px;
         }
 
-        /* To change the position of the logo */
+        /* To change the position of the Problem Solvers logo */
         #logo {
             width: 200px;
-            margin-top: -0.2%;
+            margin-top: -2%;
         }
 
+        /* to change the border of the radius */
+        #adminLogo {
+            border-radius: 20px;
+            width: 200px;
+        }
+
+        /* To change the color of the anime table */
+        #animeTable {
+            background-color: #35416C;
+        }
+
+        /* To change the color of the favourite table */
+        #favouriteTable {
+            background-color: #35416C;
+        }
+
+        .pfp {
+            width: 60%;
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -100,11 +112,16 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light"href=""><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
+                <!-- To go to ABOUT PAGE -->
                 <li class="nav-item">
-                    <a class="nav-link text-light"href="">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
+                </li>
+                <!-- To go to ADD ANIME PAGE -->
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="">add anime</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -126,35 +143,45 @@
             <!-- the user information box -->
             <div id="userInformationBox" class="col-3 mt-5">
                 <!-- Profile Picture -->
-                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="jeremie.jpg" data-rendered="true">
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp" src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
                 <!-- Username -->
-                <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
+                <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
+                <!-- admin logo -->
+                <div class="d-flex flex-column">
+                <button id="adminlogo" class="btn btn-danger align-self-center disabled">administrator</button>
                 <!-- Edit and delete button -->
+                </div>
                 <div class="mt-3 d-flex flex-row">
-                    <button id="editProfileButton" type="button" class="btn btn-outline-info">Edit Profile</button>
-                    <button id="deleteProfileButton" type="button" class="btn btn-outline-danger">Delete Account</button>
+                    <form action="<?=BASE?>User/editProfileButton" method="POST">
+                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
+                    </form>
+                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
+                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
+                    </form>
                 </div>
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->
-                <p class="text-light">Hey guys, jeremie gaychon here!
-                    I love steins;gate and
-                    school! CS gang. Hit me up if you want to eat some good fried rice ayo :> i’m a fakeass felepenes and i’m proud of being white as HECK. #callmerobert #peace #felepen #furrygang #travelgoals</p>
+                <p class="text-light">
+                    <?php 
+                        echo $data["profile"]->bio;
+                    ?>
+                </p>
             </div>
 
             <!-- The user's post, anime list, manga list, and setting section -->
             <div class="col-9 mt-4 pt-3">
-                <!-- The SECOND NAV BAR -->
+                <!-- The second nav bar -->
                 <nav id="secondNavbar" class="navbar navbar-expand-lg">
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light " href="<?=BASE?>User/adminIndex">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="#">anime list</a>
-                        <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">messages</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">anime list</a>
+                        <!-- Messages -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>
                     </div>
                 </nav>
@@ -170,7 +197,7 @@
                                 <!-- To make a scrollable table -->
                                 <div style="height: 468px;overflow: scroll;">
                                     <!-- The table itself -->
-                                    <table class="table table-hover table-borderless text-light">
+                                    <table id="animeTable" class="table table-borderless text-light">
                                         <tbody>
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
                                             <tr>
@@ -182,7 +209,7 @@
                                                 <!-- Ratings of the anime -->
                                                 <td>9/10</td>
                                                 <!-- IS THIS A BUTTON??? -->
-                                                <td>STAR BUTTON</td>
+                                                <td>Star</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -195,7 +222,7 @@
                                 <!-- To make a scrollable table -->
                                 <div style="height: 468px;overflow: scroll;">
                                     <!-- The table itself -->
-                                    <table class="table table-hover table-borderless text-light">
+                                    <table id="favouriteTable" class="table table-borderless text-light">
                                         <tbody>
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
                                             <tr>
@@ -215,13 +242,14 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
 </body>

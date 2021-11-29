@@ -170,9 +170,9 @@
                         <!-- Posts -->
                         <a class="nav-item mx-1 text-center nav-link text-light active disabled">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminAnimeList">anime list</a>
                         <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">messages</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>

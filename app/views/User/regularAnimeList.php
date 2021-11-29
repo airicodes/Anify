@@ -13,6 +13,7 @@
             background-color: #1E2336; 
             padding: 20px;
             font-family: 'Poppins', sans-serif;
+            height: 100%;
         }
 
         /* Change the color of the fy in Anify */
@@ -39,10 +40,11 @@
         /* Change the color, height, border and the padding of the box that covers the user's information */
         #userInformationBox {
             background-color: rgba(3, 5, 13, 0.61);
-            height: fit-content;
+            height: 34.5rem;
             border-radius: 25px;
             padding-bottom: 20px;
         }
+
 
         #editProfileButton{
             width: 140px;
@@ -53,6 +55,12 @@
             margin-left: 8px;
         }
 
+        /* Change the location of the second nav bar */
+        #secondNavbar {
+            margin-top: -2%;
+        }
+
+        /* Change the size the of nav item */
         #secondNavbar .navbar-nav .nav-item{
             font-size: 25px;
             width: 150px;
@@ -81,31 +89,11 @@
         /* To change the position of the logo */
         #logo {
             width: 200px;
-            margin-top: 0.5%;
+            margin-top: -0.2%;
         }
 
-        /* Change the size of the message box inside the message table */
-        #messageBox {
-            width: 500px;
-        }
-
-        /* To change the position of the message options: Sent, Read Reread */
-        #messageOptions {
-            width: 500px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        /* To remove the text decoration of the links */
-        .links {
-            text-decoration: none;
-            color: white;
-            padding-left: 10px;
-        }
-
-        /* To change the color of the link when the user hovers */ 
-        .links:hover{
-            color: #E168BF !important;
+        .pfp {
+            width: 60%;
         }
 
     </style>
@@ -142,19 +130,25 @@
             <!-- the user information box -->
             <div id="userInformationBox" class="col-3 mt-5">
                 <!-- Profile Picture -->
-                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto" src="jeremie.jpg" data-rendered="true">
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp" src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
                 <!-- Username -->
-                <h2 class="text-center text-light mt-2">Jeremie Gaychon</h2>
+                <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
-                    <button id="editProfileButton" type="button" class="btn btn-outline-info">Edit Profile</button>
-                    <button id="deleteProfileButton" type="button" class="btn btn-outline-danger">Delete Account</button>
+                    <form action="<?=BASE?>User/editProfileButton" method="POST">
+                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
+                    </form>
+                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
+                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
+                    </form>
                 </div>
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->
-                <p class="text-light">Hey guys, jeremie gaychon here!
-                    I love steins;gate and
-                    school! CS gang. Hit me up if you want to eat some good fried rice ayo :> i’m a fakeass felepenes and i’m proud of being white as HECK. #callmerobert #peace #felepen #furrygang #travelgoals</p>
+                <p class="text-light">
+                    <?php
+                        echo $data["profile"]->bio;
+                    ?>
+                </p>
             </div>
 
             <!-- The user's post, anime list, manga list, and setting section -->
@@ -164,13 +158,13 @@
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularIndex">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">anime list</a>
                         <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="#">messages</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularMessages">messages</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="#">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularSettings">settings</a>
                       </div>
                     </div>
                 </nav>
@@ -178,32 +172,56 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
-                        <table class="table">
-                            <tbody>
-                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
-                               <tr>
-                                   <!-- Place where to put the sender, message and the time stamp -->
-                                   <!-- First text: sender -->
-                                   <!-- Second text: message -->
-                                   <!-- Third text: time stamp -->
-                                 <td id="messageBox" class="text-light"> Zoubaby <br> Manns Steins gate is fucking trash  <br>Read 22:33 PM 09/31/21</td>
+                    <div class="container">
+                        <div class="row">
+                            <!-- This div is for the ALL ANIME TABLE -->
+                            <div class="col-6 d-flex flex-column">
+                                <h1 class="text-light text-center">All</h1>
+                                <!-- To make a scrollable table -->
+                                <div style="height: 468px;overflow: scroll;">
+                                    <!-- The table itself -->
+                                    <table class="table table-hover table-borderless text-light">
+                                        <tbody>
+                                            <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
+                                            <tr>
+                                                <!-- Title of the anime -->
+                                                <!-- Is this gonna be a link?? -->
+                                                <td>Durarara!!</td>
+                                                <!-- Status of the anime -->
+                                                <td>Finished</td>
+                                                <!-- Ratings of the anime -->
+                                                <td>9/10</td>
+                                                <!-- IS THIS A BUTTON??? -->
+                                                <td>STAR BUTTON</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                                 <!-- Where the sent, read, reread -->
-                                 <td id="messageOptions" class="text-light">
-                                    <!-- Sent -->
-                                    <!-- Mark the message as sent -->
-                                     <a class="links" href="#">Sent</a>
-                                    <!-- Read -->
-                                    <!-- Mark the message as read -->
-                                     <a class="links" href="#">Read</a>
-                                    <!-- Reread -->
-                                    <!-- Mark the message as reread -->
-                                     <a class="links" href="#">Reread</a>
-                                 </td>
-                               </tr>
-                            </tbody>
-                        </table>
+                            <!-- This div is for the FAVOURITES -->
+                            <div class="col-6 d-flex flex-column">
+                                <h1 class="text-light text-center">Favorite</h1>
+                                <!-- To make a scrollable table -->
+                                <div style="height: 468px;overflow: scroll;">
+                                    <!-- The table itself -->
+                                    <table class="table table-hover table-borderless text-light">
+                                        <tbody>
+                                            <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
+                                            <tr>
+                                                <!-- Title of the anime -->
+                                                <!-- Is this gonna be a link?? -->
+                                                <td>Durarara!!</td>
+                                                <!-- Status of the anime -->
+                                                <td>Finished</td>
+                                                <!-- Ratings of the anime -->
+                                                <td>9/10</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -213,7 +231,7 @@
     <!-- Footer -->
     <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
 </body>

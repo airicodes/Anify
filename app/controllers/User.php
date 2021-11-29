@@ -20,14 +20,6 @@ class User extends \app\core\Controller {
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
 
-        // code to delete account
-        if (isset($_POST["deleteAccount"])) {
-            $_SESSION["deleteAccount"] = "clicked";
-            $this->view("User/adminIndex", ["user" => $user, "profile" => $profile]);
-
-        }
-
-
         $this->view("User/adminIndex", ["user" => $user, "profile" => $profile]);
     }
 
@@ -85,6 +77,7 @@ class User extends \app\core\Controller {
 
     }
     
+    // method that brings the regular user to their settings page.
     #[\app\filters\Admin]
     public function regularSettings() {
         $user = new \app\models\User();
@@ -108,6 +101,7 @@ class User extends \app\core\Controller {
                 return;
             }
 
+            // verify that old pass is equal to the hash in db.
             if (password_verify($_POST["oldPassword"], $user->hash)) {
                 if ($newPass == $confirmNewPass) {
                     $user->password = $newPass;
@@ -126,7 +120,8 @@ class User extends \app\core\Controller {
 
         $mail = new PHPMailer(true);
 
-
+        // when the feedback send button is pressed, checks if empty or more than 300 characters.
+        // if those are satisfied, the email is sent, and the user gets a popup.
         if (isset($_POST["feedback"])) {
             if (empty(trim($_POST["message"]))) {
                 $this->view("User/regularSettings", ["error" => "", "user" => $user, "profile" => $profile, "feedback" => "Nothing was entered..."]);
@@ -165,11 +160,13 @@ class User extends \app\core\Controller {
         $this->view("User/regularSettings", ["error" => "", "user" => $user, "profile" => $profile, "feedback" => ""]);
     }
 
+    // method to display the admin about page.
     #[\app\filters\Regular]
     public function adminAbout() {
         $this->view("User/adminAbout");        
     }
 
+    // method to display the regular about page.
     #[\app\filters\Admin]
     public function regularAbout() {
         $this->view("User/regularAbout");
@@ -184,11 +181,22 @@ class User extends \app\core\Controller {
         }
     }
 
+    // method that is called whenever the edit profile button is pressed on any screen.
+    public function editProfileButton() {
+        if ($_SESSION["role"] == "admin") {
+            header("location:".BASE."User/adminEditProfile");
+        } else if ($_SESSION["role"] == "regular") {
+            header("location:".BASE."User/regularEditProfile");
+        }
+    }
+
+    // method to delete an admin account
     #[\app\filters\Regular]
     public function adminDeleteAccount() {
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
         
+        // if cancel is pressed, user is sent back to their index page.
         if (isset($_POST["cancel"])) {
 
             $profile = new \app\models\Profile();
@@ -198,6 +206,7 @@ class User extends \app\core\Controller {
             return;
         }
 
+        // if delete account button clicked, the user is delete and sent back to login page.
         if (isset($_POST["delete"])) {
             $user->deleteUser();
             session_destroy();
@@ -210,6 +219,7 @@ class User extends \app\core\Controller {
         $this->view("User/adminDeleteAccount");
     }
 
+    // method to delete a regular user's account
     #[\app\filters\Admin]
     public function regularDeleteAccount() {
         $user = new \app\models\User();
@@ -234,5 +244,49 @@ class User extends \app\core\Controller {
         }
 
         $this->view("User/regularDeleteAccount");
+    }
+
+    // method to go to the admin's anime list page
+    #[\app\filters\Regular]
+    public function adminAnimeList() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        $this->view("User/adminAnimeList", ["user" => $user, "profile" => $profile]);
+    }
+
+    // method to go to the regular user's anime list page
+    #[\app\filters\Admin]
+    public function regularAnimeList() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        $this->view("User/regularAnimeList", ["user" => $user, "profile" => $profile]);
+    }
+
+    // method to go to the admin's messages page.
+    #[\app\filters\Regular]
+    public function adminMessages() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        $this->view("User/adminMessages", ["user" => $user, "profile" => $profile]);
+    }
+
+    // method to go to the regular user's messages page.
+    #[\app\filters\Admin]
+    public function regularMessages() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        $this->view("User/regularMessages", ["user" => $user, "profile" => $profile]);
     }
 }

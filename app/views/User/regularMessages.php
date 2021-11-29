@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,7 +44,6 @@
             padding-bottom: 20px;
         }
 
-
         #editProfileButton{
             width: 140px;
             margin-right: 10px;
@@ -78,83 +78,53 @@
             padding: 10px;
         }
 
+        /* To change the position of the logo */
         #logo {
             width: 200px;
-            margin-top: 30px;
+            margin-top: 0.5%;
         }
 
-        /* Change the  border and height of the input inside the change password box */ 
-        #changePassBox input {
-            border-radius: 4px;
-            height: 40px;
-            width: 300px;
-            padding: 2%;
+        /* Change the size of the message box inside the message table */
+        #messageBox {
+            width: 500px;
         }
 
-        /* Change the size and the border radius of the confirm button */ 
-        #confirmButton {
-            border-radius: 15px;
-            width: 160px;
-            margin-left: 16%;
+        /* To change the position of the message options: Sent, Read Reread */
+        #messageOptions {
+            width: 500px;
+            text-align: center;
+            vertical-align: middle;
         }
 
-        /* Change the size and the border radius of the send button */ 
-        #sendButton {
-            width: 120px;
-            border-radius: 15px;
+        /* To remove the text decoration of the links */
+        .links {
+            text-decoration: none;
+            color: white;
+            padding-left: 10px;
         }
 
-         /* to change the border of the radius */
-         #adminLogo {
-            border-radius: 20px;
-            width: 200px;
+        /* To change the color of the link when the user hovers */ 
+        .links:hover{
+            color: #E168BF !important;
         }
 
         .pfp {
             width: 60%;
         }
 
-        #error_messages {
-            color:red;
-            font-size:100%;
-        }
-
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body id="body">
-    <?php
-    if (isset($_SESSION["passwordUpdate"])) {
-    ?>
-
-        <script>
-            swal({
-                title: "Password Updated",
-                text: "<?=$data["user"]->username?>, your password has been successfully updated",
-                icon: "success",
-                button:"ok"
-                });
-        </script>
-
-
-    <?php
-        unset($_SESSION["passwordUpdate"]);
-    }
-    ?>
-
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="">add anime</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -179,10 +149,6 @@
                 <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp" src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
-                <!-- admin logo -->
-                <div class="d-flex flex-column">
-                <button id="adminlogo" class="btn btn-danger align-self-center disabled">administrator</button>
-                </div>
                 <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
                     <form action="<?=BASE?>User/editProfileButton" method="POST">
@@ -203,18 +169,18 @@
 
             <!-- The user's post, anime list, manga list, and setting section -->
             <div class="col-9 mt-4 pt-3">
-                <!-- The second nav bar -->
+                <!-- The SECOND NAV BAR -->
                 <nav id="secondNavbar" class="navbar navbar-expand-lg">
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminIndex">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularIndex">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminAnimeList">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularAnimeList">anime list</a>
                         <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">messages</a>
                         <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularSettings">settings</a>
                       </div>
                     </div>
                 </nav>
@@ -222,39 +188,32 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;">
-                        <div class="container">
-                            <div class="row">
-                                <!-- Change password section -->
-                                <div id="changePassBox" class="col-12 d-flex flex-column">
-                                    <form action="" method="POST">
-                                        <h2 class="text-light mt-5 text-center">Change password</h2>
-                                        <!-- Old password  -->
-                                        <input class="mt-1 align-self-center" type="password" name="oldPassword" placeholder="Old password">
-                                        <br>
-                                        <!-- New password  -->
-                                        <input class="mt-1 align-self-center" type="password" name="newPassword" placeholder="New password">
-                                        <br>
-                                        <!-- New password confirmation  -->
-                                        <input class="mt-1 align-self-center" type="password" name="confirmNewPassword" placeholder="Confirm password">
-                                        <br>
-                                        <button name="action" type="submit" id="confirmButton" class="btn btn-outline-info mt-0 align-self-center">Confirm</button>
-                                        <h4 class="mt-3" id="error_messages">
-                                        <?php
-                                            echo $data["error"];
-                                        ?>
-                                        </h4>
-                                    </form>
-                                </div>
-                                <div class="container mt-5">
-                                    <div class="col-12 d-flex flex-column align-items-end mt-3">
-                                        <!-- Log out -->
-                                        <!-- When the users clicks on it, the user will be logout -->
-                                        <h1><a class="text-danger" style="text-decoration: none;" href="<?=BASE?>Main/logout">Log out</a></h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div style="height: 468px;overflow: scroll;">
+                        <table class="table">
+                            <tbody>
+                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
+                               <tr>
+                                   <!-- Place where to put the sender, message and the time stamp -->
+                                   <!-- First text: sender -->
+                                   <!-- Second text: message -->
+                                   <!-- Third text: time stamp -->
+                                 <td id="messageBox" class="text-light"> Zoubaby <br> Manns Steins gate is fucking trash  <br>Read 22:33 PM 09/31/21</td>
+
+                                 <!-- Where the sent, read, reread -->
+                                 <td id="messageOptions" class="text-light">
+                                    <!-- Sent -->
+                                    <!-- Mark the message as sent -->
+                                     <a class="links" href="#">Sent</a>
+                                    <!-- Read -->
+                                    <!-- Mark the message as read -->
+                                     <a class="links" href="#">Read</a>
+                                    <!-- Reread -->
+                                    <!-- Mark the message as reread -->
+                                     <a class="links" href="#">Reread</a>
+                                 </td>
+                               </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
