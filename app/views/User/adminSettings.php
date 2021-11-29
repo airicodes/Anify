@@ -114,12 +114,37 @@
             width: 60%;
         }
 
+        #error_messages {
+            color:red;
+            font-size:100%;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body id="body">
+    <?php
+    if (isset($_SESSION["passwordUpdate"])) {
+    ?>
+
+        <script>
+            swal({
+                title: "Password Updated",
+                text: "<?=$data["user"]->username?>, your password has been successfully updated",
+                icon: "success",
+                button:"ok"
+                });
+        </script>
+
+
+    <?php
+        unset($_SESSION["passwordUpdate"]);
+    }
+    ?>
+
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
         <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
@@ -198,17 +223,24 @@
                             <div class="row">
                                 <!-- Change password section -->
                                 <div id="changePassBox" class="col-12 d-flex flex-column">
-                                    <h2 class="text-light mt-5 text-center">Change password</h2>
-                                    <!-- Old password  -->
-                                    <input class="mt-1 align-self-center" type="text" name="oldPassword" placeholder="Old password">
-                                    <br>
-                                    <!-- New password  -->
-                                    <input class="mt-1 align-self-center" type="text" name="newPassword" placeholder="New password">
-                                    <br>
-                                    <!-- New password confirmation  -->
-                                    <input class="mt-1 align-self-center" type="text" name="newPassConfirmation" placeholder="Confirm password">
-                                    <br>
-                                    <button id="confirmButton" class="btn btn-outline-info mt-0 align-self-center">Confirm</button>
+                                    <form action="" method="POST">
+                                        <h2 class="text-light mt-5 text-center">Change password</h2>
+                                        <!-- Old password  -->
+                                        <input class="mt-1 align-self-center" type="password" name="oldPassword" placeholder="Old password">
+                                        <br>
+                                        <!-- New password  -->
+                                        <input class="mt-1 align-self-center" type="password" name="newPassword" placeholder="New password">
+                                        <br>
+                                        <!-- New password confirmation  -->
+                                        <input class="mt-1 align-self-center" type="password" name="confirmNewPassword" placeholder="Confirm password">
+                                        <br>
+                                        <button name="action" type="submit" id="confirmButton" class="btn btn-outline-info mt-0 align-self-center">Confirm</button>
+                                        <h4 class="mt-3" id="error_messages">
+                                        <?php
+                                            echo $data["error"];
+                                        ?>
+                                        </h4>
+                                    </form>
                                 </div>
                                 <div class="container mt-5">
                                     <div class="col-12 d-flex flex-column align-items-end mt-3">
