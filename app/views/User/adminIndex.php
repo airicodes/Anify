@@ -145,10 +145,10 @@
                 <!-- Edit and delete button -->
                 </div>
                 <div class="mt-3 d-flex flex-row">
-                    <form action="" method="POST">
+                    <form action="<?=BASE?>User/editProfileButton" method="POST">
                         <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
                     </form>
-                    <form action="/User/deleteAccountButton" method="POST">
+                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
                         <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
                     </form>
                 </div>

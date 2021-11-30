@@ -4,6 +4,7 @@ namespace app\models;
 
 class Profile extends \app\core\Model {
 
+    // Profile data members. 
     public $profile_id;
     public $user_id;
     public $bio;
@@ -14,12 +15,14 @@ class Profile extends \app\core\Model {
         parent::__construct();
     }
 
+    // method to insert a new profile to the database.
     public function insertProfile() {
         $SQL = "INSERT INTO profile (user_id, bio, filename) VALUES (:user_id, :bio, :filename)";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(["user_id" => $this->user_id, "bio" => $this->bio, "filename" => $this->filename]);
     }
 
+    // method to get a profile based on user id.
     public function getProfile($user_id) {
         $SQL = "SELECT * FROM profile WHERE user_id = :user_id";
         $STMT = self::$_connection->prepare($SQL);
@@ -27,6 +30,13 @@ class Profile extends \app\core\Model {
         $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Profile");
         return $STMT->fetch();
     }
+
+    // method to update the profile of a user. 
+    public function updateProfile() {
+        $SQL = "UPDATE profile SET bio = :bio, filename = :filename WHERE user_id = :user_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["bio" => $this->bio, "filename" => $this->filename, "user_id" => $this->user_id]);
+    } 
 
 
 

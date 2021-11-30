@@ -181,13 +181,6 @@
                     </div>
                     <button name="action" id="loginButton" type="submit" class="btn btn-secondary btn-lg">Create profile</button>
                     <br>
-                    <?php
-                    if ($_SESSION["role"] == "admin") {
-                        $index = "adminIndex";
-                    } else if ($_SESSION["role"] == "regular") {
-                        $index = "regularIndex";
-                    }
-                    ?>
                 </form>
             </div>
             <br>

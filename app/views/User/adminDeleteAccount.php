@@ -11,9 +11,6 @@
             /* Full height */
             height: 100%; 
 
-            /* The code that do the animation */
-            animation: animate 30s ease-in-out infinite backwards;
-
             /* To change the font */
             font-family: 'Poppins', sans-serif;
         }

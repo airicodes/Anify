@@ -190,6 +190,261 @@ class User extends \app\core\Controller {
         }
     }
 
+    public $folder='uploads/';
+    // method to enter the edit profile page for admins.
+    #[\app\filters\Regular]
+    public function adminEditProfile() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        // this if statement is to view a preview of the profile picture
+        if (isset($_POST["preview"])) {
+            if ($_FILES["newPicture"]["size"] < 1) {
+                $this->view('User/adminEditProfile', ['error'=>"No image was selected",'image'=> "/uploads/defaultAvatar.png", "user" => $user, "profile" => $profile]);
+                return;
+            }
+            if(isset($_FILES['newPicture'])){
+                $check = getimagesize($_FILES['newPicture']['tmp_name']);
+
+                $mime_type_to_extension = ['image/jpeg'=>'.jpg',
+                                            'image/gif'=>'.gif',
+                                            'image/bmp'=>'.bmp',
+                                            'image/png'=>'.png'
+                                            ];
+
+                if($check !== false && isset($mime_type_to_extension[$check['mime']])){
+                    $extension = $mime_type_to_extension[$check['mime']];
+                }else{
+                    $this->view('User/adminEditProfile', ['error'=>"Bad file type", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+
+                $filename = uniqid().$extension;
+                $filepath = $this->folder.$filename;
+
+                if($_FILES['newPicture']['size'] > 4000000){
+                    $this->view('User/adminEditProfile', ['error'=>"File too large", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+                if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
+                    $profile->filename = "/".$this->folder.$filename;
+                    $this->view("User/adminEditProfile", ["error"=>"", "user" => $user, "profile" => $profile]);
+                } else {
+                    $this->view("User/adminEditProfile", ["error"=>"Cant upload", "user" => $user, "profile" => $profile]);
+                }
+            }
+
+            return;
+        }
+
+        // code for when save changes is pressed.
+        if (isset($_POST["action"])) {
+            $newUsername = trim($_POST["newUsername"]);
+            $newBio = trim($_POST["newBio"]);
+
+            // checking if username is empty, and checking if the username change does not exist.
+            if (empty($newUsername)) {
+                $this->view("User/adminEditProfile", ["error" => "Username cannot be empty", "user" => $user, "profile" => $profile]);
+                return;
+            } else if (!($newUsername == $user->username)) {
+                $allUsers = $user->getAllUsers();
+                foreach ($allUsers as $currentUser) {
+                    if (strtolower($currentUser->username) == strtolower($newUsername)) {
+                        $this->view("User/adminEditProfile", ["error" => "This username already exists", "user" => $user, "profile" => $profile]);
+                        return;
+                    }
+                }
+            }
+
+            if ($_FILES["newPicture"]["size"] < 1 && empty(trim($_POST["newBio"]))) {
+                $profile->bio = "No bio yet...";
+                $profile->filename = "/uploads/defaultAvatar.png";
+                $profile->updateProfile();
+                $user->username = $_POST["newUsername"];
+                $user->updateUsername();
+                header("location:".BASE."User/adminIndex");
+            } else if ($_FILES['newPicture']["size"] > 0) {
+                $check = getimagesize($_FILES['newPicture']['tmp_name']);
+
+                $mime_type_to_extension = ['image/jpeg'=>'.jpg',
+                                            'image/gif'=>'.gif',
+                                            'image/bmp'=>'.bmp',
+                                            'image/png'=>'.png'
+                                            ];
+
+                if($check !== false && isset($mime_type_to_extension[$check['mime']])){
+                    $extension = $mime_type_to_extension[$check['mime']];
+                }else{
+                    $this->view('User/adminEditProfile', ['error'=>"Bad file type", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+
+                $filename = uniqid().$extension;
+                $filepath = $this->folder.$filename;
+
+                if ($_FILES['newPicture']['size'] > 4000000) {
+                    $this->view('User/adminEditProfile', ['error'=>"File too large", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+                if (move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)) {
+                    $profile->filename = "/".$this->folder.$filename;
+                    if (empty(trim($_POST["newBio"]))) {
+                        $profile->bio = "No bio yet...";
+                    } else {
+                        $profile->bio = $_POST["newBio"];
+                    }
+                    $profile->updateProfile();
+                    $user->username = $_POST["newUsername"];
+                    $user->updateUsername();
+                    header("location:".BASE."User/adminIndex");
+                    return;
+                } else {
+                    $this->view("User/adminEditProfile", ["error"=>"I am not able to upload the image... sorry.", "user" => $user, "profile" => $profile]);
+                }
+            } else if ($_FILES["newPicture"]["size"] < 1 && !empty(trim($_POST["newBio"]))) {
+                $profile->bio = $_POST["newBio"];
+                $profile->filename = "/uploads/defaultAvatar.png";
+                $profile->updateProfile();
+                $user->username = $_POST["newUsername"];
+                $user->updateUsername();
+                header("location:".BASE."User/adminIndex");
+            }
+
+            return;
+        }
+
+        $this->view("User/adminEditProfile", ["user" => $user, "profile" => $profile, "error" => ""]);
+    }
+
+    // method to enter the page where a user can edit their profile.
+    #[\app\filters\Admin]
+    public function regularEditProfile() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        // this if statement is to view a preview of the profile picture
+        if (isset($_POST["preview"])) {
+            if ($_FILES["newPicture"]["size"] < 1) {
+                $this->view('User/regularEditProfile', ['error'=>"No image was selected",'image'=> "/uploads/defaultAvatar.png", "user" => $user, "profile" => $profile]);
+                return;
+            }
+            if(isset($_FILES['newPicture'])){
+                $check = getimagesize($_FILES['newPicture']['tmp_name']);
+
+                $mime_type_to_extension = ['image/jpeg'=>'.jpg',
+                                            'image/gif'=>'.gif',
+                                            'image/bmp'=>'.bmp',
+                                            'image/png'=>'.png'
+                                            ];
+
+                if($check !== false && isset($mime_type_to_extension[$check['mime']])){
+                    $extension = $mime_type_to_extension[$check['mime']];
+                }else{
+                    $this->view('User/regularEditProfile', ['error'=>"Bad file type", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+
+                $filename = uniqid().$extension;
+                $filepath = $this->folder.$filename;
+
+                if($_FILES['newPicture']['size'] > 4000000){
+                    $this->view('User/regularEditProfile', ['error'=>"File too large", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+                if(move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)){
+                    $profile->filename = "/".$this->folder.$filename;
+                    $this->view("User/regularEditProfile", ["error"=>"", "user" => $user, "profile" => $profile]);
+                } else {
+                    $this->view("User/regularEditProfile", ["error"=>"Cant upload", "user" => $user, "profile" => $profile]);
+                }
+            }
+
+            return;
+        }
+
+        // code for when save changes is pressed.
+        if (isset($_POST["action"])) {
+            $newUsername = trim($_POST["newUsername"]);
+            $newBio = trim($_POST["newBio"]);
+
+            // checking if username is empty, and checking if the username change does not exist.
+            if (empty($newUsername)) {
+                $this->view("User/regularEditProfile", ["error" => "Username cannot be empty", "user" => $user, "profile" => $profile]);
+                return;
+            } else if (!($newUsername == $user->username)) {
+                $allUsers = $user->getAllUsers();
+                foreach ($allUsers as $currentUser) {
+                    if (strtolower($currentUser->username) == strtolower($newUsername)) {
+                        $this->view("User/regularEditProfile", ["error" => "This username already exists", "user" => $user, "profile" => $profile]);
+                        return;
+                    }
+                }
+            }
+
+            if ($_FILES["newPicture"]["size"] < 1 && empty(trim($_POST["newBio"]))) {
+                $profile->bio = "No bio yet...";
+                $profile->filename = "/uploads/defaultAvatar.png";
+                $profile->updateProfile();
+                $user->username = $_POST["newUsername"];
+                $user->updateUsername();
+                header("location:".BASE."User/regularIndex");
+            } else if ($_FILES['newPicture']["size"] > 0) {
+                $check = getimagesize($_FILES['newPicture']['tmp_name']);
+
+                $mime_type_to_extension = ['image/jpeg'=>'.jpg',
+                                            'image/gif'=>'.gif',
+                                            'image/bmp'=>'.bmp',
+                                            'image/png'=>'.png'
+                                            ];
+
+                if($check !== false && isset($mime_type_to_extension[$check['mime']])){
+                    $extension = $mime_type_to_extension[$check['mime']];
+                }else{
+                    $this->view('User/regularEditProfile', ['error'=>"Bad file type", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+
+                $filename = uniqid().$extension;
+                $filepath = $this->folder.$filename;
+
+                if ($_FILES['newPicture']['size'] > 4000000) {
+                    $this->view('User/regularEditProfile', ['error'=>"File too large", "user" => $user, "profile" => $profile]);
+                    return;
+                }
+                if (move_uploaded_file($_FILES['newPicture']['tmp_name'], $filepath)) {
+                    $profile->filename = "/".$this->folder.$filename;
+                    if (empty(trim($_POST["newBio"]))) {
+                        $profile->bio = "No bio yet...";
+                    } else {
+                        $profile->bio = $_POST["newBio"];
+                    }
+                    $profile->updateProfile();
+                    $user->username = $_POST["newUsername"];
+                    $user->updateUsername();
+                    header("location:".BASE."User/regularIndex");
+                    return;
+                } else {
+                    $this->view("User/regularEditProfile", ["error"=>"I am not able to upload the image... sorry.", "user" => $user, "profile" => $profile]);
+                }
+            } else if ($_FILES["newPicture"]["size"] < 1 && !empty(trim($_POST["newBio"]))) {
+                $profile->bio = $_POST["newBio"];
+                $profile->filename = "/uploads/defaultAvatar.png";
+                $profile->updateProfile();
+                $user->username = $_POST["newUsername"];
+                $user->updateUsername();
+                header("location:".BASE."User/regularIndex");
+            }
+
+            return;
+        }
+
+        $this->view("User/regularEditProfile", ["user" => $user, "profile" => $profile, "error" => ""]);
+    }
+
     // method to delete an admin account
     #[\app\filters\Regular]
     public function adminDeleteAccount() {

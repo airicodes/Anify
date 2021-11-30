@@ -72,4 +72,10 @@ class User extends \app\core\Model {
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(["user_id" => $this->user_id]);
     }
+
+    public function updateUsername() {
+        $SQL = "UPDATE user SET username = :username WHERE user_id = :user_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["username" => $this->username, "user_id" => $this->user_id]);
+    }
 }
