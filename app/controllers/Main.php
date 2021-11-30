@@ -58,6 +58,11 @@ class Main extends \app\core\Controller {
                 return;
             }
 
+            if (strlen($username) > 14) {
+                $this->view("Main/register", "Maximum username length is 14 characters");
+                return;
+            }
+
             $user = new \app\models\User();
             $user->username = $_POST["username"];
             $user->role = "regular";

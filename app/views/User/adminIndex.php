@@ -113,7 +113,7 @@
                 </li>
                 <!-- To go to ADD ANIME PAGE -->
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="">add anime</a>
+                    <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -145,7 +145,7 @@
                 <!-- Edit and delete button -->
                 </div>
                 <div class="mt-3 d-flex flex-row">
-                    <form action="<?=BASE?>User/editProfileButton" method="POST">
+                    <form action="<?=BASE?>Profile/editProfileButton" method="POST">
                         <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
                     </form>
                     <form action="<?=BASE?>User/deleteAccountButton" method="POST">

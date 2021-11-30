@@ -12,9 +12,9 @@ class ProfileAlreadyCreated extends \app\core\Model {
         $STMT = self::$_connection->query($SQL)->fetch();
 		 if ($STMT[0] == 1) {
             if ($_SESSION["role"] == "admin") {
-                header("location:".BASE."User/adminIndex/$user_id");
+                header("location:".BASE."User/adminIndex");
             } else if ($_SESSION["role"] == "regular") {
-                header("location:".BASE."User/adminIndex/$user_id");
+                header("location:".BASE."User/adminIndex");
             }
 			return true;
 		}

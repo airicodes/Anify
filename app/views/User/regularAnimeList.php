@@ -135,7 +135,7 @@
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
-                    <form action="<?=BASE?>User/editProfileButton" method="POST">
+                    <form action="<?=BASE?>Profile/editProfileButton" method="POST">
                         <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
                     </form>
                     <form action="<?=BASE?>User/deleteAccountButton" method="POST">

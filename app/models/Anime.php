@@ -45,7 +45,7 @@ class Anime extends \app\core\Model {
 	}
 
     // get all of the users in the database.
-    public function getAllUsers() {
+    public function getAllAnime() {
         $SQL = "SELECT * FROM anime";
 		$STMT = self::$_connection->query($SQL);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Anime");
@@ -53,11 +53,20 @@ class Anime extends \app\core\Model {
     }
 
      // get one user by their username.
-     public function getAnimeByName($name) {
-        $SQL = 'SELECT * FROM anime WHERE anime LIKE :name';
+     public function getAnimeByName($anime_name) {
+        $SQL = 'SELECT * FROM anime WHERE anime_name = :anime_name';
 		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['name' => $name]);
+		$STMT->execute(['anime_name' => $anime_name]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
 		return $STMT->fetch();
+    }
+
+    public function addAnime() {
+        $SQL = "INSERT INTO anime(anime_name, anime_creator, anime_date, anime_description, anime_episodes, anime_status, anime_studio, anime_genre, picture_link)
+            VALUES (:anime_name, :anime_creator, :anime_date, :anime_description, :anime_episodes, :anime_status, :anime_studio, :anime_genre, :picture_link)";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["anime_name" => $this->anime_name, "anime_creator" => $this->anime_creator, "anime_date" => $this->anime_date, "anime_description" => $this->anime_description, 
+            "anime_episodes" => $this->anime_episodes, "anime_status" => $this->anime_status, "anime_studio" => $this->anime_studio, "anime_genre" => $this->anime_genre,
+            "picture_link" => $this->picture_link]);
     }
 }
