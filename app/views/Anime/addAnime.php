@@ -95,6 +95,11 @@
             width: 50px;
         }
 
+        #error_messages {
+            color: red;
+            font-weight: bold;
+        }
+
     </style>
 
     <meta charset="UTF-8">
@@ -151,14 +156,21 @@
 
 
     <div class="container">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <!-- The bigbox where the anime informations are located -->
                 <div id="bigBox" class="col-8 mt-4 ">
                     <div class="container">
                         <div class="row">
                             <div class="d-flex flex-column col-4 mt-3">
-                                <img src="/app/background/Rectangle_157.png" alt="">
+                                <?php
+                                if ($data["image"] == null) {
+                                    $image = "/uploads/Rectangle_157.png";
+                                } else {
+                                    $image = $data["image"];
+                                }
+                                ?>
+                                <img src="<?=$image?>" alt="">
                                 <!-- The image of the anime -->
                                 <input class="mt-2 text-light" type="file" name="newPicture">
                                 <!-- The anime title -->
@@ -175,7 +187,7 @@
                                     <div class="row">
                                         <div id="animeAttributes" class="d-flex flex-row col mt-5">
                                             <!-- The place where the admin input the number of anime's episode -->
-                                            <h3 class="text-secondary mx-3">Episodes <br>  <input type="text" name="animeEpisodes"></h3>
+                                            <h3 class="text-secondary mx-3">Episodes <br>  <input type="number" min="1" name="animeEpisodes"></h3>
                                             <!-- The place where the admin input the genre of an anime -->
                                             <h3 class="text-secondary mx-3">Genre   <input type="text" name="animeGenre"> </h3>
                                             <!-- The place where the admin input the status of an anime -->
@@ -201,10 +213,19 @@
                     <div id="buttons">
                         <button name="preview" type="submit" class="btn btn-outline-secondary">Preview Image</button>
                         <button name="cancel" type="submit" class="btn btn-outline-danger" >Cancel</button>
-                        <button name="add" type="submit" class="btn btn-outline-info mx-1">Confirm</button>
+                        <button name="confirm" type="submit" class="btn btn-outline-info mx-1">Confirm</button>
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
+            <center>
+                <h4 id="error_messages">
+                <?php
+                    echo $data["error"];
+                ?>
+                </h4>
+            </center>
         </form>
     </div>
 
