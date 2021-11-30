@@ -100,6 +100,11 @@
             font-weight: bold;
         }
 
+        #theImage {
+            height: 80%;
+            width: 100%;
+        }
+
     </style>
 
     <meta charset="UTF-8">
@@ -170,7 +175,7 @@
                                     $image = $data["image"];
                                 }
                                 ?>
-                                <img src="<?=$image?>" alt="">
+                                <img id="theImage" src="<?=$image?>" alt="">
                                 <!-- The image of the anime -->
                                 <input class="mt-2 text-light" type="file" name="newPicture">
                                 <!-- The anime title -->

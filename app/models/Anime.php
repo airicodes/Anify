@@ -1,5 +1,7 @@
 <?php
 
+namespace app\models;
+
 class Anime extends \app\core\Model {
 
     // variables for user
