@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2021 at 11:48 PM
+-- Generation Time: Dec 01, 2021 at 06:05 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -38,11 +38,21 @@ CREATE TABLE `anime` (
   `anime_description` text NOT NULL,
   `anime_episodes` int(11) NOT NULL,
   `anime_status` varchar(20) NOT NULL,
-  `anime_rating` int(11) NOT NULL,
+  `anime_rating` int(11) DEFAULT NULL,
   `anime_studio` varchar(30) NOT NULL,
   `anime_genre` varchar(30) NOT NULL,
   `picture_link` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `anime`
+--
+
+INSERT INTO `anime` (`anime_id`, `anime_name`, `anime_creator`, `anime_date`, `anime_description`, `anime_episodes`, `anime_status`, `anime_rating`, `anime_studio`, `anime_genre`, `picture_link`) VALUES
+(1, 'One Piece', 'Eiichiro Oda', '1999-10-20', 'The best anime of all time!', 1001, 'Ongoing', NULL, 'Toei Animation', 'Adventure', '/uploads/61a6a0aadfdaf.png'),
+(2, 'Steins;Gate', 'dead ass creator', '2021-11-01', 'The most mid anime of all time...', 24, 'Finished', NULL, 'White Fox', 'Science', '/uploads/61a6b6f403f85.jpg'),
+(3, 'Naruto', 'Kishimoto', '2021-02-16', 'Almost as good as one piece', 600, 'Finished', NULL, 'Mappa', 'Action', '/uploads/61a6b7809be30.jpg'),
+(4, 'Hunter x Hunter', 'Togashi', '2021-10-31', 'Hunter x Hunter is one of the best anime of all time because it is made by one of the best mangaka of all time. It follows the story of Gon that is looking for his father. In order to find his father, he must become a hunter. He is also super cute and small.', 140, 'On Pause', NULL, 'Mappa', 'Adventure', '/uploads/61a6e87be9a34.jpg');
 
 -- --------------------------------------------------------
 
@@ -119,9 +129,9 @@ INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
 (4, 12, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (5, 13, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (8, 16, 'Ali Zoubeidi was here', '/uploads/defaultAvatar.png'),
-(10, 17, 'No bio yet...', '/uploads/defaultAvatar.png'),
-(14, 24, 'No bio yet...', '/uploads/defaultAvatar.png'),
-(18, 27, 'asdfasdf', '/uploads/61a549b6949eb.png');
+(10, 17, 'asdf', '/uploads/61a5b490d5064.jpg'),
+(14, 24, 'No bio yet...aaaa', '/uploads/defaultAvatar.png'),
+(18, 27, 'asdf', '/uploads/defaultAvatar.png');
 
 -- --------------------------------------------------------
 
@@ -159,10 +169,10 @@ INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
 (12, 'Vincent', '$2y$10$KzoArnqS9FwGBdLoYolli.N1ya68SksdUKvWgZut5vTpASBc7EEwW', 'regular'),
 (13, 'Jerbear', '$2y$10$t4ustspM3eXgCiHcqc843.FrotG81PElSwejN8eF.l9JbOPgZZw1W', 'regular'),
 (16, 'c', '$2y$10$oDFrcAeRadTzpMayFV2PtOIjJQhh6pgZORcPSxG7DubaUQxufhdne', 'regular'),
-(17, 'z', '$2y$10$hpxBHu1dAwpy1YVE5pto6eAWfT3LXofYi1IeCE.NKJywFA1f6RLQ6', 'regular'),
+(17, 'zaaaaaaaaaaaaaaaaaa', '$2y$10$hpxBHu1dAwpy1YVE5pto6eAWfT3LXofYi1IeCE.NKJywFA1f6RLQ6', 'regular'),
 (22, 'ass', '$2y$10$Wheen4aBXvDPeOrsT/JEn.DbtukVUPuuVhqTp5/X9DuVfUqqLzHl2', 'regular'),
-(24, 'ali1', '$2y$10$Pxq4cmB/8CDbPdQlIquFh.dWVJnmRoricKhoz7BAKPhPY8u1p8BCq', 'regular'),
-(27, 'alia', '$2y$10$D0PouWBVVSiW5Ig81z/Es.Er3tpD7u1zdb2XgiXQqkDhc4/MTtmIK', 'admin');
+(24, 'ali1aa', '$2y$10$Pxq4cmB/8CDbPdQlIquFh.dWVJnmRoricKhoz7BAKPhPY8u1p8BCq', 'regular'),
+(27, 'aliab', '$2y$10$D0PouWBVVSiW5Ig81z/Es.Er3tpD7u1zdb2XgiXQqkDhc4/MTtmIK', 'admin');
 
 -- --------------------------------------------------------
 
@@ -255,7 +265,7 @@ ALTER TABLE `user_review`
 -- AUTO_INCREMENT for table `anime`
 --
 ALTER TABLE `anime`
-  MODIFY `anime_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `anime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `animelist`
@@ -279,7 +289,7 @@ ALTER TABLE `post_like`
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `profile_post`
@@ -291,7 +301,7 @@ ALTER TABLE `profile_post`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_review`
@@ -307,14 +317,14 @@ ALTER TABLE `user_review`
 -- Constraints for table `animelist`
 --
 ALTER TABLE `animelist`
-  ADD CONSTRAINT `to_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+  ADD CONSTRAINT `to_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `anime_in_list`
 --
 ALTER TABLE `anime_in_list`
   ADD CONSTRAINT `animeinlist_to_anime` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`anime_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `animeinlist_to_animelist` FOREIGN KEY (`animelist_id`) REFERENCES `animelist` (`animelist_id`);
+  ADD CONSTRAINT `animeinlist_to_animelist` FOREIGN KEY (`animelist_id`) REFERENCES `animelist` (`animelist_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `favoritanime`
@@ -328,7 +338,7 @@ ALTER TABLE `favoritanime`
 --
 ALTER TABLE `post_like`
   ADD CONSTRAINT `postlike_to_profilepost` FOREIGN KEY (`profile_post_id`) REFERENCES `profile_post` (`profile_post_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `postlike_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+  ADD CONSTRAINT `postlike_to_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `profile`
