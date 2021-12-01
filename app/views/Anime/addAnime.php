@@ -128,6 +128,11 @@
                     <!-- To go to the add anime page -->
                     <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
                 </li>
+
+                <li class="nav-item">
+                    <!-- To go to the browse anime page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
+                </li>
             </ul>
             <!-- This is for the search bar -->
             <form class="d-flex justify-content-center">

@@ -170,6 +170,10 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
                 </li>
+                <li class="nav-item">
+                    <!-- To go to the regular browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
+                </li>
             </ul>
             <!-- This is for the search bar -->
             <form class="d-flex justify-content-center">

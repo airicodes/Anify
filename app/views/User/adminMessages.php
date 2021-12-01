@@ -138,6 +138,10 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
                 </li>
+                <li class="nav-item">
+                    <!-- To browse anime -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
+                </li>
             </ul>
             <!-- This is for the search bar -->
             <form class="d-flex justify-content-center">

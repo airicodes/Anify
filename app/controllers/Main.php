@@ -4,6 +4,13 @@ namespace app\controllers;
 
 class Main extends \app\core\Controller {
 
+    public function index() {
+        $anime = new \app\models\Anime();
+        $allAnime = $anime->getAllAnime();
+
+        $this->view("Main/index", $allAnime);
+    }
+
     // the function to log into an account.
     #[\app\filters\SessionCheck]
     public function login() {
@@ -99,7 +106,7 @@ class Main extends \app\core\Controller {
     public function logout() {
 		//destroy session variables
 		session_destroy();
-		header("location:".BASE."Main/login");
+		header("location:".BASE."Main/index");
 	}
 
 }

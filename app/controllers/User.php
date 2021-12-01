@@ -280,4 +280,22 @@ class User extends \app\core\Controller {
 
         $this->view("User/regularMessages", ["user" => $user, "profile" => $profile]);
     }
+    
+    // method to bring admin to their browse page
+    #[\app\filters\Regular]
+    public function adminBrowse() {
+        $anime = new \app\models\Anime();
+        $allAnime = $anime->getAllAnime();
+
+        $this->view("User/adminBrowse", $allAnime);
+    }
+
+    // method to bring regulars to their browse page
+    #[\app\filters\Admin]
+    public function regularBrowse() {
+        $anime = new \app\models\Anime();
+        $allAnime = $anime->getAllAnime();
+
+        $this->view("User/regularBrowse", $allAnime);
+    }
 }

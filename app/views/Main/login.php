@@ -163,7 +163,7 @@
     
 
     <div id="center">
-        <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
+        <a href="<?=BASE?>Main/index" style="text-decoration: none;"><h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1></a>
         <div id="loginBox" class="mx-4">
             <div class="text-center">
                 <form action="" method="POST">

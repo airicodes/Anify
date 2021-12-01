@@ -22,31 +22,31 @@ class Anime extends \app\core\Model {
         parent::__construct();
     }
 
-    // insert a user to the database.
-    public function insertAnime() {
-		$this->hash = password_hash($this->password, PASSWORD_DEFAULT);
-		$SQL = 'INSERT INTO anime(anime_name, anime_creator, anime_date,
-        anime_description,
-        anime_episodes,
-        anime_status,
-        anime_rating,
-        anime_studio,
-        anime_genre,
-        picture_link) VALUES (:anime_name, :anime_creator, :anime_date,
-        :anime_description,
-        :anime_episodes,
-        :anime_status,
-        :anime_rating,
-        :anime_studio,
-        :anime_genre,
-        :picture_link)';
-		$STMT = self::$_connection->prepare($SQL);
-		$STMT->execute(['anime_name'=>$this->anime_name,'anime_creator'=>$this->anime_creator, 'anime_description'=>$this->anime_description,
-        'anime_episodes'=>$this->anime_episodes, 'anime_status'=>$this->anime_status, 'anime_rating'=>$this->anime_rating, 'anime_studio'=>$this->anime_studio,
-        'anime_genre'=>$this->anime_genre, 'picture_link'=>$this->picture_link]);
-	}
+    // // insert a user to the database.
+    // public function insertAnime() {
+	// 	$this->hash = password_hash($this->password, PASSWORD_DEFAULT);
+	// 	$SQL = 'INSERT INTO anime(anime_name, anime_creator, anime_date,
+    //     anime_description,
+    //     anime_episodes,
+    //     anime_status,
+    //     anime_rating,
+    //     anime_studio,
+    //     anime_genre,
+    //     picture_link) VALUES (:anime_name, :anime_creator, :anime_date,
+    //     :anime_description,
+    //     :anime_episodes,
+    //     :anime_status,
+    //     :anime_rating,
+    //     :anime_studio,
+    //     :anime_genre,
+    //     :picture_link)';
+	// 	$STMT = self::$_connection->prepare($SQL);
+	// 	$STMT->execute(['anime_name'=>$this->anime_name,'anime_creator'=>$this->anime_creator, 'anime_description'=>$this->anime_description,
+    //     'anime_episodes'=>$this->anime_episodes, 'anime_status'=>$this->anime_status, 'anime_rating'=>$this->anime_rating, 'anime_studio'=>$this->anime_studio,
+    //     'anime_genre'=>$this->anime_genre, 'picture_link'=>$this->picture_link]);
+	// }
 
-    // get all of the users in the database.
+    // get all of the animes in the database.
     public function getAllAnime() {
         $SQL = "SELECT * FROM anime";
 		$STMT = self::$_connection->query($SQL);
@@ -54,7 +54,7 @@ class Anime extends \app\core\Model {
 		return $STMT->fetchAll();
     }
 
-     // get one user by their username.
+     // get anime by name
      public function getAnimeByName($anime_name) {
         $SQL = 'SELECT * FROM anime WHERE anime_name = :anime_name';
 		$STMT = self::$_connection->prepare($SQL);
@@ -63,6 +63,16 @@ class Anime extends \app\core\Model {
 		return $STMT->fetch();
     }
 
+    // get anime by id
+    public function getAnime($anime_id) {
+        $SQL = 'SELECT * FROM anime WHERE anime_id = :anime_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['anime_id' => $anime_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
+		return $STMT->fetch();
+    }
+
+    // add an anime to the database.
     public function addAnime() {
         $SQL = "INSERT INTO anime(anime_name, anime_creator, anime_date, anime_description, anime_episodes, anime_status, anime_studio, anime_genre, picture_link)
             VALUES (:anime_name, :anime_creator, :anime_date, :anime_description, :anime_episodes, :anime_status, :anime_studio, :anime_genre, :picture_link)";
@@ -70,5 +80,12 @@ class Anime extends \app\core\Model {
         $STMT->execute(["anime_name" => $this->anime_name, "anime_creator" => $this->anime_creator, "anime_date" => $this->anime_date, "anime_description" => $this->anime_description, 
             "anime_episodes" => $this->anime_episodes, "anime_status" => $this->anime_status, "anime_studio" => $this->anime_studio, "anime_genre" => $this->anime_genre,
             "picture_link" => $this->picture_link]);
+    }
+
+    // method to delete an anime using the anime id.
+    public function deleteAnime() {
+        $SQL = "DELETE FROM anime WHERE anime_id = :anime_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["anime_id" => $this->anime_id]);
     }
 }

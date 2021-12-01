@@ -124,11 +124,25 @@ class Anime extends \app\core\Controller {
             $anime->anime_studio = $animeStudio;
             $anime->anime_genre = $animeGenre;
             $anime->addAnime();
-            header("location:".BASE."Admin/adminIndex");
+            header("location:".BASE."User/adminIndex");
         }
 
-
-
         $this->view("Anime/addAnime", ["error" => "", "image" => "/uploads/Rectangle_157.png", "user" => $user, "profile" => $profile]);
+    }
+
+    #[\app\filters\Regular]
+    public function adminAnimePage($anime_id) {
+        $anime = new \app\models\Anime();
+        $anime = $anime->getAnime($anime_id);
+
+        $this->view("Anime/adminAnimePage", $anime);
+    }
+
+    #[\app\filters\Admin]
+    public function regularAnimePage($name) {
+        $anime = new \app\models\Anime();
+        $anime = $anime->getAnimeByName($name);
+
+        $this->view("Anime/regularAnimePage", $anime);
     }
 }

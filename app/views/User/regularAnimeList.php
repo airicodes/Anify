@@ -104,11 +104,15 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light"href=""><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-light"href="">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
+                </li>
+                <li class="nav-item">
+                    <!-- To go to the regular browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
