@@ -192,7 +192,7 @@
      <!-- Footer -->
      <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
     

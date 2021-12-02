@@ -134,9 +134,9 @@
                         <!-- The link that goes to the profile page -->
                         <a class="nav-link text-light"href=""> 
                             <!-- user profile picture -->
-                            <img id="smallProfileIcon" class="rounded-circle" src="/images/default.png" alt="">
+                            <img id="smallProfileIcon" class="rounded-circle" src="<?=$data["profile"]->filename;?>" alt="">
                             <!-- the username -->
-                            <p class="mt-2">jeremie gaychon</p>
+                            <p class="mt-2"><?=$data["user"]->username;?></p>
                         </a>
                     </li>
                 </div>
@@ -155,42 +155,40 @@
                         <!-- The column for the image, anime title, and add button -->
                         <div class="d-flex flex-column col-4 mt-3">
                             <!-- The image of the anime -->
-                            <img id="animeImage" src="/background/durara.jpg" alt="">
+                            <img id="animeImage" src="<?=$data['anime']->picture_link;?>" alt="">
                             <!-- The anime title -->
-                            <h2 class="text-center text-light mt-2">Durara</h2>
+                            <h2 class="text-center text-light mt-2"><?=$data["anime"]->anime_name;?></h2>
                             <!-- The add anime button -->
-                            <button id="addAnimeButton" class="btn btn-outline-info text-light align-self-center mt-3">Add  Anime</button>
+                            <form action="" method="POST">
+                                <button name="action" id="addAnimeButton" class="btn btn-outline-info text-light align-self-center mt-3">Add to list</button>
+                            </form>
                         </div>
 
                         <!-- The column for the anime description -->
                         <div class="d-flex flex-column col-8 mt-3">
                             <h2 class="text-secondary">Description</h2>
                             <p class="text-light">
-                            In Tokyo's downtown district of Ikebukuro, amidst many strange rumors and warnings of anonymous gangs and 
-                            dangerous occupants, one urban legend stands out above the rest—the existence of a headless "Black Rider" who is said to be seen driving 
-                            a jet-black motorcycle through the city streets. <br> <br> Mikado Ryuugamine has always longed for the excitement of the city life, and an invitation from a 
-                            childhood friend convinces him to move to Tokyo. Witnessing the Black Rider on his first day in the city, his wishes already seem to have been granted. 
-                            But as supernatural events begin to occur, ordinary citizens like himself, along with Ikebukuro's most colorful inhabitants, are mixed up in the commotion
-                            breaking out in their city.
+                                <?php
+                                    echo "{$data['anime']->anime_description}";
+                                ?>
+                            </p>
 
                             <div class="container mt-1">
                                 <div class="row">
                                     <div id="animeAttributes" class="d-flex flex-row col">
                                         <!-- The place where to put the number of episodes -->
-                                        <h3 class="text-secondary mx-3">Episodes <br> <p class="text-center text-light">24</p> </h3>
+                                        <h3 class="text-secondary mx-3">Episodes <br> <p class="text-center text-light"><?=$data["anime"]->anime_episodes;?></p> </h3>
                                         <!-- The place where to put the genre of the anime -->
-                                        <h3 class="text-secondary mx-3">Genre <p class="text-center text-light">Action</p> </h3>
+                                        <h3 class="text-secondary mx-3">Genre <p class="text-center text-light"><?=$data["anime"]->anime_genre;?></p> </h3>
                                         <!-- The place where to put the status of an anime -->
-                                        <h3 class="text-secondary mx-3">Status <p class="text-center text-light">Finished</p> </h3>
-                                        <h3 class="text-secondary mx-3">Studio <p class="text-center text-light">Brain's Base</p> </h3>
+                                        <h3 class="text-secondary mx-3">Status <p class="text-center text-light"><?=$data["anime"]->anime_status;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Studio <p class="text-center text-light"><?=$data["anime"]->anime_studio;?></p> </h3>
                                     </div>
                                     <div id="animeAttributes" class="d-flex flex-row col mt-0">
                                         <!-- The place where to put the creator of the anime -->
-                                        <h3 class="text-secondary mx-3">Creator <br> <p class="text-center text-light">Rougo Narita</p> </h3>
-                                        <!-- The place where to put the genre of the anime -->
-                                        <h3 class="text-secondary mx-3">Start date <p class="text-center text-light">Jan, 8 2020</p> </h3>
-                                        <!-- The place where to put the status of an anime -->
-                                        <h3 class="text-secondary mx-3">End date <p class="text-center text-light">June 25,2010</p> </h3>
+                                        <h3 class="text-secondary mx-3">Creator <br> <p class="text-center text-light"><?=$data["anime"]->anime_creator;?></p> </h3>
+                                        <!-- The place where to put the date of anime -->
+                                        <h3 class="text-secondary mx-3">Start date <p class="text-center text-light"><?=$data["anime"]->anime_date;?></p> </h3>
                                     </div>
                                 </div>
                             </div>
@@ -200,11 +198,14 @@
             </div>
         </div>
     </div>
+    <center>
+        <a class="text-decoration-none text-light" href="<?=BASE?>User/regularBrowse">Go back</a>
+    </center>
 
      <!-- Footer -->
      <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
     

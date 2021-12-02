@@ -141,9 +141,9 @@
                         <!-- The link that goes to the profile page -->
                         <a class="nav-link text-light"href=""> 
                             <!-- user profile picture -->
-                            <img id="smallProfileIcon" class="rounded-circle" src="/images/default.png" alt="">
+                            <img id="smallProfileIcon" class="rounded-circle" src="<?=$data["profile"]->filename;?>" alt="">
                             <!-- the username -->
-                            <p class="mt-2">jeremie gaychon</p>
+                            <p class="mt-2"><?php echo $data["user"]->username; ?></p>
                         </a>
                     </li>
                 </div>
@@ -161,9 +161,9 @@
                         <!-- The column for the image, anime title, and add button -->
                         <div class="d-flex flex-column col-4 mt-3">
                             <!-- The image of the anime -->
-                            <img id="animeImage" src="<?=$data->picture_link;?>" alt="">
+                            <img id="animeImage" src="<?=$data["anime"]->picture_link;?>" alt="">
                             <!-- The anime title -->
-                            <h2 class="text-center text-light mt-2"><?=$data->anime_name;?></h2>
+                            <h2 class="text-center text-light mt-2"><?=$data["anime"]->anime_name;?></h2>
                             <!-- The add anime button -->
                             <form action="" method="POST">
                                 <!-- add to anime list. -->
@@ -180,7 +180,7 @@
                             <h2 class="text-secondary">Description</h2>
                             <p class="text-light">
                                 <?php
-                                    echo "$data->anime_description";
+                                    echo "{$data['anime']->anime_description}";
                                 ?>
                             </p>
 
@@ -188,18 +188,18 @@
                                 <div class="row">
                                     <div id="animeAttributes" class="d-flex flex-row col">
                                         <!-- The place where to put the number of episodes -->
-                                        <h3 class="text-secondary mx-3">Episodes <br> <p class="text-center text-light"><?=$data->anime_episodes;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Episodes <br> <p class="text-center text-light"><?=$data["anime"]->anime_episodes;?></p> </h3>
                                         <!-- The place where to put the genre of the anime -->
-                                        <h3 class="text-secondary mx-3">Genre <p class="text-center text-light"><?=$data->anime_genre;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Genre <p class="text-center text-light"><?=$data["anime"]->anime_genre;?></p> </h3>
                                         <!-- The place where to put the status of an anime -->
-                                        <h3 class="text-secondary mx-3">Status <p class="text-center text-light"><?=$data->anime_status;?></p> </h3>
-                                        <h3 class="text-secondary mx-3">Studio <p class="text-center text-light"><?=$data->anime_studio;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Status <p class="text-center text-light"><?=$data["anime"]->anime_status;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Studio <p class="text-center text-light"><?=$data["anime"]->anime_studio;?></p> </h3>
                                     </div>
                                     <div id="animeAttributes" class="d-flex flex-row col mt-0">
                                         <!-- The place where to put the creator of the anime -->
-                                        <h3 class="text-secondary mx-3">Creator <br> <p class="text-center text-light"><?=$data->anime_creator;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Creator <br> <p class="text-center text-light"><?=$data["anime"]->anime_creator;?></p> </h3>
                                         <!-- The place where to put the genre of the anime -->
-                                        <h3 class="text-secondary mx-3">Start date <p class="text-center text-light"><?=$data->anime_date;?></p> </h3>
+                                        <h3 class="text-secondary mx-3">Start date <p class="text-center text-light"><?=$data["anime"]->anime_date;?></p> </h3>
                                     </div>
                                 </div>
                             </div>
@@ -209,11 +209,13 @@
             </div>
         </div>
     </div>
-
+    <center>
+        <a class="text-decoration-none text-light" href="<?=BASE?>User/adminBrowse">Go back</a>
+    </center>
      <!-- Footer -->
      <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
     

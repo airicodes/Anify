@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-#[\app\filters\Login]
+#[\app\filters\MainPage]
 class Profile extends \app\core\Controller {
 
     public $folder='uploads/';
@@ -204,7 +204,6 @@ class Profile extends \app\core\Controller {
 
             if ($_FILES["newPicture"]["size"] < 1 && empty(trim($_POST["newBio"]))) {
                 $profile->bio = "No bio yet...";
-                $profile->filename = "/uploads/defaultAvatar.png";
                 $profile->updateProfile();
                 $user->username = $_POST["newUsername"];
                 $user->updateUsername();
@@ -249,7 +248,6 @@ class Profile extends \app\core\Controller {
                 }
             } else if ($_FILES["newPicture"]["size"] < 1 && !empty(trim($_POST["newBio"]))) {
                 $profile->bio = $_POST["newBio"];
-                $profile->filename = "/uploads/defaultAvatar.png";
                 $profile->updateProfile();
                 $user->username = $_POST["newUsername"];
                 $user->updateUsername();
@@ -336,7 +334,6 @@ class Profile extends \app\core\Controller {
 
             if ($_FILES["newPicture"]["size"] < 1 && empty(trim($_POST["newBio"]))) {
                 $profile->bio = "No bio yet...";
-                $profile->filename = "/uploads/defaultAvatar.png";
                 $profile->updateProfile();
                 $user->username = $_POST["newUsername"];
                 $user->updateUsername();
@@ -381,7 +378,6 @@ class Profile extends \app\core\Controller {
                 }
             } else if ($_FILES["newPicture"]["size"] < 1 && !empty(trim($_POST["newBio"]))) {
                 $profile->bio = $_POST["newBio"];
-                $profile->filename = "/uploads/defaultAvatar.png";
                 $profile->updateProfile();
                 $user->username = $_POST["newUsername"];
                 $user->updateUsername();

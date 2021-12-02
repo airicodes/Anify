@@ -4,11 +4,30 @@ namespace app\controllers;
 
 class Main extends \app\core\Controller {
 
+    // bring user to the index page, which is the browse of all anime.
     public function index() {
         $anime = new \app\models\Anime();
         $allAnime = $anime->getAllAnime();
 
         $this->view("Main/index", $allAnime);
+    }
+
+    // function to bring not logged in user to specific anime description
+    public function indexAnimePage($anime_id) {
+        $anime = new \app\models\Anime();
+        $anime = $anime->getAnime($anime_id);
+
+        if (isset($_POST["action"])) {
+            $_SESSION["tryingtoaccessadd"] = "yes";
+            header("location:".BASE."Main/login");
+        } else {
+            $this->view("Main/indexAnimePage", $anime);
+        }
+
+    }
+
+    public function indexAbout() {
+        $this->view("Main/indexAbout");
     }
 
     // the function to log into an account.

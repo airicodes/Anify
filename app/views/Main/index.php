@@ -136,7 +136,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <!-- To go to the about page -->
-                    <a class="nav-link text-light" href="">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>Main/indexAbout">about</a>
                 </li>
                 <li class="nav-item">
                     <!-- To go to the add anime page -->
@@ -177,7 +177,7 @@
                                     echo "<tr>
                                             <td><img id='animeImage' src='$anime->picture_link' alt=''></td>
                                             <!-- Anime Title -->
-                                            <td id='animeTitle'><a href=''>$anime->anime_name</a></td>
+                                            <td id='animeTitle'><a href='/Main/indexAnimePage/$anime->anime_id'>$anime->anime_name</a></td>
                                         </tr>";
                                 }
                                 ?>
@@ -192,7 +192,7 @@
      <!-- Footer -->
      <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
     

@@ -173,7 +173,7 @@
                                     echo "<tr>
                                             <td><img id='animeImage' src='$anime->picture_link' alt=''></td>
                                             <!-- Anime Title -->
-                                            <td id='animeTitle'><a href='/Anime/regularAnimePage/$anime->anime_name'>$anime->anime_name</a></td>
+                                            <td id='animeTitle'><a href='/Anime/regularAnimePage/$anime->anime_id'>$anime->anime_name</a></td>
                                         </tr>";
                                 }
                                 ?>
@@ -188,7 +188,7 @@
      <!-- Footer -->
      <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
     

@@ -158,6 +158,13 @@
                     unset($_SESSION["deletedUser"]);
                 }
             ?>
+    
+    <?php
+    if (isset($_SESSION["tryingtoaccessadd"])) {
+            $data = "Must login to access add feature";
+            unset($_SESSION["tryingtoaccessadd"]);
+        }
+    ?>
 
     <img id="problemSolversImage" class="mt-2 mx-1" src="\app/background/ProblemSolversLogo.png" alt="">
     

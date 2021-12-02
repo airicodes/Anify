@@ -7,7 +7,7 @@ require_once "PHPMailer/PHPMailer.php";
 require_once "PHPMailer/SMTP.php";
 require_once "PHPMailer/Exception.php";
 
-#[\app\filters\Login]
+#[\app\filters\MainPage]
 #[\app\filters\ProfileCheck]
 class User extends \app\core\Controller {
 

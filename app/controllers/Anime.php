@@ -134,15 +134,23 @@ class Anime extends \app\core\Controller {
     public function adminAnimePage($anime_id) {
         $anime = new \app\models\Anime();
         $anime = $anime->getAnime($anime_id);
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
 
-        $this->view("Anime/adminAnimePage", $anime);
+        $this->view("Anime/adminAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
     }
 
     #[\app\filters\Admin]
-    public function regularAnimePage($name) {
+    public function regularAnimePage($anime_id) {
         $anime = new \app\models\Anime();
-        $anime = $anime->getAnimeByName($name);
+        $anime = $anime->getAnime($anime_id);
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
 
-        $this->view("Anime/regularAnimePage", $anime);
+        $this->view("Anime/regularAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
     }
 }

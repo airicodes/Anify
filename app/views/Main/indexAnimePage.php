@@ -104,12 +104,20 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="ify">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>Main/index"><h2>An<b id="ify">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <!-- To go to the about page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>Main/indexAbout">about</a>
+                </li>
+                <li class="nav-item">
+                    <!-- To go to the about page -->
+                    <a class="nav-link text-light" href="<?=BASE?>Main/index">browse</a>
+                </li>
+                <li class="nav-item">
+                    <!-- To go to the add anime page -->
+                    <a class="nav-link text-light" href="<?=BASE?>Main/login">login</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -123,21 +131,6 @@
                 <!-- The input of the search. This is where the user input the things he wants to search -->
                 <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
-            
-            <!-- The small profile box that goes to the profile page when clicked -->
-            <ul class="navbar-nav d-flex flex-row-reverse">
-                <div id="smallProfileBox">
-                    <li class="nav-item"> 
-                        <!-- The link that goes to the profile page -->
-                        <a class="nav-link text-light"href=""> 
-                            <!-- user profile picture -->
-                            <img id="smallProfileIcon" class="rounded-circle" src="/images/default.png" alt="">
-                            <!-- the username -->
-                            <p class="mt-2">jeremie gaychon</p>
-                        </a>
-                    </li>
-                </div>
-            </ul>
             
         </div>
     </nav>
@@ -156,7 +149,7 @@
                             <h2 class="text-center text-light mt-2"><?=$data->anime_name;?></h2>
                             <!-- The add anime button -->
                             <form action="" method="POST">
-                                <button name="add to list" type="submit" id="addAnimeButton" class="btn btn-outline-info text-light align-self-center mt-3">Add</button>
+                                <button name="action" type="submit" id="addAnimeButton" class="btn btn-outline-info text-light align-self-center mt-3">Add to list</button>
                             </form>
                         </div>
 
@@ -194,11 +187,14 @@
             </div>
         </div>
     </div>
+    <center>
+        <a class="text-decoration-none text-light" href="<?=BASE?>Main/index">Go back</a>
+    </center>
 
      <!-- Footer -->
      <footer>
         <div class="text-end mt-5 text-light">
-            <img id="logo" src="/background/ProblemSolversLogo.png" alt="">
+            <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
     
