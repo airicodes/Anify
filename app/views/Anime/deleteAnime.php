@@ -234,7 +234,7 @@
                                 <h1 class="text-light">Delete Anime</h1>
                                 <h2 class="text-light">Are you sure?</h1>
                                 <br>
-                                <h3 class="text-light">By clicking Delete, you are agreeing to permanently deleting <?php echo $data->anime_name ?>. It is impossible to retrieve after completing this action...</h3>
+                                <h3 class="text-light">By clicking Delete, you are agreeing to permanently deleting <span style="color:red;"><?php echo $data->anime_name ?></span>. It is impossible to retrieve after completing this action...</h3>
                             </div>
                         </div>
                     </div>

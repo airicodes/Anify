@@ -22,30 +22,6 @@ class Anime extends \app\core\Model {
         parent::__construct();
     }
 
-    // // insert a user to the database.
-    // public function insertAnime() {
-	// 	$this->hash = password_hash($this->password, PASSWORD_DEFAULT);
-	// 	$SQL = 'INSERT INTO anime(anime_name, anime_creator, anime_date,
-    //     anime_description,
-    //     anime_episodes,
-    //     anime_status,
-    //     anime_rating,
-    //     anime_studio,
-    //     anime_genre,
-    //     picture_link) VALUES (:anime_name, :anime_creator, :anime_date,
-    //     :anime_description,
-    //     :anime_episodes,
-    //     :anime_status,
-    //     :anime_rating,
-    //     :anime_studio,
-    //     :anime_genre,
-    //     :picture_link)';
-	// 	$STMT = self::$_connection->prepare($SQL);
-	// 	$STMT->execute(['anime_name'=>$this->anime_name,'anime_creator'=>$this->anime_creator, 'anime_description'=>$this->anime_description,
-    //     'anime_episodes'=>$this->anime_episodes, 'anime_status'=>$this->anime_status, 'anime_rating'=>$this->anime_rating, 'anime_studio'=>$this->anime_studio,
-    //     'anime_genre'=>$this->anime_genre, 'picture_link'=>$this->picture_link]);
-	// }
-
     // get all of the animes in the database.
     public function getAllAnime() {
         $SQL = "SELECT * FROM anime";
@@ -87,5 +63,15 @@ class Anime extends \app\core\Model {
         $SQL = "DELETE FROM anime WHERE anime_id = :anime_id";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(["anime_id" => $this->anime_id]);
+    }
+
+    public function updateAnime() {
+        $SQL = "UPDATE anime SET anime_name = :anime_name, anime_creator = :anime_creator, anime_date = :anime_date, anime_description = :anime_description,
+            anime_episodes = :anime_episodes, anime_status = :anime_status, anime_studio = :anime_studio, anime_genre = :anime_genre, picture_link = :picture_link
+            WHERE anime_id = :anime_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["anime_name" => $this->anime_name, "anime_creator" => $this->anime_creator, "anime_date" => $this->anime_date, "anime_description" => $this->anime_description, 
+            "anime_episodes" => $this->anime_episodes, "anime_status" => $this->anime_status, "anime_studio" => $this->anime_studio, "anime_genre" => $this->anime_genre,
+            "picture_link" => $this->picture_link, "anime_id" => $this->anime_id]);
     }
 }

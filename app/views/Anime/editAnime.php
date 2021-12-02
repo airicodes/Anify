@@ -164,7 +164,6 @@
         </div>
     </nav>
 
-
     <div class="container">
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="row">
@@ -173,43 +172,36 @@
                     <div class="container">
                         <div class="row">
                             <div class="d-flex flex-column col-4 mt-3">
-                                <?php
-                                if ($data["image"] == null) {
-                                    $image = "/uploads/Rectangle_157.png";
-                                } else {
-                                    $image = $data["image"];
-                                }
-                                ?>
-                                <img id="theImage" src="<?=$image?>" alt="">
+                                <img id="theImage" src="<?=$data["anime"]->picture_link;?>" alt="">
                                 <!-- The image of the anime -->
                                 <input class="mt-2 text-light" type="file" name="newPicture">
                                 <!-- The anime title -->
-                                <input class="mt-3" type="text" name="animeTitle" placeholder="Anime name">
+                                <input class="mt-3" type="text" name="newAnimeTitle" value="<?=$data["anime"]->anime_name;?>">
                             </div>
 
 
                             <div class="d-flex flex-column col-8 mt-3">
                                 <h2 class="text-secondary">Description</h2>
                                 <!-- Where the admin input the description of the anime -->
-                                <textarea name="animeDescription" id="" cols="30" rows="10" style="resize: none;"></textarea>
+                                <textarea name="newAnimeDescription" id="" cols="30" rows="10" style="resize: none;"><?=$data["anime"]->anime_description;?></textarea>
 
                                 <div class="container mt-1">
                                     <div class="row">
                                         <div id="animeAttributes" class="d-flex flex-row col mt-5">
                                             <!-- The place where the admin input the number of anime's episode -->
-                                            <h3 class="text-secondary mx-3">Episodes <br>  <input type="number" min="1" name="animeEpisodes"></h3>
+                                            <h3 class="text-secondary mx-3">Episodes <br>  <input type="number" min="1" name="newAnimeEpisodes" value="<?=$data["anime"]->anime_episodes;?>"></h3>
                                             <!-- The place where the admin input the genre of an anime -->
-                                            <h3 class="text-secondary mx-3">Genre   <input type="text" name="animeGenre"> </h3>
+                                            <h3 class="text-secondary mx-3">Genre   <input type="text" name="newAnimeGenre" value="<?=$data["anime"]->anime_genre;?>"> </h3>
                                             <!-- The place where the admin input the status of an anime -->
-                                            <h3 class="text-secondary mx-3">Status <input type="text" name="animeStatus"> </h3>
+                                            <h3 class="text-secondary mx-3">Status <input type="text" name="newAnimeStatus" value="<?=$data["anime"]->anime_status;?>"> </h3>
                                             <!-- The place where the admin input the studio of an anime -->
-                                            <h3 class="text-secondary mx-3">Studio <input type="text" name="animeStudio"> </h3>
+                                            <h3 class="text-secondary mx-3">Studio <input type="text" name="newAnimeStudio" value="<?=$data["anime"]->anime_studio;?>"> </h3>
                                         </div>
                                         <div id="animeAttributes" class="d-flex flex-row col mt-0">
                                             <!-- The place where the admin input the creator of an anime -->
-                                            <h3 class="text-secondary mx-3">Creator <br> <input type="text" name="animeCreator" style="width: 100%"> </h3>
+                                            <h3 class="text-secondary mx-3">Creator <br> <input type="text" name="newAnimeCreator" style="width: 100%" value="<?=$data["anime"]->anime_creator;?>"> </h3>
                                             <!-- The place where the admin input the start date of an anime -->
-                                            <h3 class="text-secondary mx-3">Start date <br><input type="date" name="animeDate" style="width:100%;"> </h3>
+                                            <h3 class="text-secondary mx-3">Start date <br><input type="date" name="newAnimeDate" style="width:100%;" value="<?=$data["anime"]->anime_date;?>"> </h3>
                                         </div>
                                     </div>
                                 </div>
