@@ -87,7 +87,7 @@
             opacity: 80%;
             height: 90px;
             text-align: center;
-            margin-left: 300px;
+            margin-left: 460px;
             border-radius: 25px;
         }
 
@@ -154,6 +154,21 @@
                 <!-- The input of the search. This is where the user input the things he wants to search -->
                 <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
+
+            <!-- The small profile box that goes to the profile page when clicked -->
+            <ul class="navbar-nav d-flex flex-row-reverse">
+                <div id="smallProfileBox">
+                    <li class="nav-item"> 
+                        <!-- The link that goes to the profile page -->
+                        <a class="nav-link text-light" href=""> 
+                            <!-- user profile picture -->
+                            <img id="smallProfileIcon" class="rounded-circle" src="<?=$data["profile"]->filename;?>" alt="">
+                            <!-- the username -->
+                            <p class="mt-2"><?=$data["user"]->username;?></p>
+                        </a>
+                    </li>
+                </div>
+            </ul>
             
         </div>
     </nav>
@@ -169,7 +184,7 @@
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
                                 <?php
-                                foreach ($data as $anime) {
+                                foreach ($data["anime"] as $anime) {
                                     echo "<tr>
                                             <td><img id='animeImage' src='$anime->picture_link' alt=''></td>
                                             <!-- Anime Title -->

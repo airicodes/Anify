@@ -130,6 +130,7 @@ class Anime extends \app\core\Controller {
         $this->view("Anime/addAnime", ["error" => "", "image" => "/uploads/Rectangle_157.png", "user" => $user, "profile" => $profile]);
     }
 
+    // the anime page. where a specific anime is shown to an admin with add, edit, and delete options.
     #[\app\filters\Regular]
     public function adminAnimePage($anime_id) {
         $anime = new \app\models\Anime();
@@ -139,9 +140,26 @@ class Anime extends \app\core\Controller {
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
 
+        // this code needs to be implemented.
+        if (isset($_POST["add"])) {
+            $this->view("Anime/adminAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
+            return;
+        }
+
+        // editing an anime.
+        if (isset($_POST["edit"])) {
+            header("location:".BASE."Anime/editAnime/$anime_id");
+        }
+
+        if (isset($_POST["delete"])) {
+            header("location:".BASE."Anime/deleteAnime/$anime_id");
+        }
+
+
         $this->view("Anime/adminAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
     }
 
+    // The anime page for a regular. shows the add to list item.
     #[\app\filters\Admin]
     public function regularAnimePage($anime_id) {
         $anime = new \app\models\Anime();
@@ -152,5 +170,29 @@ class Anime extends \app\core\Controller {
         $profile = $profile->getProfile($_SESSION["user_id"]);
 
         $this->view("Anime/regularAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
+    }
+
+    #[\app\filters\Regular]
+    public function deleteAnime($anime_id) {
+        $anime = new \app\models\Anime();
+        $anime = $anime->getAnime($anime_id);
+
+        if (isset($_POST["cancel"])) {
+            header("location:".BASE."Anime/adminAnimePage/$anime->anime_id");
+        }
+        if (isset($_POST["delete"])) {
+            $anime->deleteAnime();
+            header("location:".BASE."User/adminBrowse");
+        }
+        
+        $this->view("Anime/deleteAnime", $anime);
+    }
+
+    #[\app\filters\Regular]
+    public function editAnime($anime_id) {
+        $anime = new \app\models\Anime();
+        $anime = $anime->getAnime($anime_id);
+
+        $this->view("Anime/editAnime", $anime);
     }
 }

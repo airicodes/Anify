@@ -284,18 +284,26 @@ class User extends \app\core\Controller {
     // method to bring admin to their browse page
     #[\app\filters\Regular]
     public function adminBrowse() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
         $anime = new \app\models\Anime();
         $allAnime = $anime->getAllAnime();
 
-        $this->view("User/adminBrowse", $allAnime);
+        $this->view("User/adminBrowse", ["anime" => $allAnime, "user" => $user, "profile" => $profile]);
     }
 
     // method to bring regulars to their browse page
     #[\app\filters\Admin]
     public function regularBrowse() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
         $anime = new \app\models\Anime();
         $allAnime = $anime->getAllAnime();
 
-        $this->view("User/regularBrowse", $allAnime);
+        $this->view("User/regularBrowse", ["anime" => $allAnime, "user" => $user, "profile" => $profile]);
     }
 }

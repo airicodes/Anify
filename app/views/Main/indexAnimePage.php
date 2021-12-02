@@ -197,6 +197,6 @@
             <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
-    
+
 </body>
 </html>
