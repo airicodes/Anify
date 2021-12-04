@@ -93,7 +93,8 @@ class Anime extends \app\core\Model {
     }
 
     public function getAnimeFromList($anime_id, $animelist_id) {
-        $SQL = 'SELECT * FROM anime_in_list WHERE anime_id = :anime_id AND animelist_id = :animelist_id';
+        $SQL = 'SELECT * FROM anime_in_list LEFT JOIN anime
+        ON anime_in_list.anime_id = anime.anime_id WHERE animelist_id = :animelist_id AND anime.anime_id = :anime_id';
 		$STMT = self::$_connection->prepare($SQL);
 		$STMT->execute(['anime_id' => $anime_id, 'animelist_id'=>$animelist_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
@@ -124,6 +125,14 @@ class Anime extends \app\core\Model {
 		$STMT->execute(['animelist_id'=>$animelist_id]);
 		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
 		return $STMT->fetchAll();
+    }
+    
+    public function updateAnimeFromList($animelist_id, $anime_id, $watching_status, $rating) {
+        $SQL = 'UPDATE anime_in_list SET watching_status = :watching_status, rating = :rating WHERE animelist_id = :animelist_id
+        AND anime_id = :anime_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['animelist_id'=>$animelist_id, 'anime_id'=>$anime_id, 'watching_status'=>$watching_status,
+        'rating'=>$rating]);
     }
 
 }

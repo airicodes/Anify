@@ -229,10 +229,10 @@
     <label for="status" style='color: white;'>Status</label>
   <select name="status" id="status">
   <option value="Planning">Planning</option>
-  <option value="watching">Watching</option>
-    <option value="finished">Finished</option>
-    <option value="paused">Paused</option>
-    <option value="dropped">Dropped</option>
+  <option value="Watching">Watching</option>
+    <option value="Finished">Finished</option>
+    <option value="Paused">Paused</option>
+    <option value="Dropped">Dropped</option>
   </select>
   <br><br>
     <button type="submit" class="btn" name="action">Confirm</button>

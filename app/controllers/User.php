@@ -338,4 +338,22 @@ class User extends \app\core\Controller {
         }
         header("location:".BASE."User/regularAnimeList");
     }
+
+    public function regularEditAnimeList($anime_id) {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
+        if (isset($_POST['action'])) {
+            $anime->UpdateAnimeFromList($animelist->animelist_id, $anime->anime_id, $_POST['status'], $_POST['rating']);
+            header("location:".BASE."User/regularAnimeList");
+            return;
+        }
+        $this->view("User/regularEditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
+    }
+
 }

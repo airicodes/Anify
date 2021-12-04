@@ -105,6 +105,52 @@
         .table-hover tbody tr:hover th {
             color: #E168BF;
         }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  border: 3px solid black;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 2px;
+  margin-bottom:10px;
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -213,19 +259,48 @@
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
                                         <?php
                                         $star = "";
-                                             foreach ($data["list"] as $anime) {
-                                                if ($anime->favorite == 'y') {
-                                                    $star =  "/app/background/withstar.png";
-                                                } else {
-                                                    $star =  "/app/background/nostar.png";
-                                                }
-                                               echo "<tr><td><a href=''>" . $anime->anime_name . "</td>
-                                                <td><a href=''>" . $anime->watching_status . "</a></td>
-                                                <td><a href=''>" . $anime->rating . "</a></td>
-                                                <td><a href='/User/addFavAnime/" . $anime->anime_id . "'><img src='" .
-                                                $star . "' alt=''></a></td>
-                                                            </tr>";
-                                            }
+                                        foreach ($data["list"] as $anime) {
+                                           if ($anime->favorite == 'y') {
+                                               $star =  "/app/background/withstar.png";
+                                           } else {
+                                               $star =  "/app/background/nostar.png";
+                                           }
+                                          echo "<tr><td><a href='/User/regularEditAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
+                                           <td ><a href='/User/regularEditAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
+                                           <td><a  href='/User/regularEditAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
+                                           <td><a href='/User/addFavAnime/" . $anime->anime_id . "'><img src='" .
+                                           $star . "' alt=''></a></td>
+                                                       </tr>";
+
+                                           echo "<div class='form-popup' id='myForm'>
+                                           <form action='' class='form-container' method='POST'>
+                                             <label for='status' style='color: white;'>Status</label>
+                                           <select name='status' id='status'>
+                                           <option value='Planning'>Planning</option>
+                                           <option value='watching'>Watching</option>
+                                             <option value='finished'>Finished</option>
+                                             <option value='paused'>Paused</option>
+                                             <option value='dropped'>Dropped</option>
+                                           </select>
+                                           <label for='rating' style='color: white;'>Status</label>
+                                           <select name='rating' id='rating'>
+                                             <option value='$anime->rating' selected>$anime->rating</option>
+                                             <option value='1'>0</option>
+                                             <option value='2'>1</option>
+                                             <option value='3'>2</option>
+                                             <option value='4'>3</option>
+                                             <option value='5'>5</option>
+                                             <option value='6'>6</option>
+                                             <option value='7'>7</option>
+                                             <option value='8'>8</option>
+                                             <option value='9'>9</option>
+                                             <option value='10'>10</option>
+                                           </select>
+                                           <br><br>
+                                             <button type='submit' class='btn' name='action'>Confirm</button>
+                                           </form>
+                                         </div>";
+                                       }
                                         ?>
                                         </tbody>
                                     </table>
@@ -243,10 +318,10 @@
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
                                             <?php
                                              foreach ($data["favlist"] as $favanime) {
-                                               echo "<tr><td><a href=''>" . $favanime->anime_name . "</td>
-                                                <td><a href=''>" . $favanime->watching_status . "</a></td>
-                                                <td><a href=''>" . $favanime->rating . "</a></td>
-                                                <td><a href=''><img src='\app/backgrounds/nostar.png' alt=''></a></td>
+                                               echo "<tr><td><p href=''>" . $favanime->anime_name . "</p></td>
+                                                <td><p href=''>" . $favanime->watching_status . "</p></td>
+                                                <td><p href=''>" . $favanime->rating . "</p></td>
+                                                <td><p href=''><img src='\app/backgrounds/nostar.png' alt=''></p></td>
                                                             </tr>";
                                             }
                                         ?>
@@ -267,6 +342,15 @@
             <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
+    <script>
+    function openForm() {
+ if (document.getElementById("myForm").style.display == "block") {
+    document.getElementById("myForm").style.display = "none";
+ } else {
+    document.getElementById("myForm").style.display = "block";
+ }
+}
+</script>
 </body>
 
 </html>
