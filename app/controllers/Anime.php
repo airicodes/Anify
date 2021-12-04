@@ -164,10 +164,24 @@ class Anime extends \app\core\Controller {
     public function regularAnimePage($anime_id) {
         $anime = new \app\models\Anime();
         $anime = $anime->getAnime($anime_id);
+        $animelist = new \app\models\Animelist();
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
+        $favorite = 'n';
+
+        if (isset($_POST['action'])) {
+            if (!$anime->getAnimeFromList($anime->anime_id, $animelist->animelist_id)) {
+                $anime->addAnimeToList($anime->anime_id, $animelist->animelist_id, $_POST['status'], $favorite);
+                $this->view("Anime/regularAnimePage", ["anime" => $anime, "response" => "added", "user" => $user, "profile" => $profile]);
+                return;
+            } else {
+                $this->view("Anime/regularAnimePage", ["anime" => $anime, "response" => "error", "user" => $user, "profile" => $profile]);
+                return;
+            }
+        }
 
         $this->view("Anime/regularAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
     }
@@ -326,4 +340,5 @@ class Anime extends \app\core\Controller {
 
         $this->view("Anime/editAnime", ["error" => "", "anime" => $anime, "user" => $user, "profile" => $profile]);
     }
+
 }

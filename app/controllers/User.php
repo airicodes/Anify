@@ -251,12 +251,18 @@ class User extends \app\core\Controller {
     // method to go to the regular user's anime list page
     #[\app\filters\Admin]
     public function regularAnimeList() {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
+        $allAnimeFromList = $anime->getAllAnimeFromList($animelist->animelist_id);
+        $allFavAnimeFromList = $anime->getAllFavAnimeFromList($animelist->animelist_id);
 
-        $this->view("User/regularAnimeList", ["user" => $user, "profile" => $profile]);
+        $this->view("User/regularAnimeList", ["user" => $user, "profile" => $profile, "list"=> $allAnimeFromList,
+    "favlist" => $allFavAnimeFromList]);
     }
 
     // method to go to the admin's messages page.
@@ -305,5 +311,31 @@ class User extends \app\core\Controller {
         $allAnime = $anime->getAllAnime();
 
         $this->view("User/regularBrowse", ["anime" => $allAnime, "user" => $user, "profile" => $profile]);
+    }
+
+    #[\app\filters\Admin]
+    public function addFavAnime($anime_id) {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
+        $allAnimeFromList = $anime->getAllAnimeFromList($animelist->animelist_id);
+        $allFavAnimeFromList = $anime->getAllFavAnimeFromList($animelist->animelist_id);
+        foreach ($allAnimeFromList as $animeInList) {
+            if ($anime_id == $animeInList->anime_id) {
+                if ($animeInList->favorite == 'n') {
+                    $fav = 'y';
+                    $anime->updateFavAnimeFromList($animelist->animelist_id, $animeInList->anime_id, $fav);
+                } else {
+                    $fav = 'n';
+                    $anime->updateFavAnimeFromList($animelist->animelist_id, $animeInList->anime_id, $fav);
+                }
+            }
+        }
+        header("location:".BASE."User/regularAnimeList");
     }
 }

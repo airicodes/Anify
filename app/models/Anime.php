@@ -12,6 +12,7 @@ class Anime extends \app\core\Model {
     public $anime_description;
     public $anime_episodes;
     public $anime_status;
+    public $favorite;
     public $anime_rating;
     public $anime_studio;
     public $anime_genre;
@@ -74,4 +75,55 @@ class Anime extends \app\core\Model {
             "anime_episodes" => $this->anime_episodes, "anime_status" => $this->anime_status, "anime_studio" => $this->anime_studio, "anime_genre" => $this->anime_genre,
             "picture_link" => $this->picture_link, "anime_id" => $this->anime_id]);
     }
+
+    public function addAnimeToList($anime_id, $animelist_id, $status, $favorite) {
+        $SQL = "INSERT INTO anime_in_list(anime_id, animelist_id, watching_status, favorite)
+            VALUES (:anime_id, :animelist_id, :watching_status, :favorite)";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["anime_id"=>$anime_id, "animelist_id"=>$animelist_id, "watching_status"=>$status,
+        "favorite"=>$favorite]);
+    }
+
+    public function getAnimeList($anime_id) {
+        $SQL = 'SELECT * FROM anime_list WHERE user_id = :user_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['anime_id' => $anime_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
+		return $STMT->fetch();
+    }
+
+    public function getAnimeFromList($anime_id, $animelist_id) {
+        $SQL = 'SELECT * FROM anime_in_list WHERE anime_id = :anime_id AND animelist_id = :animelist_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['anime_id' => $anime_id, 'animelist_id'=>$animelist_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
+		return $STMT->fetch();
+    }
+
+    public function getAllAnimeFromList($animelist_id) {
+        $SQL = 'SELECT DISTINCT * FROM anime_in_list LEFT JOIN anime ON anime_in_list.anime_id =
+        anime.anime_id WHERE anime_in_list.animelist_id = :animelist_id GROUP BY anime.anime_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['animelist_id'=>$animelist_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
+		return $STMT->fetchAll();
+    }
+
+    public function updateFavAnimeFromList($animelist_id, $anime_id, $favorite) {
+        $SQL = 'UPDATE anime_in_list SET favorite = :favorite WHERE animelist_id = :animelist_id
+        AND anime_id = :anime_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['animelist_id'=>$animelist_id, 'anime_id'=>$anime_id, 'favorite'=>$favorite]);
+    }
+
+    public function getAllFavAnimeFromList($animelist_id) {
+        $SQL = 'SELECT DISTINCT * FROM anime_in_list LEFT JOIN anime ON anime_in_list.anime_id =
+        anime.anime_id WHERE anime_in_list.animelist_id = :animelist_id AND 
+        anime_in_list.favorite = "y" GROUP BY anime.anime_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['animelist_id'=>$animelist_id]);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, 'app\\models\\Anime');
+		return $STMT->fetchAll();
+    }
+
 }

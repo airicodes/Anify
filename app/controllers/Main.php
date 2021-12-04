@@ -4,6 +4,7 @@ namespace app\controllers;
 
 class Main extends \app\core\Controller {
 
+    #[\app\filters\SessionCheck]
     // bring user to the index page, which is the browse of all anime.
     public function index() {
         $anime = new \app\models\Anime();
@@ -12,6 +13,7 @@ class Main extends \app\core\Controller {
         $this->view("Main/index", $allAnime);
     }
 
+    #[\app\filters\SessionCheck]
     // function to bring not logged in user to specific anime description
     public function indexAnimePage($anime_id) {
         $anime = new \app\models\Anime();
@@ -26,6 +28,7 @@ class Main extends \app\core\Controller {
 
     }
 
+    #[\app\filters\SessionCheck]
     public function indexAbout() {
         $this->view("Main/indexAbout");
     }

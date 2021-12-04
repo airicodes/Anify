@@ -59,6 +59,8 @@ class Profile extends \app\core\Controller {
                 $profile->bio = "No bio yet...";
                 $profile->filename = "/uploads/defaultAvatar.png";
                 $profile->insertProfile();
+                $animelist = new \app\models\Animelist();
+                $animelist->insertUserAL($_SESSION["user_id"]);
                 if ($_SESSION["role"] == "admin") {
                     header("location:".BASE."User/adminIndex");
                 } else if ($_SESSION["role"] == "regular") {
@@ -96,6 +98,8 @@ class Profile extends \app\core\Controller {
                         $profile->bio = $_POST["bio"];
                     }
                     $profile->insertProfile();
+                    $animelist = new \app\models\Animelist();
+                    $animelist->insertUserAL($_SESSION["user_id"]);
                     if ($_SESSION["role"] == "admin") {
                         header("location:".BASE."User/adminIndex");
                     } else if ($_SESSION["role"] == "regular") {
@@ -109,6 +113,8 @@ class Profile extends \app\core\Controller {
                 $profile->bio = $_POST["bio"];
                 $profile->filename = "/uploads/defaultAvatar.png";
                 $profile->insertProfile();
+                $animelist = new \app\models\Animelist();
+                $animelist->insertUserAL($_SESSION["user_id"]);
                 if ($_SESSION["role"] == "admin") {
                     header("location:".BASE."User/adminIndex");
                 } else if ($_SESSION["role"] == "regular") {
