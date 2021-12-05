@@ -227,6 +227,9 @@ class User extends \app\core\Controller {
     public function adminDeleteAccount() {
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
+
+        $profilePost = new \app\models\ProfilePost();
+        $posts = $profilePost->getAllPost($_SESSION["user_id"]);
         
         // if cancel is pressed, user is sent back to their index page.
         if (isset($_POST["cancel"])) {
@@ -234,7 +237,7 @@ class User extends \app\core\Controller {
             $profile = new \app\models\Profile();
             $profile = $profile->getProfile($_SESSION["user_id"]);
 
-            $this->view("User/adminIndex", ["user" => $user, "profile" => $profile]);
+            $this->view("User/adminIndex", ["user" => $user, "profile" => $profile, "posts" => $posts, "error" => ""]);
             return;
         }
 
@@ -256,13 +259,16 @@ class User extends \app\core\Controller {
     public function regularDeleteAccount() {
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
+
+        $profilePost = new \app\models\ProfilePost();
+        $posts = $profilePost->getAllPost($_SESSION["user_id"]);
         
         if (isset($_POST["cancel"])) {
 
             $profile = new \app\models\Profile();
             $profile = $profile->getProfile($_SESSION["user_id"]);
 
-            $this->view("User/regularIndex", ["user" => $user, "profile" => $profile]);
+            $this->view("User/regularIndex", ["user" => $user, "profile" => $profile, "error" => "", "posts" => $posts]);
             return;
         }
 

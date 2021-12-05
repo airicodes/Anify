@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 04, 2021 at 08:57 PM
+-- Host: localhost
+-- Generation Time: Dec 05, 2021 at 07:32 AM
 -- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -72,7 +72,8 @@ CREATE TABLE `animelist` (
 
 INSERT INTO `animelist` (`animelist_id`, `user_id`) VALUES
 (1, 29),
-(3, 36);
+(3, 36),
+(4, 37);
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,9 @@ CREATE TABLE `anime_in_list` (
 INSERT INTO `anime_in_list` (`anime_id`, `animelist_id`, `rating`, `watching_status`, `favorite`) VALUES
 (1, 1, 3, 'dropped', 'y'),
 (2, 1, 10, 'finished', 'n'),
-(3, 1, 0, 'dropped', 'n');
+(3, 1, 0, 'dropped', 'n'),
+(1, 4, 0, 'Watching', 'n'),
+(3, 4, 0, 'Finished', 'n');
 
 -- --------------------------------------------------------
 
@@ -138,7 +141,8 @@ INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
 (14, 24, 'No bio yet...aaaa', '/uploads/defaultAvatar.png'),
 (18, 27, 'asdf', '/uploads/defaultAvatar.png'),
 (24, 29, 'Hi.', '/uploads/61ab0fa489f64.png'),
-(27, 36, 'No bio yet...', '/uploads/defaultAvatar.png');
+(27, 36, 'No bio yet...', '/uploads/defaultAvatar.png'),
+(28, 37, 'JERBEAR IS GAY', '/uploads/defaultAvatar.png');
 
 -- --------------------------------------------------------
 
@@ -149,9 +153,19 @@ INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
 DROP TABLE IF EXISTS `profile_post`;
 CREATE TABLE `profile_post` (
   `profile_post_id` int(11) NOT NULL,
+  `post` text NOT NULL,
   `date` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `profile_post`
+--
+
+INSERT INTO `profile_post` (`profile_post_id`, `post`, `date`, `user_id`) VALUES
+(3, 'Ali\'s the best', '2021-12-04', 37),
+(4, 'Lisa is my queen', '2021-12-04', 37),
+(5, 'Stein\'s gate is trash', '2021-12-04', 29);
 
 -- --------------------------------------------------------
 
@@ -180,8 +194,9 @@ INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
 (22, 'ass', '$2y$10$Wheen4aBXvDPeOrsT/JEn.DbtukVUPuuVhqTp5/X9DuVfUqqLzHl2', 'regular'),
 (24, 'ali1aa', '$2y$10$Pxq4cmB/8CDbPdQlIquFh.dWVJnmRoricKhoz7BAKPhPY8u1p8BCq', 'regular'),
 (27, 'aliab', '$2y$10$D0PouWBVVSiW5Ig81z/Es.Er3tpD7u1zdb2XgiXQqkDhc4/MTtmIK', 'admin'),
-(29, 'airi', '$2y$10$vAgq7KKdDWY58zjamt3N3eIYMcON3WZqjNfJUFZdTOVez0OBfp8Te', 'regular'),
-(36, 'airii', '$2y$10$zUXSie1vSXAVL3xSkNULfeuNOGEEznu8gO5r7q0BYBBkZBtTjjWoW', 'regular');
+(29, 'airi', '$2y$10$vAgq7KKdDWY58zjamt3N3eIYMcON3WZqjNfJUFZdTOVez0OBfp8Te', 'admin'),
+(36, 'airii', '$2y$10$zUXSie1vSXAVL3xSkNULfeuNOGEEznu8gO5r7q0BYBBkZBtTjjWoW', 'regular'),
+(37, 'v', '$2y$10$wBCZKRI2JmcfJtpdyMVyze3mAKXW6pUx4roz/wS97KKjR/KX.mYuu', 'regular');
 
 -- --------------------------------------------------------
 
@@ -272,7 +287,7 @@ ALTER TABLE `anime`
 -- AUTO_INCREMENT for table `animelist`
 --
 ALTER TABLE `animelist`
-  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `post_like`
@@ -284,19 +299,19 @@ ALTER TABLE `post_like`
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `profile_post`
 --
 ALTER TABLE `profile_post`
-  MODIFY `profile_post_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `profile_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `user_review`
