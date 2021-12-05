@@ -76,12 +76,12 @@ class Anime extends \app\core\Model {
             "picture_link" => $this->picture_link, "anime_id" => $this->anime_id]);
     }
 
-    public function addAnimeToList($anime_id, $animelist_id, $status, $favorite) {
-        $SQL = "INSERT INTO anime_in_list(anime_id, animelist_id, watching_status, favorite)
-            VALUES (:anime_id, :animelist_id, :watching_status, :favorite)";
+    public function addAnimeToList($anime_id, $animelist_id, $status, $favorite, $rating) {
+        $SQL = "INSERT INTO anime_in_list(anime_id, animelist_id, watching_status, favorite, rating)
+            VALUES (:anime_id, :animelist_id, :watching_status, :favorite, :rating)";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(["anime_id"=>$anime_id, "animelist_id"=>$animelist_id, "watching_status"=>$status,
-        "favorite"=>$favorite]);
+        "favorite"=>$favorite, "rating"=>$rating]);
     }
 
     public function getAnimeList($anime_id) {

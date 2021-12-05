@@ -15,24 +15,65 @@ class User extends \app\core\Controller {
     // we are getting the user so that we have the username, and we are getting the profile for pfp and bio.
     #[\app\filters\Regular]
     public function adminIndex() {
+
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
 
-        $this->view("User/adminIndex", ["user" => $user, "profile" => $profile]);
+        $profilePost = new \app\models\ProfilePost();
+        $posts = $profilePost->getAllPost($_SESSION["user_id"]);
+        if(isset($_POST["submitPost"])) {
+            $post = trim($_POST["userPost"]);
+            if (empty($post)) {
+                $this->view("User/adminIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Nothing was entered"]);
+                return;
+            } 
+            if (strlen($post) > 140) {
+                $this->view("User/adminIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Text must be 140 characters max"]);
+                return;
+            }
+            $profilePost->post = $post;
+            $profilePost->date = date('Y-m-d H:i:s');
+            $profilePost->user_id = $_SESSION["user_id"];
+            $profilePost->addPost();
+            header("location:".BASE."User/adminIndex");
+        }
+
+
+        $this->view("User/adminIndex", ["user" => $user, "profile" => $profile, "posts"=>$posts, "error"=>""]);
     }
 
     // go to regular index
     #[\app\filters\Admin]
     public function regularIndex() {
 
+        $profilePost = new \app\models\ProfilePost();
+        $posts = $profilePost->getAllPost($_SESSION["user_id"]);
+
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
+        if(isset($_POST["submitPost"])) {
+            $post = trim($_POST["userPost"]);
+            if (empty($post)) {
+                $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Nothing was entered"]);
+                return;
+            } 
+            if (strlen($post) > 140) {
+                $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Text must be 140 characters max"]);
+                return;
+            }
+            $profilePost->post = $post;
+            $profilePost->date = date('Y-m-d H:i:s');
+            $profilePost->user_id = $_SESSION["user_id"];
+            $profilePost->addPost();
+            header("location:".BASE."User/regularIndex");
+        }
 
-        $this->view("User/regularIndex", ["user" => $user, "profile" => $profile]);
+
+        $this->view("User/regularIndex", ["user" => $user, "profile" => $profile, "posts"=>$posts, "error"=>""]);
     }
 
     #[\app\filters\Regular]
@@ -356,4 +397,9 @@ class User extends \app\core\Controller {
         $this->view("User/regularEditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
     }
 
+    public function deletePost($profile_post_id) {
+        $profilePost = new \app\models\ProfilePost();
+        $profilePost->deletePost($profile_post_id);
+        header("location:".BASE."User/regularIndex");
+    }
 }

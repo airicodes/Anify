@@ -78,7 +78,7 @@
         #listBox{
             background-color: rgba(3, 5, 13, 0.61);
             width: 1000px;
-            height: max-content;
+            height: 86% ;
             border-radius: 25px;
             padding: 10px;
         }
@@ -87,6 +87,24 @@
             width: 200px;
             margin-top: 30px;
         }
+
+        #postBox {
+            height: 200px;
+            width: 300px;
+            margin-left: 74%;
+        }
+
+        /* Change the size and the position of the submit button */
+        #submitButton {
+            height: 35px;
+            margin-left: 30%;
+        }
+
+        #error_messages {
+            color: red;
+            font-weight: bold;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -167,21 +185,38 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
+                    <div style="height: 280px;overflow: scroll;">
                         <table class="table">
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
-                               <tr>
-                                   <!-- Place where to put the message and the time stamp -->
-                                 <td class="text-light"> Manns Steins gate is fucking trash <br> 22:33 PM 09/31/21</td>
-                               </tr>
-
-                               <tr>
-                                   <!-- Place where to put the message and the time stamp -->
-                                 <td class="text-light"> We love one piece!!!  <br> 22:33 PM 09/31/21 </td>
-                               </tr>
+                                <!-- Place where to put the message and the time stamp -->
+                                <?php
+                                    foreach($data["posts"] as $post) {
+                                        echo"<tr>
+                                        <td class='text-light'> $post->post <br> $post->date  Likes</td>
+                                        <td class='text-light'> 
+                                        <a href='/User/deletePost/$post->profile_post_id'>Delete</a>
+                                        <a href=''>Like</a>
+                                        </td>
+                                      </tr>";
+                                    }
+                                ?>
                             </tbody>
                         </table>
+                    </div>
+                    
+                    <div id="postBox">
+                        <h6 id="error_messages">
+                            <?php
+                                echo $data["error"];
+                            ?>
+                        </h6>
+
+                        <form class="pt-3" action="" method="POST">
+                            <textarea name="userPost" id="" cols="30" rows="3" style="resize: none;" placeholder="Enter your post here..."></textarea>
+                            <br>
+                            <button id="submitButton" name="submitPost" type="submit" class="btn btn-outline-primary mt-2">Post</button>
+                        </form>
                     </div>
                 </div>
             </div>
