@@ -211,27 +211,21 @@
                     <div style="height: 468px;overflow: scroll;">
                         <table class="table">
                             <tbody>
-                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
-                               <tr>
-                                   <!-- Place where to put the sender, message and the time stamp -->
-                                   <!-- First text: sender -->
-                                   <!-- Second text: message -->
-                                   <!-- Third text: time stamp -->
-                                 <td id="messageBox" class="text-light"> Zoubaby <br> Manns Steins gate is fucking trash  <br>Read 22:33 PM 09/31/21</td>
-
-                                 <!-- Where the sent, read, reread -->
-                                 <td id="messageOptions" class="text-light">
-                                    <!-- Sent -->
-                                    <!-- Mark the message as sent -->
-                                     <a class="links" href="#">Sent</a>
-                                    <!-- Read -->
-                                    <!-- Mark the message as read -->
-                                     <a class="links" href="#">Read</a>
-                                    <!-- Reread -->
-                                    <!-- Mark the message as reread -->
-                                     <a class="links" href="#">Reread</a>
-                                 </td>
-                               </tr>
+                                <?php
+                                    $sender = new \app\models\User();
+                                    $helper = new \app\core\Helper();
+                                    foreach($data["messages"] as $message) {
+                                        $sender = $sender->getUser($message->sender);
+                                        echo "<tr><td id='messageBox' class='text-light'>From: $sender->username <br> $message->message  <br> $message->read_status {$helper::ConvertDateTime($message->timestamp)}</td>
+                                        <td id='messageOptions' class='text-light'>
+                                            <a class='links' href='/User/unReadStatus/$message->message_id'>Unread</a>
+                                            <a class='links' href='/User/readStatus/$message->message_id'>Read</a>
+                                            <a class='links' href='/User/reReadStatus/$message->message_id'>Reread</a>
+                                            <a class='links' href='/User/deleteMessage/$message->message_id'>Delete</a>
+                                        </td>
+                                        </tr>";
+                                    }
+                                ?>
                             </tbody>
                         </table>
                     </div>

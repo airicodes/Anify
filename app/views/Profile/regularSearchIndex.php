@@ -44,6 +44,11 @@
             padding-bottom: 20px;
         }
 
+        .pfp {
+            width: 60%;
+        }
+
+
         #editProfileButton{
             width: 140px;
             margin-right: 10px;
@@ -55,7 +60,7 @@
 
         #secondNavbar .navbar-nav .nav-item{
             font-size: 25px;
-            width: 150px;
+            width: 300px;
         }
 
         /* For the hovering effect of the second navbar */
@@ -73,27 +78,31 @@
         #listBox{
             background-color: rgba(3, 5, 13, 0.61);
             width: 1000px;
-            height: max-content;
+            height: 86% ;
             border-radius: 25px;
             padding: 10px;
         }
 
-        /* To change the position of the logo */
         #logo {
             width: 200px;
-            margin-top: 0.5%;
+            margin-top: 30px;
         }
 
-        /* Change the size of the message box inside the message table */
-        #messageBox {
-            width: 500px;
+        #postBox {
+            height: 200px;
+            width: 300px;
+            margin-left: 74%;
         }
 
-        /* To change the position of the message options: Sent, Read Reread */
-        #messageOptions {
-            width: 500px;
-            text-align: center;
-            vertical-align: middle;
+        /* Change the size and the position of the submit button */
+        #submitButton {
+            height: 35px;
+            margin-left: 30%;
+        }
+
+        #error_messages {
+            color: red;
+            font-weight: bold;
         }
 
         /* To remove the text decoration of the links */
@@ -106,10 +115,6 @@
         /* To change the color of the link when the user hovers */ 
         .links:hover{
             color: #E168BF !important;
-        }
-
-        .pfp {
-            width: 60%;
         }
 
     </style>
@@ -132,8 +137,8 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" name="searchProfile"  type="submit">
+            <form class="d-flex justify-content-center" action="/Profile/searchProfiles" method="POST">
+                <button class="btn" id="searchButton" name="searchProfile" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -141,6 +146,12 @@
                 </button>
                 <input id="searchInput" class="form-control me-2" type="search" name="searchInput" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
+
+            <h6 id="error_messages">
+                <?php
+                    echo $data["errorSearch"];
+                ?>
+            </h6>
         </div>
     </nav>
 
@@ -154,15 +165,7 @@
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
-                <div class="mt-3 d-flex flex-row">
-                    <form action="<?=BASE?>Profile/editProfileButton" method="POST">
-                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
-                    </form>
-                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
-                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
-                    </form>
-                </div>
-                <h5 class="text-light mt-3">bio</h5>
+                <h5 class="text-light mt-5">bio</h5>
                 <!-- Bio -->
                 <p class="text-light">
                     <?php
@@ -173,18 +176,16 @@
 
             <!-- The user's post, anime list, manga list, and setting section -->
             <div class="col-9 mt-4 pt-3">
-                <!-- The SECOND NAV BAR -->
+                <!-- The second nav bar -->
                 <nav id="secondNavbar" class="navbar navbar-expand-lg">
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularIndex">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularAnimeList">anime list</a>
-                        <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">messages</a>
-                        <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularSettings">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAnimeList/<?php echo $data["user"]->user_id; ?>">anime list</a>
+                        <!-- Send Message -->
+                        <a class="nav-item mx-1 text-center nav-link text-danger" href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id; ?>">send messages</a>
                       </div>
                     </div>
                 </nav>
@@ -192,22 +193,40 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
+                    <div style="height: 280px;overflow: scroll;">
                         <table class="table">
                             <tbody>
+                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
+                                <!-- Place where to put the message and the time stamp -->
                                 <?php
-                                    $sender = new \app\models\User();
-                                    $helper = new \app\core\Helper();
-                                    foreach($data["messages"] as $message) {
-                                        $sender = $sender->getUser($message->sender);
-                                        echo "<tr><td id='messageBox' class='text-light'>From: $sender->username <br> $message->message  <br> $message->read_status {$helper::ConvertDateTime($message->timestamp)}</td>
-                                        <td id='messageOptions' class='text-light'>
-                                            <a class='links' href='/User/unReadStatus/$message->message_id'>Unread</a>
-                                            <a class='links' href='/User/readStatus/$message->message_id'>Read</a>
-                                            <a class='links' href='/User/reReadStatus/$message->message_id'>Reread</a>
-                                            <a class='links' href='/User/deleteMessage/$message->message_id'>Delete</a>
+                                    $like = new \app\models\PostLike();
+                                    $currentUser = new \app\models\User();
+                                    $currentUser = $currentUser->getUser($_SESSION["user_id"]);
+                                    foreach($data["posts"] as $userPost) {
+                                        $likes = $like->getAllLikes($userPost->profile_post_id);
+                                        $likeOrUnlikeHref;
+                                        $deleteLink;
+                                        if ($like->isPostLiked($userPost->profile_post_id, $_SESSION["user_id"])) {
+                                            $likeOrUnlikeHref = "<a class='links' href='/Profile/unLikePost/$userPost->profile_post_id/$userPost->user_id'>Unlike post</a>";
+                                        }else if (!$like->isPostLiked($userPost->profile_post_id, $userPost->user_id)) {
+                                            $likeOrUnlikeHref = "<a class='links' href='/Profile/likePost/$userPost->profile_post_id/$userPost->user_id'>Like post</a>";
+                                        } 
+                                        
+                                        // If the user is an admin the force delete link will appaear
+                                        if($currentUser->role == "admin") {
+                                          $deleteLink = "<a class='links' href='/User/forceDeletePost/$userPost->profile_post_id/$userPost->user_id'>Delete</a>";
+                                        } else {
+                                            $deleteLink = "<a class='links' href=''></a>";;
+                                        }
+
+                                        echo"<tr>
+                                        <td class='text-light'> $userPost->post <br> $userPost->date {$likes['COUNT(*)']} Likes</td>
+                                        <td>
+                                            $likeOrUnlikeHref
+                                            $deleteLink
+                                        <td>
                                         </td>
-                                        </tr>";
+                                      </tr>";
                                     }
                                 ?>
                             </tbody>

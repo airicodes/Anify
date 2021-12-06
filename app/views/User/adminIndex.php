@@ -110,6 +110,18 @@
             color: red;
             font-weight: bold;
         }
+
+         /* To remove the text decoration of the links */
+         .links {
+            text-decoration: none;
+            color: white;
+            padding-left: 10px;
+        }
+
+        /* To change the color of the link when the user hovers */ 
+        .links:hover{
+            color: #E168BF !important;
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -138,14 +150,14 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form action="" method="POST" class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" type="submit">
+            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" name="searchProfile" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" type="search" name="searchInput" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
         </div>
     </nav>
@@ -209,12 +221,22 @@
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
                                    <!-- Place where to put the message and the time stamp -->
                                 <?php
+                                    $like = new \app\models\PostLike();
+                                    $currentUser = new \app\models\User();
+                                    $currentUser = $currentUser->getUser($_SESSION["user_id"]);
                                     foreach($data["posts"] as $post) {
+                                        $likes = $like->getAllLikes($post->profile_post_id);
+                                        $likeOrUnlikeHref;
+                                        if ($like->isPostLiked($post->profile_post_id, $_SESSION["user_id"])) {
+                                            $likeOrUnlikeHref = "<a class='links' href='/Profile/adminUnLikeOwnPost/$post->profile_post_id/$currentUser->user_id'>Unlike post</a>";
+                                        }else if (!$like->isPostLiked($post->profile_post_id, $post->user_id)) {
+                                            $likeOrUnlikeHref = "<a class='links' href='/Profile/adminLikeOwnPost/$post->profile_post_id/$currentUser->user_id'>Like post</a>";
+                                        } 
                                         echo"<tr>
-                                        <td class='text-light'> $post->post <br> $post->date</td>
+                                        <td class='text-light'> $post->post <br> $post->date {$likes['COUNT(*)']} Likes</td>
                                         <td class='text-light'> 
-                                        <a href='/User/deletePost/$post->profile_post_id'>Delete</a>
-                                        <a href=''>Like</a>
+                                        $likeOrUnlikeHref
+                                        <a class='links' href='/User/deletePost/$post->profile_post_id'>Delete</a>
                                         </td>
                                       </tr>";
                                     }

@@ -58,11 +58,11 @@ class User extends \app\core\Controller {
         if(isset($_POST["submitPost"])) {
             $post = trim($_POST["userPost"]);
             if (empty($post)) {
-                $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Nothing was entered"]);
+                $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Nothing was entered", "errorSearch"=>""]);
                 return;
             } 
             if (strlen($post) > 140) {
-                $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Text must be 140 characters max"]);
+                $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"Text must be 140 characters max", "errorSearch"=>""]);
                 return;
             }
             $profilePost->post = $post;
@@ -73,7 +73,7 @@ class User extends \app\core\Controller {
         }
 
 
-        $this->view("User/regularIndex", ["user" => $user, "profile" => $profile, "posts"=>$posts, "error"=>""]);
+        $this->view("User/regularIndex", ["user" => $user, "profile" => $profile, "posts"=>$posts, "error"=>"", "errorSearch"=>""]);
     }
 
     #[\app\filters\Regular]
@@ -319,8 +319,10 @@ class User extends \app\core\Controller {
         $user = $user->getUser($_SESSION["user_id"]);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
+        $message = new \app\models\Message();
+        $messages = $message->getAllMessages($user->user_id);
 
-        $this->view("User/adminMessages", ["user" => $user, "profile" => $profile]);
+        $this->view("User/adminMessages", ["user" => $user, "profile" => $profile, "messages"=>$messages]);
     }
 
     // method to go to the regular user's messages page.
@@ -330,8 +332,11 @@ class User extends \app\core\Controller {
         $user = $user->getUser($_SESSION["user_id"]);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
+        $message = new \app\models\Message();
+        $messages = $message->getAllMessages($user->user_id);
 
-        $this->view("User/regularMessages", ["user" => $user, "profile" => $profile]);
+
+        $this->view("User/regularMessages", ["user" => $user, "profile" => $profile, "messages"=>$messages]);
     }
     
     // method to bring admin to their browse page
@@ -403,9 +408,69 @@ class User extends \app\core\Controller {
         $this->view("User/regularEditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
     }
 
+    // A method that deletes a post of a regular user and admin
     public function deletePost($profile_post_id) {
         $profilePost = new \app\models\ProfilePost();
         $profilePost->deletePost($profile_post_id);
         header("location:".BASE."User/regularIndex");
     }
+
+    // As an admin, he/she can delete other user's post
+    public function forceDeletePost($profile_post_id, $user_id) {
+        $profilePost = new \app\models\ProfilePost();
+        $profilePost->deletePost($profile_post_id);
+        header("location:".BASE."Profile/regularSearchProfile/$user_id");
+    }
+
+    public function deleteMessage($message_id) {
+        $message = new \app\models\Message();
+        $message->deleteMessage($message_id);
+        header("location:".BASE."User/regularMessages");
+    }
+
+
+      // Edit the status of the message
+        public function reReadStatus($message_id) {
+            $message = new \app\models\Message();
+            $user = new \app\models\User();
+            $user = $user->getUser($_SESSION["user_id"]);
+            $status = "re read";
+            $message->editReadStatus($message_id, $status);
+            if ($user->role == "regular") {
+                header("location:".BASE."User/regularMessages");        
+            } else {
+                header("location:".BASE."User/adminMessages");        
+            }
+            
+	}
+    
+    // Edit the status of the message
+    public function readStatus($message_id) {
+	    $message = new \app\models\Message();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $status = "read";
+		$message->editReadStatus($message_id, $status);
+
+        if ($user->role == "regular") {
+            header("location:".BASE."User/regularMessages");        
+        } else {
+            header("location:".BASE."User/adminMessages");        
+        }
+	}
+
+    // Edit the status of the message
+    public function unReadStatus($message_id) {
+        $message = new \app\models\Message();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $status = "unread";
+		$message->editReadStatus($message_id, $status);
+        
+        if ($user->role == "regular") {
+            header("location:".BASE."User/regularMessages");        
+        } else {
+            header("location:".BASE."User/adminMessages");        
+        }
+	}
 }

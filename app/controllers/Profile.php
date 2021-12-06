@@ -395,4 +395,195 @@ class Profile extends \app\core\Controller {
 
         $this->view("Profile/regularEditProfile", ["user" => $user, "profile" => $profile, "error" => ""]);
     }
+
+    // Search the profile of the username
+    public function searchProfiles() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        $profilePost = new \app\models\ProfilePost();
+        $posts = $profilePost->getAllPost($_SESSION["user_id"]);
+        $searchInput = trim($_POST["searchInput"]);
+
+        if (empty($searchInput)) {
+            $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"", "errorSearch"=>"Nothing was entered"]);
+            return;
+        } 
+        if (strlen($serachInput) > 140) {
+            $this->view("User/regularIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"", "errorSearch"=>"Text must be 30 characters max"]);
+            return;
+        }
+        
+        $searchResults = $profile->searchProfile($searchInput);
+
+        $this->view("Profile/SearchProfile", $searchResults);
+    }
+
+    // Goes to the searched regular index
+    public function regularSearchProfile($user_id) {
+        $user = new \app\models\User();
+        $user = $user->getUser($user_id);
+
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($user_id);
+
+
+        $profilePost = new \app\models\ProfilePost();
+        $posts = $profilePost->getAllPost($user_id);
+
+        if ($user->role == "regular") {
+            $this->view("Profile/regularSearchIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"", "errorSearch"=>""]);
+        } else {
+            $this->view("Profile/adminSearchIndex", ["user" => $user, "posts"=>$posts,"profile" => $profile, "error"=>"", "errorSearch"=>""]);
+        }
+    }
+
+    // Like your own post
+    public function likeOwnPost($post_id, $searchUserId) {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $post_like = new \app\models\PostLike();
+        $post_like->user_id = $user->user_id;
+        $post_like->profile_post_id = $post_id;
+        $post_like->addLike($post_id);
+        header("location:".BASE."User/regularIndex/$searchUserId");
+    }
+
+    // Unlike your own post
+    public function unLikeOwnPost($post_id, $searchUserId) {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $post_like = new \app\models\PostLike();
+        $post_like->user_id = $user->user_id;
+        $post_like->profile_post_id = $post_id;
+        $post_like->removeLike($post_id);
+        header("location:".BASE."User/regularIndex/$searchUserId");
+    }
+
+    // Like your own post for admin
+    public function adminLikeOwnPost($post_id, $searchUserId) {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $post_like = new \app\models\PostLike();
+        $post_like->user_id = $user->user_id;
+        $post_like->profile_post_id = $post_id;
+        $post_like->addLike($post_id);
+        header("location:".BASE."User/regularIndex/$searchUserId");
+    }
+
+    // Unlike your own post for admin
+    public function adminUnLikeOwnPost($post_id, $searchUserId) {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $post_like = new \app\models\PostLike();
+        $post_like->user_id = $user->user_id;
+        $post_like->profile_post_id = $post_id;
+        $post_like->removeLike($post_id);
+        header("location:".BASE."User/adminIndex/$searchUserId");
+    }
+
+    // Likes the post of the user
+    public function likePost($post_id, $searchUserId) {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $post_like = new \app\models\PostLike();
+        $post_like->user_id = $user->user_id;
+        $post_like->profile_post_id = $post_id;
+        $post_like->addLike($post_id);
+        header("location:".BASE."Profile/regularSearchProfile/$searchUserId");
+    }
+
+    // Unlke the post of the user
+    public function unLikePost($post_id, $searchUserId) {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $post_like = new \app\models\PostLike();
+        $post_like->user_id = $user->user_id;
+        $post_like->profile_post_id = $post_id;
+        $post_like->removeLike($post_id);
+        header("location:".BASE."Profile/regularSearchProfile/$searchUserId/$searchUserId->role");
+    }
+
+    // Methods to navigate to other user's anime list 
+    public function otherAnimeList($user_id) {
+        $user = new \app\models\User();
+        $user = $user->getUser($user_id);
+        
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $animelist = $animelist->getUserAL($user_id);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($user_id);
+        $allAnimeFromList = $anime->getAllAnimeFromList($animelist->animelist_id);
+        $allFavAnimeFromList = $anime->getAllFavAnimeFromList($animelist->animelist_id);
+
+        if ($user->role == "regular") {
+            $this->view("Profile/otherProfileAnimeList", ["user" => $user, "profile" => $profile, "list"=> $allAnimeFromList,
+            "favlist" => $allFavAnimeFromList]);
+        } else  {
+            $this->view("Profile/otherAdminProfileAnimeList", ["user" => $user, "profile" => $profile, "list"=> $allAnimeFromList,
+            "favlist" => $allFavAnimeFromList]);
+        }
+    }
+
+    // Method that navigates the user to the send message page
+    public function otherSendMessage($user_id) {
+        $user = new \app\models\User();
+        $user = $user->getUser($user_id);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($user_id);
+
+        if ($user->role == "regular") {
+            $this->view("Profile/otherProfileMessage", ["user" => $user, "profile" => $profile, "error"=>""]);
+        } else  {
+            $this->view("Profile/otherAdminProfileMessage", ["user" => $user, "profile" => $profile, "error"=>""]);
+        }
+    }
+
+    // Method allows other user to send message to each other
+    public function sendMessage($user_id) {
+        $user = new \app\models\User();
+        $otherUser = $user->getUser($user_id);
+        $currentUser =  $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($user_id);
+        
+        $message = new \app\models\Message();
+        $message->sender = $_SESSION["user_id"];
+        $message->receiver = $user_id;
+        $message->read_status = "unread";
+        $newMessage = trim($_POST["message"]);
+        if ($currentUser->role == "regular") {
+            if (empty($newMessage)) {
+                $this->view("Profile/otherProfileMessage", ["user" => $otherUser, "profile" => $profile, "error"=>"Nothing was entered"]);
+                return;
+            } 
+            if (strlen($newMessage) > 140) {
+                $this->view("Profile/otherProfileMessage", ["user" => $otherUser, "profile" => $profile, "error"=>"Text must be 140 characters max"]);
+                return;
+            }
+            
+            $message->message = $newMessage;
+            $message->addMessage();
+            header("location:/Profile/otherSendMessage/$user_id");
+
+        } else {
+
+            if (empty($newMessage)) {
+                $this->view("Profile/otherAdminProfileMessage", ["user" => $otherUser, "profile" => $profile, "error"=>"Nothing was entered"]);
+                return;
+            } 
+            if (strlen($newMessage) > 140) {
+                $this->view("Profile/otherAdminProfileMessage", ["user" => $otherUser, "profile" => $profile, "error"=>"Text must be 140 characters max"]);
+                return;
+            }
+
+            $message->message = $newMessage ;
+            $message->addMessage();
+            header("location:/Profile/otherSendMessage/$user_id");
+        }
+
+    }
 }

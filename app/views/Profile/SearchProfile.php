@@ -87,7 +87,7 @@
             opacity: 80%;
             height: 90px;
             text-align: center;
-            margin-left: 300px;
+            margin-left: 460px;
             border-radius: 25px;
         }
 
@@ -131,20 +131,16 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="ify">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="ify">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <!-- To go to the about page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
-                </li>
-                <!-- To go to ADD ANIME PAGE -->
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
                 </li>
                 <li class="nav-item">
-                    <!-- To go to the browse page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
+                    <!-- To go to the regular browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -166,13 +162,14 @@
                         <!-- The link that goes to the profile page -->
                         <a class="nav-link text-light" href=""> 
                             <!-- user profile picture -->
-                            <img id="smallProfileIcon" class="rounded-circle" src="<?=$data["profile"]->filename;?>" alt="">
+                            <!-- <img id="smallProfileIcon" class="rounded-circle" src="<?=$data["profile"]->filename;?>" alt=""> -->
                             <!-- the username -->
-                            <p class="mt-2"><?php echo $data["user"]->username; ?></p>
+                            <!-- <p class="mt-2"><?=$data["user"]->username;?></p> -->
                         </a>
                     </li>
                 </div>
             </ul>
+            
         </div>
     </nav>
 
@@ -187,12 +184,10 @@
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
                                 <?php
-                                foreach ($data["anime"] as $anime) {
+                                foreach ($data as $user) {
                                     echo "<tr>
-                                            <td><img id='animeImage' src='$anime->picture_link' alt=''></td>
-                                            <!-- Anime Title -->
-                                            <td id='animeTitle'><a href='/Anime/adminAnimePage/$anime->anime_id'>$anime->anime_name</a></td>
-                                        </tr>";
+                                           <td style='text-align:center;'> <a style='text-decoration:none;' class='text-light' href='/Profile/regularSearchProfile/$user->user_id'>$user->username</a><td>
+                                        </tr> <br>";
                                 }
                                 ?>
                             </tbody>

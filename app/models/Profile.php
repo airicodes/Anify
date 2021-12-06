@@ -38,6 +38,13 @@ class Profile extends \app\core\Model {
         $STMT->execute(["bio" => $this->bio, "filename" => $this->filename, "user_id" => $this->user_id]);
     } 
 
-
+    // method that search the profile based on the given username
+    public function searchProfile($username) {
+        $SQL = "SELECT * FROM user WHERE username LIKE :username";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["username"=> "%$username%"]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\User");
+        return $STMT->fetchAll();
+    }
 
 }

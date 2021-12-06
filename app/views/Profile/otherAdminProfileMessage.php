@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +56,7 @@
 
         #secondNavbar .navbar-nav .nav-item{
             font-size: 25px;
-            width: 150px;
+            width: 300px;
         }
 
         /* For the hovering effect of the second navbar */
@@ -95,19 +96,12 @@
         #confirmButton {
             border-radius: 15px;
             width: 160px;
-            margin-left: 16%;
         }
 
         /* Change the size and the border radius of the send button */ 
         #sendButton {
             width: 120px;
             border-radius: 15px;
-        }
-
-         /* to change the border of the radius */
-         #adminLogo {
-            border-radius: 20px;
-            width: 200px;
         }
 
         .pfp {
@@ -119,6 +113,12 @@
             font-size:100%;
         }
 
+        /* to change the border of the radius */
+        #adminLogo {
+            border-radius: 20px;
+            width: 200px;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -126,7 +126,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body id="body">
-    <?php
+
+<?php
     if (isset($_SESSION["passwordUpdate"])) {
     ?>
 
@@ -145,31 +146,50 @@
     }
     ?>
 
+<?php
+    if (isset($_SESSION["feedbackSent"])) {
+    ?>
+
+        <script>
+            swal({
+                title: "Feedback Sent",
+                text: "Thank you <?=$data["user"]->username?>!, your feedback has been sent to us!",
+                icon: "success",
+                button:"ok"
+                });
+        </script>
+
+
+    <?php
+        unset($_SESSION["feedbackSent"]);
+    }
+    ?>
+
+    
+
+    
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
-                </li>
-                <li class="nav-item">
-                    <!-- To go to the add anime page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
+                    <!-- To go to the regular browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form action="/Profile/searchProfiles" class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" name="searchProfile" type="submit">
+            <form class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <input id="searchInput" class="form-control me-2" type="search" name="searchInput" placeholder="Search users/mangas/animes" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
         </div>
     </nav>
@@ -183,20 +203,11 @@
                 <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp" src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
-                <!-- admin logo -->
                 <div class="d-flex flex-column">
-                <button id="adminlogo" class="btn btn-danger align-self-center disabled">administrator</button>
+                    <!-- If we make this disabled it will make the button darker -->
+                    <button id="adminlogo" class="btn btn-danger align-self-center" disabled>administrator</button>
                 </div>
-                <!-- Edit and delete button -->
-                <div class="mt-3 d-flex flex-row">
-                    <form action="<?=BASE?>Profile/editProfileButton" method="POST">
-                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
-                    </form>
-                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
-                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
-                    </form>
-                </div>
-                <h5 class="text-light mt-3">bio</h5>
+                <h5 class="text-light mt-5">bio</h5>
                 <!-- Bio -->
                 <p class="text-light">
                     <?php
@@ -212,13 +223,11 @@
                     <div class="collapse navbar-collapse">
                       <div class="navbar-nav">
                         <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminIndex">posts</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/regularSearchProfile/<?php echo $data["user"]->user_id; ?>">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminAnimeList">anime list</a>
-                        <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
-                        <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">settings</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAnimeList/<?php echo $data["user"]->user_id; ?>">anime list</a>
+                        <!-- Send Message -->
+                        <a class="nav-item mx-1 text-center nav-link text-danger active disabled" href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id; ?>">send messages</a>
                       </div>
                     </div>
                 </nav>
@@ -230,32 +239,21 @@
                         <div class="container">
                             <div class="row">
                                 <!-- Change password section -->
-                                <div id="changePassBox" class="col-12 d-flex flex-column">
-                                    <form action="" method="POST">
-                                        <h2 class="text-light mt-5 text-center">Change password</h2>
-                                        <!-- Old password  -->
-                                        <input class="mt-1 align-self-center" type="password" name="oldPassword" placeholder="Old password">
+                                <div id="changePassBox" class="col-6 d-flex flex-column">
+                                    <form action="<?=BASE?>Profile/sendMessage/<?php echo $data["user"]->user_id; ?>" method="POST">
+                                        <h2 class="text-light mt-2" >Send Message</h2>
+                                        <!-- Feedback textarea -->
+                                        <textarea name="message" id="" cols="30" rows="10" style="resize: none;" placeholder="Enter your message here..."></textarea>
+                                        <!-- Send button -->
+                                        <!-- Sends the feedback -->
                                         <br>
-                                        <!-- New password  -->
-                                        <input class="mt-1 align-self-center" type="password" name="newPassword" placeholder="New password">
-                                        <br>
-                                        <!-- New password confirmation  -->
-                                        <input class="mt-1 align-self-center" type="password" name="confirmNewPassword" placeholder="Confirm password">
-                                        <br>
-                                        <button name="action" type="submit" id="confirmButton" class="btn btn-outline-info mt-0 align-self-center">Confirm</button>
+                                        <button type="submit" id="feedback" class="btn btn-outline-info mt-0 align-self-end mt-3">Send</button>
                                         <h4 class="mt-3" id="error_messages">
                                         <?php
                                             echo $data["error"];
-                                        ?>
+                                        ?> 
                                         </h4>
                                     </form>
-                                </div>
-                                <div class="container mt-5">
-                                    <div class="col-12 d-flex flex-column align-items-end mt-3">
-                                        <!-- Log out -->
-                                        <!-- When the users clicks on it, the user will be logout -->
-                                        <h1><a class="text-danger" style="text-decoration: none;" href="<?=BASE?>Main/logout">Log out</a></h1>
-                                    </div>
                                 </div>
                             </div>
                         </div>

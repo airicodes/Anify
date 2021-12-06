@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 05, 2021 at 07:32 AM
+-- Generation Time: Dec 06, 2021 at 06:17 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -73,7 +73,8 @@ CREATE TABLE `animelist` (
 INSERT INTO `animelist` (`animelist_id`, `user_id`) VALUES
 (1, 29),
 (3, 36),
-(4, 37);
+(4, 37),
+(5, 38);
 
 -- --------------------------------------------------------
 
@@ -98,8 +99,36 @@ INSERT INTO `anime_in_list` (`anime_id`, `animelist_id`, `rating`, `watching_sta
 (1, 1, 3, 'dropped', 'y'),
 (2, 1, 10, 'finished', 'n'),
 (3, 1, 0, 'dropped', 'n'),
-(1, 4, 0, 'Watching', 'n'),
+(1, 4, 0, 'Watching', 'y'),
 (3, 4, 0, 'Finished', 'n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `message_id` int(11) NOT NULL,
+  `sender` int(11) NOT NULL,
+  `receiver` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT utc_timestamp(),
+  `read_status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`message_id`, `sender`, `receiver`, `message`, `timestamp`, `read_status`) VALUES
+(4, 38, 37, 'hi', '2021-12-06 04:37:42', 'unread'),
+(5, 38, 37, 'olah', '2021-12-06 04:37:49', 'unread'),
+(6, 38, 37, 'im so done', '2021-12-06 04:37:56', 're read'),
+(7, 29, 37, 'Hello', '2021-12-06 06:03:06', 'unread'),
+(9, 29, 37, 'Hello vince', '2021-12-06 06:45:40', 'unread'),
+(10, 29, 37, 'hello v', '2021-12-06 07:52:43', 'unread');
 
 -- --------------------------------------------------------
 
@@ -113,6 +142,13 @@ CREATE TABLE `post_like` (
   `user_id` int(11) NOT NULL,
   `profile_post_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `post_like`
+--
+
+INSERT INTO `post_like` (`post_like_id`, `user_id`, `profile_post_id`) VALUES
+(48, 38, 4);
 
 -- --------------------------------------------------------
 
@@ -142,7 +178,8 @@ INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
 (18, 27, 'asdf', '/uploads/defaultAvatar.png'),
 (24, 29, 'Hi.', '/uploads/61ab0fa489f64.png'),
 (27, 36, 'No bio yet...', '/uploads/defaultAvatar.png'),
-(28, 37, 'JERBEAR IS GAY', '/uploads/defaultAvatar.png');
+(28, 37, 'JERBEAR IS GAY', '/uploads/defaultAvatar.png'),
+(29, 38, 'Vince', '/uploads/defaultAvatar.png');
 
 -- --------------------------------------------------------
 
@@ -163,9 +200,10 @@ CREATE TABLE `profile_post` (
 --
 
 INSERT INTO `profile_post` (`profile_post_id`, `post`, `date`, `user_id`) VALUES
-(3, 'Ali\'s the best', '2021-12-04', 37),
 (4, 'Lisa is my queen', '2021-12-04', 37),
-(5, 'Stein\'s gate is trash', '2021-12-04', 29);
+(9, 'hello', '2021-12-05', 37),
+(10, 'heloo', '2021-12-05', 29),
+(11, 'my name is jeremie guerchon', '2021-12-05', 29);
 
 -- --------------------------------------------------------
 
@@ -196,7 +234,8 @@ INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
 (27, 'aliab', '$2y$10$D0PouWBVVSiW5Ig81z/Es.Er3tpD7u1zdb2XgiXQqkDhc4/MTtmIK', 'admin'),
 (29, 'airi', '$2y$10$vAgq7KKdDWY58zjamt3N3eIYMcON3WZqjNfJUFZdTOVez0OBfp8Te', 'admin'),
 (36, 'airii', '$2y$10$zUXSie1vSXAVL3xSkNULfeuNOGEEznu8gO5r7q0BYBBkZBtTjjWoW', 'regular'),
-(37, 'v', '$2y$10$wBCZKRI2JmcfJtpdyMVyze3mAKXW6pUx4roz/wS97KKjR/KX.mYuu', 'regular');
+(37, 'v', '$2y$10$wBCZKRI2JmcfJtpdyMVyze3mAKXW6pUx4roz/wS97KKjR/KX.mYuu', 'regular'),
+(38, 'vincebry', '$2y$10$Ov3GUIbH.Ne0h/qwCB34vOD1QD/mUybOv3gw8cufT3F7uS4Ao4.x6', 'regular');
 
 -- --------------------------------------------------------
 
@@ -236,6 +275,14 @@ ALTER TABLE `animelist`
 ALTER TABLE `anime_in_list`
   ADD KEY `animeinlist_to_anime` (`anime_id`),
   ADD KEY `animeinlist_to_animelist` (`animelist_id`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `sender_user_id` (`sender`),
+  ADD KEY `receiver_user_id` (`receiver`);
 
 --
 -- Indexes for table `post_like`
@@ -287,31 +334,37 @@ ALTER TABLE `anime`
 -- AUTO_INCREMENT for table `animelist`
 --
 ALTER TABLE `animelist`
-  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `post_like`
 --
 ALTER TABLE `post_like`
-  MODIFY `post_like_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `post_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `profile_post`
 --
 ALTER TABLE `profile_post`
-  MODIFY `profile_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `profile_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `user_review`
@@ -335,6 +388,13 @@ ALTER TABLE `animelist`
 ALTER TABLE `anime_in_list`
   ADD CONSTRAINT `animeinlist_to_anime` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`anime_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `animeinlist_to_animelist` FOREIGN KEY (`animelist_id`) REFERENCES `animelist` (`animelist_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `receiver_user_id` FOREIGN KEY (`receiver`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `sender_user_id` FOREIGN KEY (`sender`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `post_like`
