@@ -4,16 +4,99 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
 
-        /* To insert the Poppins font style */
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');   
+        #body {
+            /* Full height */
+            height: 100%; 
+
+            /* To change the font */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #problemSolversImage {
+            width: 250px;
+        }
+
+        /* Use to center the box at the middle of the page */
+        #center{
+            position: absolute;
+            width: 700px;
+            height: 600px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        /*  The design of the box in the middle */
+        #loginBox {
+            width: 650px;
+            height: 400px;
+            background-color: #03050D;
+            border-radius: 25px;
+            opacity: 80%;
+        }
+
+        .anchors a:hover {
+            color:red;
+        }
+
+        /* To change the font size of anify */ 
+        #websiteName{
+            position: relative;
+            font-size: 100px;
+            margin: -24px;
+            z-index: 1;
+        }
+
+        /* To change the color of the ify in anify */
+        #ify {
+            color: #E168BF;
+        }
+
+        /* To change the design of the input*/
+       .input {
+            width: 500px;
+            height: 55px;
+            border-radius: 10px;
+            margin-top: 10%;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        
+        /* To change the color, radius and the margin top of the log in button */
+        #loginButton {
+            /* background-color: red; */
+            width: 120%;
+            border-radius: 15px;
+            margin-left: 250%;
+            margin-top: 39%;
+            padding-right: 60%;
+        }
+
+        #cancel {
+            /* background-color: green; */
+            width: 120%;
+            border-radius: 15px;
+            margin-top: 35%;
+            margin-left:100%
+        }
+
+        #error_messages {
+            color: red;
+            font-weight: bold;
+        }
+
+              /* To insert the Poppins font style */
+              @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');   
         
         #body{
             background-color: #1E2336; 
             padding: 20px;
             font-family: 'Poppins', sans-serif;
-            background-image: url('/app/background/about.png');
             background-size: 85% 85%;
             background-repeat: no-repeat;
         }
@@ -84,6 +167,7 @@
 
         #logo {
             width: 200px;
+            margin-top: 40%;
         }
 
         #about {
@@ -95,15 +179,22 @@
             width:85%;
             height:85%
         }
+
+        .boutens {
+            float: left;
+            margin-left: 22%;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light"href="<?=BASE?>User/adminIndex"><h2>An<b id="fy">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <!-- To go to ABOUT PAGE -->
@@ -115,7 +206,7 @@
                     <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
                 </li>
                 <li class="nav-item">
-                    <!-- To go to the browse anime page -->
+                    <!-- To go to the browse page -->
                     <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
                 </li>
                 <li class="nav-item">
@@ -124,20 +215,43 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" name="" type="submit">
+            <form class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <!-- The input of the search. This is where the user input the things he wants to search -->
-                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
         </div>
     </nav>
 
-    <div id="invisible"></div>
+    <div id="center">
+        <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
+        <div id="loginBox" class="mx-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <div class="mt-3" id="go-down">
+                                <h1 class="text-light">Delete Regular's Account</h1>
+                                <h2 class="text-light">Are you sure?</h1>
+                                <br>
+                                <h3 class="text-light">By clicking Delete, you are agreeing to permanently deleting <span style="color:red;"><?php echo $data->username ?></span>'s account. It is impossible to retrieve after completing this action...</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <center>
+            <form action="" method="POST">
+                <button name="cancel" type="submit" class="btn btn-outline-secondary btn-lg boutens">Cancel</button>
+                <button name="delete" type="submit" class="btn btn-outline-danger btn-lg boutens">Delete</button>
+            </form>
+        </center>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>

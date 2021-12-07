@@ -144,15 +144,15 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" type="submit">
+            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" name="" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
                 <!-- The input of the search. This is where the user input the things he wants to search -->
-                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
             </form>
 
             <!-- The small profile box that goes to the profile page when clicked -->
@@ -183,15 +183,43 @@
                         <table class="table">
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
+                                <center>
+                                <h1 style='color: white; margin-left: -6%;'>Users</h1>
+                                </center>
+                                <hr>
                                 <?php
-                                foreach ($data as $user) {
+                                foreach ($data['users'] as $user) {
                                     echo "<tr>
                                            <td style='text-align:center;'> <a style='text-decoration:none;' class='text-light' href='/Profile/regularSearchProfile/$user->user_id'>$user->username</a><td>
-                                        </tr> <br>";
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
-                        </table>
+                            </table>
+                            <table class="table">
+                            <tbody>
+                                <center>
+                                <h1 style='color: white; margin-left: -6%;'>Animes</h1>
+                                </center>
+                                <hr>
+                                <!-- Per message. We need to put a for loop then put this tr inside of it  -->
+                                <?php
+                                if ($_SESSION['role'] == 'admin') {
+                                 foreach ($data['animes'] as $anime) {
+                                        echo "<tr>
+                                              <td style='text-align:center;'> <a style='text-decoration:none;' class='text-light' href='/Anime/AdminAnimePage/$anime->anime_id'>$anime->anime_name</a><td>
+                                            </tr>";
+                                 }
+                                } else {
+                                    foreach ($data['animes'] as $anime) {
+                                        echo "<tr>
+                                              <td style='text-align:center;'> <a style='text-decoration:none;' class='text-light' href='/Anime/regularAnimePage/$anime->anime_id'>$anime->anime_name</a><td>
+                                            </tr>";
+                                 }  
+                                }
+                                ?>
+                            </tbody>
+                            </table>
                     </div>
                 </div>
             </div>

@@ -87,7 +87,7 @@
             opacity: 80%;
             height: 90px;
             text-align: center;
-            margin-left: 460px;
+            margin-left: 300px;
             border-radius: 25px;
         }
 
@@ -108,7 +108,7 @@
         /* To change the position of the title of the anime */
         #animeTitle {
             vertical-align: middle;
-            font-size: 40px;
+            font-size: 20px;
         }
 
         /* To remove the text decoration of title of the anime  and the change the position of it*/
@@ -131,20 +131,29 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="ify">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/adminIndex"><h2>An<b id="ify">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <!-- To go to the about page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
+                    <a class="nav-link text-light" href="<?=BASE?>User/adminAbout">about</a>
+                </li>
+                <!-- To go to ADD ANIME PAGE -->
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
                 </li>
                 <li class="nav-item">
-                    <!-- To go to the regular browse page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
+                    <!-- To go to the browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
+                </li>
+                <li class="nav-item">
+                    <!-- To go to the browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regulars">regulars list</a>
                 </li>
             </ul>
+
             <!-- This is for the search bar -->
-            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
+            <form action="/User/searchRegulars" method="POST" class="d-flex justify-content-center">
                 <button class="btn" id="searchButton" name="" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
@@ -152,7 +161,7 @@
                     </svg>
                 </button>
                 <!-- The input of the search. This is where the user input the things he wants to search -->
-                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" name="search" type="search" placeholder="Search for regular users" aria-label="Search">
             </form>
 
             <!-- The small profile box that goes to the profile page when clicked -->
@@ -164,12 +173,11 @@
                             <!-- user profile picture -->
                             <img id="smallProfileIcon" class="rounded-circle" src="<?=$data["profile"]->filename;?>" alt="">
                             <!-- the username -->
-                            <p class="mt-2"><?=$data["user"]->username;?></p>
+                            <p class="mt-2"><?php echo $data["user"]->username; ?></p>
                         </a>
                     </li>
                 </div>
             </ul>
-            
         </div>
     </nav>
 
@@ -184,11 +192,16 @@
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
                                 <?php
-                                foreach ($data["anime"] as $anime) {
+                                foreach ($data["regulars"] as $currentRegular) {
+                                    $profile = new \app\models\Profile();
+                                    $profile = $profile->getProfile($currentRegular->user_id);
                                     echo "<tr>
-                                            <td><img id='animeImage' src='$anime->picture_link' alt=''></td>
+                                            <td><img class='rounded-circle img-responsive center-block d-block mx-auto pfp' id='animeImage' src='$profile->filename' alt=''></td>
                                             <!-- Anime Title -->
-                                            <td id='animeTitle'><a href='/Anime/regularAnimePage/$anime->anime_id'>$anime->anime_name</a></td>
+                                            <td id='animeTitle'><a href=''>$currentRegular->username</a></td>
+                                            <td id='' class='text-light' style='margin-top: 10%;'>$profile->bio</td>
+                                            <td><a href='/Profile/editRegular/$currentRegular->user_id' class='btn btn-outline-info'>Edit user</a></td>
+                                            <td><a href='/User/deleteRegular/$currentRegular->user_id' class='btn btn-outline-danger'>Delete user</a></td>
                                         </tr>";
                                 }
                                 ?>

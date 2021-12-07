@@ -135,4 +135,18 @@ class Anime extends \app\core\Model {
         'rating'=>$rating]);
     }
 
+    public function deleteAnimeFromList($anime_id, $animelist_id) {
+        $SQL = 'DELETE FROM anime_in_list WHERE animelist_id = :animelist_id AND anime_id = :anime_id';
+		$STMT = self::$_connection->prepare($SQL);
+		$STMT->execute(['anime_id' => $anime_id, 'animelist_id'=>$animelist_id]);
+    }
+
+    public function searchAnime($anime_name) {
+        $SQL = "SELECT * FROM anime WHERE anime_name LIKE :anime_name";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["anime_name"=> "%$anime_name%"]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Anime");
+        return $STMT->fetchAll();
+    }
+
 }

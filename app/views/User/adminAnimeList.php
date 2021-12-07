@@ -104,6 +104,61 @@
         .pfp {
             width: 60%;
         }
+
+        .table-hover tbody a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .table-hover tbody tr:hover td,
+        .table-hover tbody tr:hover th {
+            color: #E168BF;
+        }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+        /* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  border: 3px solid black;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 2px;
+  margin-bottom:10px;
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -126,6 +181,10 @@
                 <li class="nav-item">
                     <!-- To go to the browse anime page -->
                     <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
+                </li>
+                <li class="nav-item">
+                    <!-- To go to the browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regulars">regulars list</a>
                 </li>
             </ul>
             <!-- This is for the search bar -->
@@ -201,20 +260,25 @@
                                 <!-- To make a scrollable table -->
                                 <div style="height: 468px;overflow: scroll;">
                                     <!-- The table itself -->
-                                    <table id="animeTable" class="table table-borderless text-light">
+                                    <table  class="table table-hover table-borderless text-light">
                                         <tbody>
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
-                                            <tr>
-                                                <!-- Title of the anime -->
-                                                <!-- Is this gonna be a link?? -->
-                                                <td>Durarara!!</td>
-                                                <!-- Status of the anime -->
-                                                <td>Finished</td>
-                                                <!-- Ratings of the anime -->
-                                                <td>9/10</td>
-                                                <!-- IS THIS A BUTTON??? -->
-                                                <td>Star</td>
-                                            </tr>
+                                            <?php
+                                        $star = "";
+                                        foreach ($data["list"] as $anime) {
+                                           if ($anime->favorite == 'y') {
+                                               $star =  "/app/background/withstar.png";
+                                           } else {
+                                               $star =  "/app/background/nostar.png";
+                                           }
+                                          echo "<tr><td><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
+                                           <td ><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
+                                           <td><a  href='/User/EditAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
+                                           <td><a href='/User/addFavAnime/" . $anime->anime_id . "'><img src='" .
+                                           $star . "' alt=''></a></td>
+                                                       </tr>";
+                                        }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -226,18 +290,18 @@
                                 <!-- To make a scrollable table -->
                                 <div style="height: 468px;overflow: scroll;">
                                     <!-- The table itself -->
-                                    <table id="favouriteTable" class="table table-borderless text-light">
+                                    <table class="table table-hover table-borderless text-light">
                                         <tbody>
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
-                                            <tr>
-                                                <!-- Title of the anime -->
-                                                <!-- Is this gonna be a link?? -->
-                                                <td>Durarara!!</td>
-                                                <!-- Status of the anime -->
-                                                <td>Finished</td>
-                                                <!-- Ratings of the anime -->
-                                                <td>9/10</td>
-                                            </tr>
+                                            <?php
+                                                foreach ($data["favlist"] as $favanime) {
+                                                echo "<tr><td><p href=''>" . $favanime->anime_name . "</p></td>
+                                                    <td><p href=''>" . $favanime->watching_status . "</p></td>
+                                                    <td><p href=''>" . $favanime->rating . "</p></td>
+                                                    <td><p href=''><img src='\app/backgrounds/nostar.png' alt=''></p></td>
+                                                                </tr>";
+                                                }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>

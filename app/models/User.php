@@ -73,9 +73,29 @@ class User extends \app\core\Model {
         $STMT->execute(["user_id" => $this->user_id]);
     }
 
+    // method to update the username of a user.
     public function updateUsername() {
         $SQL = "UPDATE user SET username = :username WHERE user_id = :user_id";
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(["username" => $this->username, "user_id" => $this->user_id]);
     }
+
+    // method to search for regulars
+    public function getRegulars() {
+        $SQL = "SELECT * FROM user WHERE role = 'regular'";
+		$STMT = self::$_connection->query($SQL);
+		$STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\User");
+		return $STMT->fetchAll();
+    }
+
+    // method to search for customers
+    public function searchRegular($search_term) {
+        $SQL = "SELECT * FROM user WHERE username LIKE :search_term AND role = 'regular'";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(array(':search_term' => '%' . $search_term . '%'));
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\User");
+        return $STMT->fetchAll();
+    }
+
+
 }

@@ -178,16 +178,14 @@
             </ul>
             <!-- This is for the search bar -->
             <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" name="searchProfile" type="submit">
+                <button class="btn" id="searchButton" name="" type="submit">
                     <!-- Adding the search icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-search text-light" viewBox="0 0 16 16">
-                        <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <input id="searchInput" class="form-control me-2" type="search" name="searchInput" placeholder="Search users/mangas/animes"
-                    aria-label="Search">
+                <!-- The input of the search. This is where the user input the things he wants to search -->
+                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
             </form>
         </div>
     </nav>
@@ -265,42 +263,12 @@
                                            } else {
                                                $star =  "/app/background/nostar.png";
                                            }
-                                          echo "<tr><td><a href='/User/regularEditAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
-                                           <td ><a href='/User/regularEditAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
-                                           <td><a  href='/User/regularEditAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
+                                          echo "<tr><td><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
+                                           <td ><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
+                                           <td><a  href='/User/EditAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
                                            <td><a href='/User/addFavAnime/" . $anime->anime_id . "'><img src='" .
                                            $star . "' alt=''></a></td>
                                                        </tr>";
-
-                                           echo "<div class='form-popup' id='myForm'>
-                                           <form action='' class='form-container' method='POST'>
-                                             <label for='status' style='color: white;'>Status</label>
-                                           <select name='status' id='status'>
-                                           <option value='Planning'>Planning</option>
-                                           <option value='watching'>Watching</option>
-                                             <option value='finished'>Finished</option>
-                                             <option value='paused'>Paused</option>
-                                             <option value='dropped'>Dropped</option>
-                                           </select>
-                                           <label for='rating' style='color: white;'>Status</label>
-                                           <select name='rating' id='rating'>
-                                             <option value='$anime->rating' selected>$anime->rating</option>
-                                             <option value='1'>0</option>
-                                             <option value='2'>1</option>
-                                             <option value='3'>2</option>
-                                             <option value='4'>3</option>
-                                             <option value='5'>5</option>
-                                             <option value='6'>6</option>
-                                             <option value='7'>7</option>
-                                             <option value='8'>8</option>
-                                             <option value='9'>9</option>
-                                             <option value='10'>10</option>
-                                           </select>
-                                           <br><br>
-                                             <button type='submit' class='btn' name='action'>Confirm</button>
-                                           </form>
-                                         </div>";
-                                       }
                                         ?>
                                         </tbody>
                                     </table>

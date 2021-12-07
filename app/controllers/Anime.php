@@ -142,8 +142,20 @@ class Anime extends \app\core\Controller {
 
         // this code needs to be implemented.
         if (isset($_POST["add"])) {
-            $this->view("Anime/adminAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
-            return;
+            $favorite = 'n';
+            $rating = '0';
+            if (isset($_POST['action'])) {
+              if (!$anime->getAnimeFromList($anime->anime_id, $animelist->animelist_id)) {
+                    $anime->addAnimeToList($anime->anime_id, $animelist->animelist_id, $_POST['status'], $favorite, $rating);
+                    $this->view("Anime/adminAnimePage", ["anime" => $anime, "response" => "added", "user" => $user, "profile" => $profile]);
+                    return;
+              } else {
+                 $this->view("Anime/adminAnimePage", ["anime" => $anime, "response" => "error", "user" => $user, "profile" => $profile]);
+                  return;
+              }
+        }
+
+        $this->view("Anime/adminAnimePage", ["anime" => $anime, "user" => $user, "profile" => $profile]);
         }
 
         // editing an anime.

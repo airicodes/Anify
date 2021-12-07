@@ -209,6 +209,10 @@
                     <!-- To go to the browse page -->
                     <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
                 </li>
+                <li class="nav-item">
+                    <!-- To go to the browse page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regulars">regulars list</a>
+                </li>
             </ul>
             <!-- This is for the search bar -->
             <form class="d-flex justify-content-center">

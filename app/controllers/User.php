@@ -287,12 +287,18 @@ class User extends \app\core\Controller {
     // method to go to the admin's anime list page
     #[\app\filters\Regular]
     public function adminAnimeList() {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
+        $allAnimeFromList = $anime->getAllAnimeFromList($animelist->animelist_id);
+        $allFavAnimeFromList = $anime->getAllFavAnimeFromList($animelist->animelist_id);
 
-        $this->view("User/adminAnimeList", ["user" => $user, "profile" => $profile]);
+        $this->view("User/adminAnimeList", ["user" => $user, "profile" => $profile, "list"=> $allAnimeFromList,
+    "favlist" => $allFavAnimeFromList]);
     }
 
     // method to go to the regular user's anime list page
@@ -365,7 +371,6 @@ class User extends \app\core\Controller {
         $this->view("User/regularBrowse", ["anime" => $allAnime, "user" => $user, "profile" => $profile]);
     }
 
-    #[\app\filters\Admin]
     public function addFavAnime($anime_id) {
         $anime = new \app\models\Anime();
         $animelist = new \app\models\Animelist();
@@ -388,10 +393,15 @@ class User extends \app\core\Controller {
                 }
             }
         }
-        header("location:".BASE."User/regularAnimeList");
+
+        if ($_SESSION['role'] == 'admin') {
+            header("location:".BASE."User/adminAnimeList");
+        } else {
+            header("location:".BASE."User/regularAnimeList");
+        }
     }
 
-    public function regularEditAnimeList($anime_id) {
+    public function EditAnimeList($anime_id) {
         $anime = new \app\models\Anime();
         $animelist = new \app\models\Animelist();
         $user = new \app\models\User();
@@ -402,10 +412,15 @@ class User extends \app\core\Controller {
         $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
         if (isset($_POST['action'])) {
             $anime->UpdateAnimeFromList($animelist->animelist_id, $anime->anime_id, $_POST['status'], $_POST['rating']);
-            header("location:".BASE."User/regularAnimeList");
-            return;
+            if ($_SESSION['role'] == 'admin') {
+                header("location:".BASE."User/adminAnimeList");
+                return;
+            } else {
+                header("location:".BASE."User/regularAnimeList");
+                return;
+            }
         }
-        $this->view("User/regularEditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
+        $this->view("User/EditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
     }
 
     // A method that deletes a post of a regular user and admin
@@ -473,4 +488,67 @@ class User extends \app\core\Controller {
             header("location:".BASE."User/adminMessages");        
         }
 	}
+
+    // bringing admins to the view of all the regular users.
+    #[\app\filters\Regular]
+    public function regulars() {
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $user = new \app\models\User();
+        $regulars = $user->getRegulars();
+
+
+        $this->view("User/regulars", ["user" => $user, "profile" => $profile, "regulars" => $regulars]);
+    }
+
+    // This is the search for admins searching for regulars.
+    #[\app\filters\Regular]
+    public function searchRegulars() {
+        $user = new \app\models\User();
+        $regulars = $user->searchRegular($_POST["search"]);
+        $admin = new \app\models\User();
+        $admin = $admin->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+
+        $this->view("User/regulars", ["user" => $admin, "profile" => $profile, "regulars" => $regulars]);
+    }
+
+    // method so that an admin can delete a regular, the admin is asked if he is sure before.
+    #[\app\filters\Regular]
+    public function deleteRegular($user_id) {
+        $user = new \app\models\User();
+        $user = $user->getUser($user_id);
+
+        if (isset($_POST["cancel"])) {
+            header("location:".BASE."User/regulars");
+        }
+
+        if (isset($_POST["delete"])) {
+            $user->deleteUser();
+            header("location:".BASE."User/regulars");
+        }
+
+        $this->view("User/deleteRegular", $user);
+    }
+
+    public function RemoveAnimeFromList($anime_id) {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
+        $anime->deleteAnimeFromList($anime->anime_id, $animelist->animelist_id);
+        print_r('hello');
+        if ($_SESSION['role'] == 'admin') {
+            header("location:".BASE."User/adminAnimeList");
+        } else {
+            header("location:".BASE."User/regularAnimeList");
+        }
+    }
 }
