@@ -233,6 +233,8 @@
                             <!-- Anime List -->
                             <a class="nav-item mx-1 text-center nav-link text-light active disabled">anime list</a>
                             <!-- Manga List -->
+                            <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAdminProfileReviews/<?=$data["user"]->user_id;?>">reviews</a>
+
                             <a class="nav-item mx-1 text-center nav-link text-danger"
                                 href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id;?>">send message</a>
                             <!-- Settings -->

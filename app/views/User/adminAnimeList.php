@@ -243,6 +243,8 @@
                         <a class="nav-item mx-1 text-center nav-link text-light active disabled">anime list</a>
                         <!-- Messages -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
+                        <!-- Reviews -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/Reviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>

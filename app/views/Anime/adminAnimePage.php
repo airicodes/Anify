@@ -93,6 +93,51 @@
         #smallProfileIcon {
             width: 50px;
         }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+        /* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  border: 3px solid black;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #03050D;
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
         
 
     </style>
@@ -164,19 +209,35 @@
                     <div class="row">
                         <!-- The column for the image, anime title, and add button -->
                         <div class="d-flex flex-column col-4 mt-3">
-                            <!-- The image of the anime -->
-                            <img id="animeImage" src="<?=$data["anime"]->picture_link;?>" alt="">
-                            <!-- The anime title -->
-                            <h2 class="text-center text-light mt-2"><?=$data["anime"]->anime_name;?></h2>
-                            <!-- The add anime button -->
-                            <form action="" method="POST">
-                                <!-- add to anime list. -->
-                                <button name="add" type="submit" id="addAnimeButton" class="btn btn-outline-info text-light align-self-center mt-3">Add to list</button>
-                                <!-- The edit anime button -->
-                                <button name="edit" type="submit" id="addAnimeButton" class="btn btn-outline-warning text-light align-self-center mt-3">Edit</button>
+                            <center>
+                                <!-- The image of the anime -->
+                                <img id="animeImage" src="<?=$data['anime']->picture_link;?>" alt="">
+                                <!-- The anime title -->
+                                <h2 class="text-center text-light mt-2"><?=$data["anime"]->anime_name;?></h2>
+                                <!-- The add anime button -->
+                                    <button name="action" id="addAnimeButton" onclick="openForm()"
+                                        class="btn btn-outline-info text-light align-self-center mt-3 p-2">Add to
+                                        list</button>
+                                        <button name="edit" type="submit" id="addAnimeButton" class="btn btn-outline-warning text-light align-self-center mt-3">Edit</button>
                                 <!-- The remove anime button -->
                                 <button name="delete" type="submit" id="addAnimeButton" class="btn btn-outline-danger text-light align-self-center mt-3">Remove</button>
-                            </form>
+           
+
+<div class="form-popup" id="myForm">
+  <form action="" class="form-container" method='POST'>
+    <label for="status" style='color: white;'>Status</label>
+  <select name="status" id="status">
+  <option value="Planning">Planning</option>
+  <option value="Watching">Watching</option>
+    <option value="Finished">Finished</option>
+    <option value="Paused">Paused</option>
+    <option value="Dropped">Dropped</option>
+  </select>
+  <br><br>
+    <button type="submit" class="btn" name="action">Confirm</button>
+  </form>
+</div>
+                            </center>
                         </div>
 
                         <!-- The column for the anime description -->
@@ -214,7 +275,22 @@
         </div>
     </div>
     <center>
+        <!-- If the anime was successfully added -->
         <a class="text-decoration-none text-light" href="<?=BASE?>User/adminBrowse">Go back</a>
+        <br><br>
+        <?php
+        if ($data != null) {
+            if ($data['response'] == 'added') {
+                echo "<div class='alert alert-primary' role='alert'>
+                 <b>" . $data['anime']->anime_name . "</b> has been added to your <a href='/User/adminAnimeList/' class='alert-link'> list.</a>
+                </div>";
+            } else if ($data['response'] == 'error') {
+                echo "<div class='alert alert-secondary' role='alert'>
+                You already have <b>" . $data['anime']->anime_name . "</b> in your  <a href='/admin/adminAnimeList/' class='alert-link'> list.</a>
+                </div>";
+            }
+        }
+         ?>
     </center>
      <!-- Footer -->
      <footer>
@@ -222,6 +298,18 @@
             <img id="logo" src="/app/background/ProblemSolversLogo.png" alt="">
         </div>
     </footer>
+
+    <script>
+function openForm() {
+ if (document.getElementById("myForm").style.display == "block") {
+    document.getElementById("myForm").style.display = "none";
+ } else {
+    document.getElementById("myForm").style.display = "block";
+ }
+
+}
+
+</script>
     
 </body>
 </html>

@@ -149,4 +149,27 @@ class Anime extends \app\core\Model {
         return $STMT->fetchAll();
     }
 
+    public function addReview($review, $user_id, $anime_id) {
+        $SQL = "INSERT INTO user_review(review, user_id, anime_id)
+            VALUES (:review, :user_id, :anime_id)";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["review"=>$review, "user_id"=>$user_id, "anime_id"=>$anime_id]);
+    }
+
+    public function getAllReviews($user_id) {
+        $SQL = "SELECT * FROM user_review WHERE user_id = :user_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["user_id"=>$user_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Review");
+        return $STMT->fetchAll();
+    }
+
+    public function updateReview($user_review_id, $user_id) {
+        $SQL = "SELECT * FROM user_review WHERE user_id = :user_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["user_id"=>$user_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Review");
+        return $STMT->fetchAll();
+    }
+
 }

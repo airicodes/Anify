@@ -217,17 +217,16 @@
                 <!-- The SECOND NAV BAR -->
                 <nav id="secondNavbar" class="navbar navbar-expand-lg">
                     <div class="collapse navbar-collapse">
-                        <div class="navbar-nav">
-                            <!-- Posts -->
-                            <a class="nav-item mx-1 text-center nav-link text-light"
+                      <div class="navbar-nav">
+                        <!-- Posts -->
+                        <a class="nav-item mx-1 text-center nav-link text-light"
                                 href="<?=BASE?>Profile/regularSearchProfile/<?php echo $data["user"]->user_id; ?>">posts</a>
-                            <!-- Anime List -->
-                            <a class="nav-item mx-1 text-center nav-link text-light active disabled">anime list</a>
-                            <!-- Manga List -->
-                            <a class="nav-item mx-1 text-center nav-link text-danger"
-                                href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id; ?>">send message</a>
-                            <!-- Settings -->
-                        </div>
+                        <!-- Anime List -->
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled"  href="<?=BASE?>Profile/otherAnimeList/<?php echo $data['user']->user_id; ?>">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherRegularProfileReviews/<?=$data["user"]->user_id;?>">reviews</a>
+                        <!-- Send Message -->
+                        <a class="nav-item mx-1 text-center nav-link text-danger" href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id; ?>">send messages</a>
+                      </div>
                     </div>
                 </nav>
 

@@ -208,8 +208,10 @@
                         <a class="nav-item mx-1 text-center nav-link text-light active disabled">posts</a>
                         <!-- Anime List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminAnimeList">anime list</a>
-                        <!-- Manga List -->
+                        <!-- Messages -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
+                        <!-- Reviews -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/Reviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>
@@ -257,9 +259,9 @@
                         </h6>
 
                         <form class="pt-3" action="" method="POST">
-                            <textarea name="userPost" id="" cols="30" rows="3" style="resize: none;" placeholder="Enter your post here..."></textarea>
+                            <textarea name="userPost" id="" cols="30" rows="3" style="margin-left: -80%; resize: none;" placeholder="Enter your post here..."></textarea>
                             <br>
-                            <button id="submitButton" name="submitPost" type="submit" class="btn btn-outline-primary mt-2">Post</button>
+                            <button id="submitButton" name="submitPost" style="margin-left: 55%;" type="submit" class="btn btn-outline-primary mt-2">Post</button>
                         </form>
                     </div>
                 </div>

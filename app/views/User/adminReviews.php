@@ -91,34 +91,74 @@
             width: 200px;
         }
 
-        /* Change the size of the message box inside the message table */
-        #messageBox {
-            width: 500px;
+        /* To change the color of the anime table */
+        #animeTable {
+            background-color: #35416C;
         }
 
-        /* To change the position of the message options: Sent, Read Reread */
-        #messageOptions {
-            width: 500px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        /* To remove the text decoration of the links */
-        .links {
-            text-decoration: none;
-            color: white;
-            padding-left: 10px;
-        }
-
-        /* To change the color of the link when the user hovers */ 
-        .links:hover{
-            color: #E168BF !important;
+        /* To change the color of the favourite table */
+        #favouriteTable {
+            background-color: #35416C;
         }
 
         .pfp {
             width: 60%;
         }
 
+        .table-hover tbody a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .table-hover tbody tr:hover td,
+        .table-hover tbody tr:hover th {
+            color: #E168BF;
+        }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+        /* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  border: 3px solid black;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 2px;
+  margin-bottom:10px;
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -139,7 +179,7 @@
                     <a class="nav-link text-light" href="<?=BASE?>Anime/addAnime">add anime</a>
                 </li>
                 <li class="nav-item">
-                    <!-- To browse anime -->
+                    <!-- To go to the browse anime page -->
                     <a class="nav-link text-light" href="<?=BASE?>User/adminBrowse">browse</a>
                 </li>
                 <li class="nav-item">
@@ -148,15 +188,14 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" name="" type="submit">
+            <form class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <!-- The input of the search. This is where the user input the things he wants to search -->
-                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
             </form>
         </div>
     </nav>
@@ -172,7 +211,7 @@
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- admin logo -->
                 <div class="d-flex flex-column">
-                <button id="adminlogo" class="btn btn-danger align-self-center disabled"> administrator</button>
+                <button id="adminlogo" class="btn btn-danger align-self-center disabled">administrator</button>
                 <!-- Edit and delete button -->
                 </div>
                 <div class="mt-3 d-flex flex-row">
@@ -186,7 +225,7 @@
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->
                 <p class="text-light">
-                    <?php
+                    <?php 
                         echo $data["profile"]->bio;
                     ?>
                 </p>
@@ -201,11 +240,11 @@
                         <!-- Posts -->
                         <a class="nav-item mx-1 text-center nav-link text-light " href="<?=BASE?>User/adminIndex">posts</a>
                         <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminAnimeList">anime list</a>
-                        <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">messages</a>
+                        <a class='nav-item mx-1 text-center nav-link text-light' href='<?=BASE?>User/adminAnimeList'>anime list</a>
+                        <!-- Messages -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
                         <!-- Reviews -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/Reviews">reviews</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="<?=BASE?>User/Reviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>
@@ -215,26 +254,30 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
-                        <table class="table">
-                            <tbody>
-                                <?php
-                                    $sender = new \app\models\User();
-                                    $helper = new \app\core\Helper();
-                                    foreach($data["messages"] as $message) {
-                                        $sender = $sender->getUser($message->sender);
-                                        echo "<tr><td id='messageBox' class='text-light'>From: $sender->username <br> $message->message  <br> $message->read_status {$helper::ConvertDateTime($message->timestamp)}</td>
-                                        <td id='messageOptions' class='text-light'>
-                                            <a class='links' href='/User/unReadStatus/$message->message_id'>Unread</a>
-                                            <a class='links' href='/User/readStatus/$message->message_id'>Read</a>
-                                            <a class='links' href='/User/reReadStatus/$message->message_id'>Reread</a>
-                                            <a class='links' href='/User/deleteMessage/$message->message_id'>Delete</a>
-                                        </td>
-                                        </tr>";
-                                    }
-                                ?>
-                            </tbody>
-                        </table>
+                    <div class="container">
+                        <div class="row">
+                            <!-- This div is for the ALL ANIME TABLE -->
+                            <div class="col-14 d-flex flex-column">
+                                <h1 class="text-light text-center">Reviews</h1>
+                                <!-- To make a scrollable table -->
+                                <div style="height: 468px;overflow: scroll;">
+                                    <!-- The table itself -->
+                                    <table class="table table-hover table-borderless text-light">
+                                        <tbody>
+                                            <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
+                                        <?php
+                                        $anime = new \app\models\Anime();
+                                        foreach ($data["reviews"] as $review) {
+                                        $anime = $anime->getAnime($review->anime_id);
+                                          echo "<tr><td><a href='/User/EditReview/$review->user_review_id'>" . "Review of " . $anime->anime_name  . "</td>
+                                                       </tr>";
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -544,6 +544,49 @@ class Profile extends \app\core\Controller {
         }
     }
 
+    public function viewReview($user_review_id, $user_id) {
+        $anime = new \app\models\Anime();
+        $review = new \app\models\Review();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($user_id);
+        $review = $review->getReview($user_review_id, $user->user_id);
+        $anime = $anime->getAnime($review->anime_id);
+
+        $this->view('Profile/OtherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
+    }
+
+    public function otherAdminProfileReviews($user_id) {
+            $anime = new \app\models\Anime();
+            $user = new \app\models\User();
+            $user = $user->getUser($user_id);
+            $profile = new \app\models\Profile();
+            $profile = $profile->getProfile($user_id);
+            $reviews = $anime->getAllReviews($user_id);
+    
+            if ($_SESSION['role'] == 'admin') {
+                $this->view("Profile/otherAdminProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+            } else {
+                $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+            }
+    }
+
+    public function otherRegularProfileReviews($user_id) {
+        $anime = new \app\models\Anime();
+        $user = new \app\models\User();
+        $user = $user->getUser($user_id);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($user_id);
+        $reviews = $anime->getAllReviews($user_id);
+
+        if ($_SESSION['role'] == 'admin') {
+            $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+        } else {
+            $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+        }
+}
+    
+
     // Method allows other user to send message to each other
     public function sendMessage($user_id) {
         $user = new \app\models\User();
@@ -719,4 +762,6 @@ class Profile extends \app\core\Controller {
     
             $this->view("Profile/editRegular", ["user" => $user, "profile" => $profile, "error" => ""]);
         }
+
+
 }

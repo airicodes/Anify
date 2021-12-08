@@ -168,13 +168,33 @@
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
-                </li>
-                <li class="nav-item">
-                    <!-- To go to the regular browse page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
-                </li>
+            <?php
+                    if ($_SESSION['role'] == 'admin') {
+                        echo '<li class="nav-item">
+                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
+                    </li>
+                    <!-- To go to ADD ANIME PAGE -->
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Anime/addAnime">add anime</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse anime page -->
+                        <a class="nav-link text-light" href="/User/adminBrowse">browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse page -->
+                        <a class="nav-link text-light" href="/User/regulars">regulars list</a>
+                    </li>';
+                    } else {
+                        echo '<li class="nav-item">
+                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse anime page -->
+                        <a class="nav-link text-light" href="/User/regularBrowse">browse</a>
+                    </li>';
+                    }
+                ?>
             </ul>
             <!-- This is for the search bar -->
             <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
@@ -201,16 +221,6 @@
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
-                <div class="mt-3 d-flex flex-row">
-                    <form action="<?=BASE?>Profile/editProfileButton" method="POST">
-                        <button name="editProfile" id="editProfileButton" type="submit"
-                            class="btn btn-outline-info">Edit Profile</button>
-                    </form>
-                    <form action="<?=BASE?>User/deleteAccountButton" method="POST">
-                        <button name="deleteAccount" id="deleteProfileButton" type="submit"
-                            class="btn btn-outline-danger">Delete Account</button>
-                    </form>
-                </div>
                 <h5 class="text-light mt-3">bio</h5>
                 <!-- Bio -->
                 <p class="text-light">
@@ -225,21 +235,15 @@
                 <!-- The SECOND NAV BAR -->
                 <nav id="secondNavbar" class="navbar navbar-expand-lg">
                     <div class="collapse navbar-collapse">
-                        <div class="navbar-nav">
-                            <!-- Posts -->
-                            <a class="nav-item mx-1 text-center nav-link text-light"
-                                href="<?=BASE?>User/regularIndex">posts</a>
-                            <!-- Anime List -->
-                            <a class="nav-item mx-1 text-center nav-link text-light active disabled">anime list</a>
-                            <!-- Manga List -->
-                            <a class="nav-item mx-1 text-center nav-link text-light"
-                                href="<?=BASE?>User/regularMessages">messages</a>
-                                <!-- Reviews -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularReviews">reviews</a>
-                            <!-- Settings -->
-                            <a class="nav-item mx-1 text-center nav-link text-light"
-                                href="<?=BASE?>User/regularSettings">settings</a>
-                        </div>
+                      <div class="navbar-nav">
+                        <!-- Posts -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/regularSearchProfile/<?php echo $data["user"]->user_id; ?>">posts</a>
+                        <!-- Anime List -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAnimeList/<?php echo $data["user"]->user_id; ?>">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="<?=BASE?>Profile/otherRegularProfileReviews/<?=$data["user"]->user_id;?>">reviews</a>
+                        <!-- Send Message -->
+                        <a class="nav-item mx-1 text-center nav-link text-danger" href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id; ?>">send messages</a>
+                      </div>
                     </div>
                 </nav>
 
@@ -249,8 +253,8 @@
                     <div class="container">
                         <div class="row">
                             <!-- This div is for the ALL ANIME TABLE -->
-                            <div class="col-6 d-flex flex-column">
-                                <h1 class="text-light text-center">All</h1>
+                            <div class="col-14 d-flex flex-column">
+                                <h1 class="text-light text-center">Reviews</h1>
                                 <!-- To make a scrollable table -->
                                 <div style="height: 468px;overflow: scroll;">
                                     <!-- The table itself -->
@@ -258,44 +262,13 @@
                                         <tbody>
                                             <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
                                         <?php
-                                        $star = "";
-                                        foreach ($data["list"] as $anime) {
-                                           if ($anime->favorite == 'y') {
-                                               $star =  "/app/background/withstar.png";
-                                           } else {
-                                               $star =  "/app/background/nostar.png";
-                                           }
-                                          echo "<tr><td><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
-                                           <td ><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
-                                           <td><a  href='/User/EditAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
-                                           <td><a href='/User/addFavAnime/" . $anime->anime_id . "'><img src='" .
-                                           $star . "' alt=''></a></td>
+                                        $anime = new \app\models\Anime();
+                                        foreach ($data["reviews"] as $review) {
+                                        $anime = $anime->getAnime($review->anime_id);
+                                          echo "<tr><td><a href='/Profile/viewReview/$review->user_review_id/$review->user_id'>" . "Review of " . $anime->anime_name  . "</td>
                                                        </tr>";
                                         }
                                         ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- This div is for the FAVOURITES -->
-                            <div class="col-6 d-flex flex-column">
-                                <h1 class="text-light text-center">Favorite</h1>
-                                <!-- To make a scrollable table -->
-                                <div style="height: 468px;overflow: scroll;">
-                                    <!-- The table itself -->
-                                    <table class="table table-hover table-borderless text-light">
-                                        <tbody>
-                                            <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
-                                            <?php
-                                                foreach ($data["favlist"] as $favanime) {
-                                                echo "<tr><td><p href=''>" . $favanime->anime_name . "</p></td>
-                                                    <td><p href=''>" . $favanime->watching_status . "</p></td>
-                                                    <td><p href=''>" . $favanime->rating . "</p></td>
-                                                    <td><p href=''><img src='\app/backgrounds/nostar.png' alt=''></p></td>
-                                                                </tr>";
-                                                }
-                                            ?>
                                         </tbody>
                                     </table>
                                 </div>

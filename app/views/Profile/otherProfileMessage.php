@@ -217,6 +217,7 @@
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/regularSearchProfile/<?php echo $data["user"]->user_id; ?>">posts</a>
                         <!-- Anime List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAnimeList/<?php echo $data["user"]->user_id; ?>">anime list</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherRegularProfileReviews/<?=$data["user"]->user_id;?>">reviews</a>
                         <!-- Send Message -->
                         <a class="nav-item mx-1 text-center nav-link text-danger active disabled" href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id; ?>">send messages</a>
                       </div>

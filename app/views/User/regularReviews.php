@@ -1,18 +1,19 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-
         /* To insert the Poppins font style */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');   
-        
-        #body{
-            background-color: #1E2336; 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        #body {
+            background-color: #1E2336;
             padding: 20px;
             font-family: 'Poppins', sans-serif;
+            height: 100%;
         }
 
         /* Change the color of the fy in Anify */
@@ -44,7 +45,8 @@
             padding-bottom: 20px;
         }
 
-        #editProfileButton{
+
+        #editProfileButton {
             width: 140px;
             margin-right: 10px;
         }
@@ -53,24 +55,30 @@
             margin-left: 8px;
         }
 
-        #secondNavbar .navbar-nav .nav-item{
+        /* Change the location of the second nav bar */
+        #secondNavbar {
+            margin-top: -2%;
+        }
+
+        /* Change the size the of nav item */
+        #secondNavbar .navbar-nav .nav-item {
             font-size: 25px;
             width: 150px;
         }
 
         /* For the hovering effect of the second navbar */
-        #secondNavbar .navbar-nav a:hover{
+        #secondNavbar .navbar-nav a:hover {
             color: #E168BF !important;
         }
 
         /* changing the color of the active nav item */
-        #secondNavbar .navbar-nav a.active{
+        #secondNavbar .navbar-nav a.active {
             background-color: #151929;
             border-radius: 25px;
         }
-        
+
         /* the box where all the anime list and manga list are located */
-        #listBox{
+        #listBox {
             background-color: rgba(3, 5, 13, 0.61);
             width: 1000px;
             height: max-content;
@@ -81,46 +89,83 @@
         /* To change the position of the logo */
         #logo {
             width: 200px;
-            margin-top: 0.5%;
-        }
-
-        /* Change the size of the message box inside the message table */
-        #messageBox {
-            width: 500px;
-        }
-
-        /* To change the position of the message options: Sent, Read Reread */
-        #messageOptions {
-            width: 500px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        /* To remove the text decoration of the links */
-        .links {
-            text-decoration: none;
-            color: white;
-            padding-left: 10px;
-        }
-
-        /* To change the color of the link when the user hovers */ 
-        .links:hover{
-            color: #E168BF !important;
+            margin-top: -0.2%;
         }
 
         .pfp {
             width: 60%;
         }
 
+        .table-hover tbody a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .table-hover tbody tr:hover td,
+        .table-hover tbody tr:hover th {
+            color: #E168BF;
+        }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  border: 3px solid black;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 2px;
+  margin-bottom:10px;
+}
+
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
     </style>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
 </head>
+
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="fy">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex">
+            <h2>An<b id="fy">ify</b></h2>
+        </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -151,16 +196,19 @@
             <!-- the user information box -->
             <div id="userInformationBox" class="col-3 mt-5">
                 <!-- Profile Picture -->
-                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp" src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
+                <img class="rounded-circle mt-3 img-responsive center-block d-block mx-auto pfp"
+                    src="<?php echo $data["profile"]->filename; ?>" data-rendered="true">
                 <!-- Username -->
                 <h2 class="text-center text-light mt-2"><?php echo $data["user"]->username; ?></h2>
                 <!-- Edit and delete button -->
                 <div class="mt-3 d-flex flex-row">
                     <form action="<?=BASE?>Profile/editProfileButton" method="POST">
-                        <button name="editProfile" id="editProfileButton" type="submit" class="btn btn-outline-info">Edit Profile</button>
+                        <button name="editProfile" id="editProfileButton" type="submit"
+                            class="btn btn-outline-info">Edit Profile</button>
                     </form>
                     <form action="<?=BASE?>User/deleteAccountButton" method="POST">
-                        <button name="deleteAccount" id="deleteProfileButton" type="submit" class="btn btn-outline-danger">Delete Account</button>
+                        <button name="deleteAccount" id="deleteProfileButton" type="submit"
+                            class="btn btn-outline-danger">Delete Account</button>
                     </form>
                 </div>
                 <h5 class="text-light mt-3">bio</h5>
@@ -177,43 +225,51 @@
                 <!-- The SECOND NAV BAR -->
                 <nav id="secondNavbar" class="navbar navbar-expand-lg">
                     <div class="collapse navbar-collapse">
-                      <div class="navbar-nav">
-                        <!-- Posts -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularIndex">posts</a>
-                        <!-- Anime List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularAnimeList">anime list</a>
-                        <!-- Manga List -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled">messages</a>
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularReviews">reviews</a>
-                        <!-- Settings -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularSettings">settings</a>
-                      </div>
+                        <div class="navbar-nav">
+                            <!-- Posts -->
+                            <a class="nav-item mx-1 text-center nav-link text-light"
+                                href="<?=BASE?>User/regularIndex">posts</a>
+                            <!-- Anime List -->
+                            <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularAnimeList">anime list</a>
+                            <!-- Reviews -->
+                            <!-- Messages -->
+                            <a class="nav-item mx-1 text-center nav-link text-light"
+                                href="<?=BASE?>User/regularMessages">messages</a>
+                                <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="<?=BASE?>User/regularReviews">reviews</a>
+                            <!-- Settings -->
+                            <a class="nav-item mx-1 text-center nav-link text-light"
+                                href="<?=BASE?>User/regularSettings">settings</a>
+                        </div>
                     </div>
                 </nav>
 
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 468px;overflow: scroll;">
-                        <table class="table">
-                            <tbody>
-                                <?php
-                                    $sender = new \app\models\User();
-                                    $helper = new \app\core\Helper();
-                                    foreach($data["messages"] as $message) {
-                                        $sender = $sender->getUser($message->sender);
-                                        echo "<tr><td id='messageBox' class='text-light'>From: $sender->username <br> $message->message  <br> $message->read_status {$helper::ConvertDateTime($message->timestamp)}</td>
-                                        <td id='messageOptions' class='text-light'>
-                                            <a class='links' href='/User/unReadStatus/$message->message_id'>Unread</a>
-                                            <a class='links' href='/User/readStatus/$message->message_id'>Read</a>
-                                            <a class='links' href='/User/reReadStatus/$message->message_id'>Reread</a>
-                                            <a class='links' href='/User/deleteMessage/$message->message_id'>Delete</a>
-                                        </td>
-                                        </tr>";
-                                    }
-                                ?>
-                            </tbody>
-                        </table>
+                    <div class="container">
+                        <div class="row">
+                            <!-- This div is for the ALL ANIME TABLE -->
+                            <div class="col-14 d-flex flex-column">
+                                <h1 class="text-light text-center">Reviews</h1>
+                                <!-- To make a scrollable table -->
+                                <div style="height: 468px;overflow: scroll;">
+                                    <!-- The table itself -->
+                                    <table class="table table-hover table-borderless text-light">
+                                        <tbody>
+                                            <!-- One row of the table. We need to put a for loop here so can can have multiple values -->
+                                        <?php
+                                        $anime = new \app\models\Anime();
+                                        foreach ($data["reviews"] as $review) {
+                                        $anime = $anime->getAnime($review->anime_id);
+                                          echo "<tr><td><a href='/User/EditReview/$review->user_review_id'>" . "Review of " . $anime->anime_name  . "</td>
+                                                       </tr>";
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

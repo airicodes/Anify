@@ -228,6 +228,7 @@
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularAnimeList">anime list</a>
                         <!-- Manga List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularMessages">messages</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/regularReviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light active disabled">settings</a>
                       </div>

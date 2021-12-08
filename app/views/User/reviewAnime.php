@@ -36,7 +36,7 @@
         /*  The design of the box in the middle */
         #loginBox {
             width: 650px;
-            height: 500px;
+            height: 600px;
             background-color: #03050D;
             border-radius: 25px;
             opacity: 80%;
@@ -214,6 +214,11 @@
             margin-top: 5%;
             margin-right: 65%;
         }
+
+        .asd { 
+            font-size: 2px; 
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -233,34 +238,14 @@
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <?php
-                    if ($_SESSION['role'] == 'admin') {
-                        echo '<li class="nav-item">
-                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
-                    </li>
-                    <!-- To go to ADD ANIME PAGE -->
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/Anime/addAnime">add anime</a>
-                    </li>
-                    <li class="nav-item">
-                        <!-- To go to the browse anime page -->
-                        <a class="nav-link text-light" href="/User/adminBrowse">browse</a>
-                    </li>
-                    <li class="nav-item">
-                        <!-- To go to the browse page -->
-                        <a class="nav-link text-light" href="/User/regulars">regulars list</a>
-                    </li>';
-                    } else {
-                        echo '<li class="nav-item">
-                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
-                    </li>
-                    <li class="nav-item">
-                        <!-- To go to the browse anime page -->
-                        <a class="nav-link text-light" href="/User/regularBrowse">browse</a>
-                    </li>';
-                    }
-                ?>
                 <!-- To go to ABOUT PAGE -->
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
+                </li>
+                <li class="nav-item">
+                    <!-- To go to the browse anime page -->
+                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
+                </li>
             </ul>
             <!-- This is for the search bar -->
             <form class="d-flex justify-content-center">
@@ -282,63 +267,21 @@
         <h1 id="websiteName" class="text-light text-center">An<b id="ify">ify</b></h1>
         <div id="loginBox" class="mx-4">
             <div class="text-center">
-                <br>
-                <h1 class="mt-2 text-light recommended">Editing Entry For</h1>
-                <br>
+                <h1 class="mt-2 text-light recommended">Making a review for</h1>
                 <form action="" method="POST" enctype="">
                     <!-- Where user enters new username -->
                     <h2 style='color: white;'><?=$data['anime']->anime_name;?><h2>
                     <!-- Where the user input his new password -->
+                    <p style='color: white; font-size: 10pt'>1000 characters max</p>
+                    <textarea name="review" style="font-size: 15pt" cols="30" rows="12"></textarea>
                     <br>
-                    <label for='status' style='color: white;'>Status</label>
-                    <select name='status' id='status'>
-                    <option value="<?=$data['anime']->watching_status?>" selected="selected" hidden="hidden"><?=$data['anime']->watching_status?></option>
-                        <option value='Planning'>Planning</option>
-                        <option value='watching'>Watching</option>
-                        <option value='finished'>Finished</option>
-                        <option value='Paused'>Paused</option>
-                        <option value='dropped'>Dropped</option>
-                    </select>
-                    <label for='rating' style='color: white;'>Rating</label>
-                    <select name='rating' id='rating'>
-                    <option value="<?=$data['anime']->rating?>" selected="selected" hidden="hidden"><?=$data['anime']->rating?></option>
-                        <option value='0'>0</option>
-                        <option value='1'>1</option>
-                        <option value='2'>2</option>
-                        <option value='3'>3</option>
-                        <option value='4'>4</option>
-                        <option value='5'>5</option>
-                        <option value='6'>6</option>
-                        <option value='7'>7</option>
-                        <option value='8'>8</option>
-                        <option value='9'>9</option>
-                        <option value='10'>10</option>
-                    </select>
+                    <button name="action" id="loginButton" type="action" class="btn btn-secondary btn-lg">Complete review</button>
                     <br>
-                    <br>
-                    <a class='btn btn-danger' href="/User/RemoveAnimeFromList/<?=$data['anime']->anime_id?>">Delete from list</a>
-                    <a class='btn btn-primary' href="/User/MakeReview/<?=$data['anime']->anime_id?>">Make a review</a>
-                    <br>
-                    <button name="action" id="loginButton" type="action" class="btn btn-secondary btn-lg">Save changes</button>
-                    <br><br>
                 </form>
                 <a class="text-light" style="text-decoration:none;" href="<?=BASE?>User/regularAnimeList">Go back</a>
             </div>
             <br>
             <center>
-            <?php
-        if ($data != null) {
-            if ($data['response'] == 'added') {
-                echo "<div class='alert alert-primary' role='alert'>
-                 <b>" . $data['anime']->anime_name . "</b> has been added to your <a href='/User/regularAnimeList/' class='alert-link'> list.</a>
-                </div>";
-            } else if ($data['response'] == 'error') {
-                echo "<div class='alert alert-secondary' role='alert'>
-                You already have <b>" . $data['anime']->anime_name . "</b> in your  <a href='/User/regularAnimeList/' class='alert-link'> list.</a>
-                </div>";
-            }
-        }
-         ?>
             </center>
         </div>
     </div>

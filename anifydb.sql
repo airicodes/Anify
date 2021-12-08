@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 06, 2021 at 06:17 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Host: 127.0.0.1
+-- Generation Time: Dec 08, 2021 at 03:11 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `anifydb`
 --
-CREATE DATABASE IF NOT EXISTS `anifydb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `anifydb`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +27,6 @@ USE `anifydb`;
 -- Table structure for table `anime`
 --
 
-DROP TABLE IF EXISTS `anime`;
 CREATE TABLE `anime` (
   `anime_id` int(11) NOT NULL,
   `anime_name` varchar(100) NOT NULL,
@@ -60,7 +57,6 @@ INSERT INTO `anime` (`anime_id`, `anime_name`, `anime_creator`, `anime_date`, `a
 -- Table structure for table `animelist`
 --
 
-DROP TABLE IF EXISTS `animelist`;
 CREATE TABLE `animelist` (
   `animelist_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
@@ -74,7 +70,8 @@ INSERT INTO `animelist` (`animelist_id`, `user_id`) VALUES
 (1, 29),
 (3, 36),
 (4, 37),
-(5, 38);
+(5, 38),
+(7, 40);
 
 -- --------------------------------------------------------
 
@@ -82,7 +79,6 @@ INSERT INTO `animelist` (`animelist_id`, `user_id`) VALUES
 -- Table structure for table `anime_in_list`
 --
 
-DROP TABLE IF EXISTS `anime_in_list`;
 CREATE TABLE `anime_in_list` (
   `anime_id` int(11) NOT NULL,
   `animelist_id` int(11) NOT NULL,
@@ -96,11 +92,11 @@ CREATE TABLE `anime_in_list` (
 --
 
 INSERT INTO `anime_in_list` (`anime_id`, `animelist_id`, `rating`, `watching_status`, `favorite`) VALUES
-(1, 1, 3, 'dropped', 'y'),
-(2, 1, 10, 'finished', 'n'),
-(3, 1, 0, 'dropped', 'n'),
+(3, 1, 5, 'watching', 'n'),
 (1, 4, 0, 'Watching', 'y'),
-(3, 4, 0, 'Finished', 'n');
+(3, 4, 0, 'Finished', 'n'),
+(2, 1, 6, 'Planning', 'y'),
+(1, 7, 0, 'Planning', 'n');
 
 -- --------------------------------------------------------
 
@@ -108,7 +104,6 @@ INSERT INTO `anime_in_list` (`anime_id`, `animelist_id`, `rating`, `watching_sta
 -- Table structure for table `message`
 --
 
-DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `message_id` int(11) NOT NULL,
   `sender` int(11) NOT NULL,
@@ -136,7 +131,6 @@ INSERT INTO `message` (`message_id`, `sender`, `receiver`, `message`, `timestamp
 -- Table structure for table `post_like`
 --
 
-DROP TABLE IF EXISTS `post_like`;
 CREATE TABLE `post_like` (
   `post_like_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -156,7 +150,6 @@ INSERT INTO `post_like` (`post_like_id`, `user_id`, `profile_post_id`) VALUES
 -- Table structure for table `profile`
 --
 
-DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `profile_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -169,17 +162,17 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
-(3, 11, 'No bio yet...', '/uploads/defaultAvatar.png'),
+(3, 11, 'aaaaera', '/uploads/61aec11111cd4.png'),
 (4, 12, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (5, 13, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (8, 16, 'Ali Zoubeidi was here', '/uploads/defaultAvatar.png'),
 (10, 17, 'asdf', '/uploads/61a5b490d5064.jpg'),
-(14, 24, 'No bio yet...aaaa', '/uploads/defaultAvatar.png'),
 (18, 27, 'asdf', '/uploads/defaultAvatar.png'),
 (24, 29, 'Hi.', '/uploads/61ab0fa489f64.png'),
 (27, 36, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (28, 37, 'JERBEAR IS GAY', '/uploads/defaultAvatar.png'),
-(29, 38, 'Vince', '/uploads/defaultAvatar.png');
+(29, 38, 'Vince', '/uploads/defaultAvatar.png'),
+(31, 40, 'No bio yet...', '/uploads/defaultAvatar.png');
 
 -- --------------------------------------------------------
 
@@ -187,7 +180,6 @@ INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
 -- Table structure for table `profile_post`
 --
 
-DROP TABLE IF EXISTS `profile_post`;
 CREATE TABLE `profile_post` (
   `profile_post_id` int(11) NOT NULL,
   `post` text NOT NULL,
@@ -211,7 +203,6 @@ INSERT INTO `profile_post` (`profile_post_id`, `post`, `date`, `user_id`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -224,18 +215,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
-(11, 'Jeremie', '$2y$10$.jHKBRPadup9L0L/qa8vi.7.9eMUZowjFR7zO21SssVZiX7PhsNp6', 'regular'),
+(11, 'Jeremieea', '$2y$10$.jHKBRPadup9L0L/qa8vi.7.9eMUZowjFR7zO21SssVZiX7PhsNp6', 'regular'),
 (12, 'Vincent', '$2y$10$KzoArnqS9FwGBdLoYolli.N1ya68SksdUKvWgZut5vTpASBc7EEwW', 'regular'),
 (13, 'Jerbear', '$2y$10$t4ustspM3eXgCiHcqc843.FrotG81PElSwejN8eF.l9JbOPgZZw1W', 'regular'),
 (16, 'c', '$2y$10$oDFrcAeRadTzpMayFV2PtOIjJQhh6pgZORcPSxG7DubaUQxufhdne', 'regular'),
 (17, 'zaaaaaaaaaaaaaaaaaa', '$2y$10$hpxBHu1dAwpy1YVE5pto6eAWfT3LXofYi1IeCE.NKJywFA1f6RLQ6', 'regular'),
-(22, 'ass', '$2y$10$Wheen4aBXvDPeOrsT/JEn.DbtukVUPuuVhqTp5/X9DuVfUqqLzHl2', 'regular'),
-(24, 'ali1aa', '$2y$10$Pxq4cmB/8CDbPdQlIquFh.dWVJnmRoricKhoz7BAKPhPY8u1p8BCq', 'regular'),
 (27, 'aliab', '$2y$10$D0PouWBVVSiW5Ig81z/Es.Er3tpD7u1zdb2XgiXQqkDhc4/MTtmIK', 'admin'),
 (29, 'airi', '$2y$10$vAgq7KKdDWY58zjamt3N3eIYMcON3WZqjNfJUFZdTOVez0OBfp8Te', 'admin'),
 (36, 'airii', '$2y$10$zUXSie1vSXAVL3xSkNULfeuNOGEEznu8gO5r7q0BYBBkZBtTjjWoW', 'regular'),
 (37, 'v', '$2y$10$wBCZKRI2JmcfJtpdyMVyze3mAKXW6pUx4roz/wS97KKjR/KX.mYuu', 'regular'),
-(38, 'vincebry', '$2y$10$Ov3GUIbH.Ne0h/qwCB34vOD1QD/mUybOv3gw8cufT3F7uS4Ao4.x6', 'regular');
+(38, 'vincebry', '$2y$10$Ov3GUIbH.Ne0h/qwCB34vOD1QD/mUybOv3gw8cufT3F7uS4Ao4.x6', 'regular'),
+(40, 'airiairi', '$2y$10$l1YxKHmAqY.jB91bpfblJe7k2soKqfEzWyH3LnXjOS95ZlhXwohKq', 'regular');
 
 -- --------------------------------------------------------
 
@@ -243,14 +233,19 @@ INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
 -- Table structure for table `user_review`
 --
 
-DROP TABLE IF EXISTS `user_review`;
 CREATE TABLE `user_review` (
   `user_review_id` int(11) NOT NULL,
   `review` varchar(1000) NOT NULL,
-  `date` date NOT NULL,
   `user_id` int(11) NOT NULL,
   `anime_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_review`
+--
+
+INSERT INTO `user_review` (`user_review_id`, `review`, `user_id`, `anime_id`) VALUES
+(2, 'a', 40, 1);
 
 --
 -- Indexes for dumped tables
@@ -334,7 +329,7 @@ ALTER TABLE `anime`
 -- AUTO_INCREMENT for table `animelist`
 --
 ALTER TABLE `animelist`
-  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `message`
@@ -352,7 +347,7 @@ ALTER TABLE `post_like`
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `profile_post`
@@ -364,13 +359,13 @@ ALTER TABLE `profile_post`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `user_review`
 --
 ALTER TABLE `user_review`
-  MODIFY `user_review_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

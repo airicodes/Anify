@@ -423,6 +423,123 @@ class User extends \app\core\Controller {
         $this->view("User/EditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
     }
 
+    public function MakeReview($anime_id) {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
+        if (isset($_POST['action'])) {
+            
+            if (strlen($_POST['review']) == 0 || strlen($_POST['review']) > 1000) {
+                $this->view("User/reviewAnime", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => 'Must have a minimum of 1 and a maximum of 1000 characters.']);
+            }
+            
+            $anime->addReview($_POST['review'], $user->user_id, $anime->anime_id);
+            if ($_SESSION['role'] == 'admin') {
+                header("location:".BASE."User/adminAnimeList");
+                return;
+            } else {
+                header("location:".BASE."User/regularAnimeList");
+                return;
+            }
+        }
+        $this->view("User/reviewAnime", ["user" => $user, "profile" => $profile, "anime" => $anime]);
+    }
+
+    public function EditReview($user_review_id) {
+        $anime = new \app\models\Anime();
+        $review = new \app\models\Review();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $animelist = $animelist->getUserAL($_SESSION['user_id']);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $review = $review->getReview($user_review_id, $user->user_id);
+        $anime = $anime->getAnime($review->anime_id);
+       // $anime = $anime->getAnimeFromList($review->anime_id, $animelist->animelist_id);
+        if (isset($_POST['action'])) {
+            if (strlen($_POST['review']) == 0 || strlen($_POST['review']) > 1000) {
+                $this->view("User/editReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review, "error" => 'Must have a minimum of 1 and a maximum of 1000 characters.']);
+                return;
+            }
+            
+            $review->updateReview($review->user_review_id, $user->user_id, $_POST['review']);
+            if ($_SESSION['role'] == 'admin') {
+                header("location:".BASE."User/adminAnimeList");
+                return;
+            } else {
+                header("location:".BASE."User/regularAnimeList");
+                return;
+            }
+        }
+        $this->view("User/EditReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review]);
+    }
+
+    public function Reviews() {
+        $anime = new \app\models\Anime();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $reviews = $anime->getAllReviews($user->user_id);
+
+        if ($_SESSION['role'] == 'admin') {
+            $this->view("User/adminReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+        } else {
+            $this->view("User/regularReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+        }
+    }
+
+    public function deleteReview($user_review_id) {
+        $review = new \app\models\Review();
+        $review->deleteReview($user_review_id, $_SESSION['user_id']);
+        
+        if ($_SESSION['role'] == 'admin') {
+            header("location:".BASE."User/adminIndex");
+        } else {
+            header("location:".BASE."User/regularIndex");
+        }
+    }
+
+    public function adminReviews() {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $reviews = $anime->getAllReviews($user->user_id);
+        $allAnimeFromList = $anime->getAllAnimeFromList($animelist->animelist_id);
+
+        if ($_SESSION['role'] == 'admin') {
+            $this->view("User/adminReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews, "list" => $allAnimeFromList]);
+        } else {
+            $this->view("User/regularReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+        }
+    }
+
+    public function regularReviews() {
+        $anime = new \app\models\Anime();
+        $animelist = new \app\models\Animelist();
+        $user = new \app\models\User();
+        $user = $user->getUser($_SESSION["user_id"]);
+        $profile = new \app\models\Profile();
+        $profile = $profile->getProfile($_SESSION["user_id"]);
+        $reviews = $anime->getAllReviews($user->user_id);
+        $allAnimeFromList = $anime->getAllAnimeFromList($animelist->animelist_id);
+
+        if ($_SESSION['role'] == 'regular') {
+            $this->view("User/regularReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews, "list" => $allAnimeFromList]);
+        } else {
+            $this->view("User/regularReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+        }
+    }
+
     // A method that deletes a post of a regular user and admin
     public function deletePost($profile_post_id) {
         $profilePost = new \app\models\ProfilePost();

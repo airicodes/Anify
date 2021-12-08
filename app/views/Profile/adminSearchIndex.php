@@ -194,6 +194,7 @@
                         <!-- Anime List -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAnimeList/<?php echo $data["user"]->user_id; ?>">anime list</a>
                         <!-- Send Message -->
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>Profile/otherAdminProfileReviews/<?=$data["user"]->user_id;?>">reviews</a>
                         <a class="nav-item mx-1 text-center nav-link text-danger" href="<?=BASE?>Profile/otherSendMessage/<?php echo $data["user"]->user_id;?>">send messages</a>
                       </div>
                     </div>
