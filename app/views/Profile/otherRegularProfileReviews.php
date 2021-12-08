@@ -63,7 +63,7 @@
         /* Change the size the of nav item */
         #secondNavbar .navbar-nav .nav-item {
             font-size: 25px;
-            width: 150px;
+            width: 300px;
         }
 
         /* For the hovering effect of the second navbar */

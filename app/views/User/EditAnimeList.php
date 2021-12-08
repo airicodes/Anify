@@ -288,45 +288,50 @@
                 <form action="" method="POST" enctype="">
                     <!-- Where user enters new username -->
                     <h2 style='color: white;'><?=$data['anime']->anime_name;?><h2>
-                    <!-- Where the user input his new password -->
-                    <br>
-                    <label for='status' style='color: white;'>Status</label>
-                    <select name='status' id='status'>
-                    <option value="<?=$data['anime']->watching_status?>" selected="selected" hidden="hidden"><?=$data['anime']->watching_status?></option>
-                        <option value='Planning'>Planning</option>
-                        <option value='watching'>Watching</option>
-                        <option value='finished'>Finished</option>
-                        <option value='Paused'>Paused</option>
-                        <option value='dropped'>Dropped</option>
-                    </select>
-                    <label for='rating' style='color: white;'>Rating</label>
-                    <select name='rating' id='rating'>
-                    <option value="<?=$data['anime']->rating?>" selected="selected" hidden="hidden"><?=$data['anime']->rating?></option>
-                        <option value='0'>0</option>
-                        <option value='1'>1</option>
-                        <option value='2'>2</option>
-                        <option value='3'>3</option>
-                        <option value='4'>4</option>
-                        <option value='5'>5</option>
-                        <option value='6'>6</option>
-                        <option value='7'>7</option>
-                        <option value='8'>8</option>
-                        <option value='9'>9</option>
-                        <option value='10'>10</option>
-                    </select>
-                    <br>
-                    <br>
-                    <a class='btn btn-danger' href="/User/RemoveAnimeFromList/<?=$data['anime']->anime_id?>">Delete from list</a>
-                    <a class='btn btn-primary' href="/User/MakeReview/<?=$data['anime']->anime_id?>">Make a review</a>
-                    <br>
-                    <button name="action" id="loginButton" type="action" class="btn btn-secondary btn-lg">Save changes</button>
-                    <br><br>
+                            <!-- Where the user input his new password -->
+                            <br>
+                            <label for='status' style='color: white;'>Status</label>
+                            <select name='status' id='status'>
+                                <option value="<?=$data['anime']->watching_status?>" selected="selected"
+                                    hidden="hidden"><?=$data['anime']->watching_status?></option>
+                                <option value='Planning'>Planning</option>
+                                <option value='watching'>Watching</option>
+                                <option value='finished'>Finished</option>
+                                <option value='Paused'>Paused</option>
+                                <option value='dropped'>Dropped</option>
+                            </select>
+                            <label for='rating' style='color: white;'>Rating</label>
+                            <select name='rating' id='rating'>
+                                <option value="<?=$data['anime']->rating?>" selected="selected" hidden="hidden">
+                                    <?=$data['anime']->rating?></option>
+                                <option value='0'>0</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                                <option value='6'>6</option>
+                                <option value='7'>7</option>
+                                <option value='8'>8</option>
+                                <option value='9'>9</option>
+                                <option value='10'>10</option>
+                            </select>
+                            <br>
+                            <br>
+                            <a class='btn btn-danger'
+                                href="/User/RemoveAnimeFromList/<?=$data['anime']->anime_id?>">Delete from list</a>
+                            <a class='btn btn-primary' href="/User/MakeReview/<?=$data['anime']->anime_id?>">Make a
+                                review</a>
+                            <br>
+                            <button name="action" id="loginButton" type="action" class="btn btn-secondary btn-lg">Save
+                                changes</button>
+                            <br><br>
                 </form>
                 <a class="text-light" style="text-decoration:none;" href="<?=BASE?>User/regularAnimeList">Go back</a>
             </div>
             <br>
             <center>
-            <?php
+                <?php
         if ($data != null) {
             if ($data['response'] == 'added') {
                 echo "<div class='alert alert-primary' role='alert'>
@@ -342,6 +347,15 @@
             </center>
         </div>
     </div>
+    <center>
+        <h4 id="error_messages">
+            <?php
+            if (isset($data['error'])) {
+                echo $data["error"];
+            }
+                ?>
+        </h4>
+    </center>
 
     <!-- Footer -->
     <footer>

@@ -215,10 +215,9 @@
             margin-right: 65%;
         }
 
-        .asd { 
-            font-size: 2px; 
+        .asd {
+            font-size: 2px;
         }
-
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -238,7 +237,7 @@
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-            <?php
+                <?php
                     if ($_SESSION['role'] == 'admin') {
                         echo '<li class="nav-item">
                         <a class="nav-link text-light" href="/User/adminAbout">about</a>
@@ -290,21 +289,24 @@
                 <form action="" method="POST" enctype="">
                     <!-- Where user enters new username -->
                     <h2 style='color: white;'><?=$data['anime']->anime_name?><h2>
-                    <!-- Where the user input his new password -->
-                    <p style='color: white; font-size: 10pt'></p>
-                    <textarea name="review" style="font-size: 15pt" cols="30" rows="12"><?=$data['review']->review?></textarea>
-                    <br>
-                    <a class='btn btn-danger' href="/User/deleteReview/<?=$data['review']->user_review_id?>">Delete review</a>
-                    <br>
-                    <button name="action" id="loginButton" type="action" class="btn btn-secondary btn-lg">Edit review</button>
-                    <br>
+                            <!-- Where the user input his new password -->
+                            <p style='color: white; font-size: 10pt'></p>
+                            <textarea name="review" style="font-size: 15pt" cols="30"
+                                rows="12"><?=$data['review']->review?></textarea>
+                            <br>
+                            <a class='btn btn-danger'
+                                href="/User/deleteReview/<?=$data['review']->user_review_id?>">Delete review</a>
+                            <br>
+                            <button name="action" id="loginButton" type="action" class="btn btn-secondary btn-lg">Edit
+                                review</button>
+                            <br>
                 </form>
                 <a class="text-light" style="text-decoration:none;" href="<?=BASE?>User/regularAnimeList">Go back</a>
             </div>
             <br>
-             <center>
+            <center>
                 <h4 id="error_messages">
-                <?php
+                    <?php
                     echo $data["error"];
                 ?>
                 </h4>

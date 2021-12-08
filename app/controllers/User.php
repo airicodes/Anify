@@ -425,6 +425,7 @@ class User extends \app\core\Controller {
 
     public function MakeReview($anime_id) {
         $anime = new \app\models\Anime();
+        $review = new \app\models\Review();
         $animelist = new \app\models\Animelist();
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
@@ -432,6 +433,12 @@ class User extends \app\core\Controller {
         $profile = new \app\models\Profile();
         $profile = $profile->getProfile($_SESSION["user_id"]);
         $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
+
+        if ($review->getAnimeReview($user->user_id, $anime_id) != null) {
+            $this->view("User/EditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => 'You already made a review for this anime.']);
+            return;
+        }
+    
         if (isset($_POST['action'])) {
             
             if (strlen(trim($_POST['review'])) == 0 || strlen(trim($_POST['review'])) > 1000) {
