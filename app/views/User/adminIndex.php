@@ -161,7 +161,7 @@
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <input id="searchInput" class="form-control me-2" type="search" name="searchInput" placeholder="Search users/mangas/animes" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" type="search" name="searchInput" placeholder="Search animes/users" aria-label="Search">
             </form>
         </div>
     </nav>
@@ -221,7 +221,7 @@
                 <!-- post, animelist, mangalist, and settings box -->
                 <!-- The box where all the post, anime list, mangalist and settings will be placed -->
                 <div id="listBox">
-                    <div style="height: 280px;overflow: scroll;">
+                    <div style="height: 280px;overflow: hidden; overflow-y: scroll;">
                         <table class="table">
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
@@ -259,9 +259,9 @@
                         </h6>
 
                         <form class="pt-3" action="" method="POST">
-                            <textarea name="userPost" id="" cols="30" rows="3" style="margin-left: -80%; resize: none;" placeholder="Enter your post here..."></textarea>
+                            <textarea name="userPost" id="" cols="30" rows="3" style=" resize: none;" placeholder="Enter your post here..."></textarea>
                             <br>
-                            <button id="submitButton" name="submitPost" style="margin-left: 55%;" type="submit" class="btn btn-outline-primary mt-2">Post</button>
+                            <button id="submitButton" name="submitPost" type="submit" class="btn btn-outline-primary mt-2">Post</button>
                         </form>
                     </div>
                 </div>

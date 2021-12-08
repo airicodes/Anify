@@ -219,6 +219,11 @@
             font-size: 2px; 
         }
 
+        #error_messages {
+            color: red;
+            font-weight: bold;
+        }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -282,6 +287,11 @@
             </div>
             <br>
             <center>
+                <h5 class="mt-3" id="error_messages">
+                <?php
+                    echo $data["error"];
+                ?>
+                </h5>
             </center>
         </div>
     </div>

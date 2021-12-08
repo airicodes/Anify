@@ -10,7 +10,7 @@ class Main extends \app\core\Controller {
         $anime = new \app\models\Anime();
         $allAnime = $anime->getAllAnime();
 
-        $this->view("Main/index", $allAnime);
+        $this->view("Main/index", ["errorSearch" => "", "anime" => $allAnime]);
     }
 
     #[\app\filters\SessionCheck]
@@ -130,5 +130,27 @@ class Main extends \app\core\Controller {
 		session_destroy();
 		header("location:".BASE."Main/index");
 	}
+
+    // Search the profile of the username
+    public function searchAnimes() {
+        $anime = new \app\models\Anime();
+
+        $searchInput = trim($_POST["searchInput"]);
+
+        if (empty($searchInput)) {
+            $animeSearchResults = $anime->getAllAnime();
+            $this->view("Main/index", ["errorSearch"=>"Nothing was entered", "anime" =>  $animeSearchResults]);
+            return;
+        }
+        if (strlen($searchInput) > 100) {
+            $animeSearchResults = $anime->getAllAnime();
+            $this->view("Main/index", ["errorSearch"=>"Text must be 100 characters max", "anime" =>  $animeSearchResults]);
+            return;
+        }
+        
+        $animeSearchResults = $anime->searchAnime($searchInput);
+
+        $this->view("Main/index", [ "errorSearch" => "", "anime" => $animeSearchResults]);
+    }
 
 }

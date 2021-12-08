@@ -190,7 +190,7 @@ class Profile extends \app\core\Controller {
             $newBio = trim($_POST["newBio"]);
 
             if (strlen($newUsername) > 14) {
-                $this->view("Profile/adminEditProfile", ["error" => "Maximum username length is 20 characters", "user" => $user, "profile" => $profile]);
+                $this->view("Profile/adminEditProfile", ["error" => "Maximum username length is 14 characters", "user" => $user, "profile" => $profile]);
                 return;
             }
 
@@ -320,7 +320,7 @@ class Profile extends \app\core\Controller {
             $newBio = trim($_POST["newBio"]);
 
             if (strlen($newUsername) > 14) {
-                $this->view("Profile/regularEditProfile", ["error" => "Maximum username length is 20 characters", "user" => $user, "profile" => $profile]);
+                $this->view("Profile/regularEditProfile", ["error" => "Maximum username length is 14 characters", "user" => $user, "profile" => $profile]);
                 return;
             }
 
@@ -753,7 +753,7 @@ class Profile extends \app\core\Controller {
                 $profile->updateProfile();
                 $user->username = $_POST["newUsername"];
                 $user->updateUsername();
-                header("location:".BASE."User/adminIndex");
+                header("location:".BASE."User/regulars");
             }
 
             return;

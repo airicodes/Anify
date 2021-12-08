@@ -434,20 +434,19 @@ class User extends \app\core\Controller {
         $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
         if (isset($_POST['action'])) {
             
-            if (strlen($_POST['review']) == 0 || strlen($_POST['review']) > 1000) {
+            if (strlen(trim($_POST['review'])) == 0 || strlen(trim($_POST['review'])) > 1000) {
                 $this->view("User/reviewAnime", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => 'Must have a minimum of 1 and a maximum of 1000 characters.']);
+                return;
             }
             
             $anime->addReview($_POST['review'], $user->user_id, $anime->anime_id);
             if ($_SESSION['role'] == 'admin') {
                 header("location:".BASE."User/adminAnimeList");
-                return;
             } else {
                 header("location:".BASE."User/regularAnimeList");
-                return;
             }
         }
-        $this->view("User/reviewAnime", ["user" => $user, "profile" => $profile, "anime" => $anime]);
+        $this->view("User/reviewAnime", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => ""]);
     }
 
     public function EditReview($user_review_id) {
@@ -463,7 +462,7 @@ class User extends \app\core\Controller {
         $anime = $anime->getAnime($review->anime_id);
        // $anime = $anime->getAnimeFromList($review->anime_id, $animelist->animelist_id);
         if (isset($_POST['action'])) {
-            if (strlen($_POST['review']) == 0 || strlen($_POST['review']) > 1000) {
+            if (strlen(trim($_POST['review'])) == 0 || strlen(trim($_POST['review'])) > 1000) {
                 $this->view("User/editReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review, "error" => 'Must have a minimum of 1 and a maximum of 1000 characters.']);
                 return;
             }
@@ -477,7 +476,7 @@ class User extends \app\core\Controller {
                 return;
             }
         }
-        $this->view("User/EditReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review]);
+        $this->view("User/EditReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review, "error" => ""]);
     }
 
     public function Reviews() {
@@ -500,9 +499,9 @@ class User extends \app\core\Controller {
         $review->deleteReview($user_review_id, $_SESSION['user_id']);
         
         if ($_SESSION['role'] == 'admin') {
-            header("location:".BASE."User/adminIndex");
+            header("location:".BASE."User/adminReviews");
         } else {
-            header("location:".BASE."User/regularIndex");
+            header("location:".BASE."User/regularReviews");
         }
     }
 

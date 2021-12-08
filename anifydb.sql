@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2021 at 03:11 AM
+-- Generation Time: Dec 08, 2021 at 06:02 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `anifydb`
 --
+CREATE DATABASE IF NOT EXISTS `anifydb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `anifydb`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `anime`
 --
 
+DROP TABLE IF EXISTS `anime`;
 CREATE TABLE `anime` (
   `anime_id` int(11) NOT NULL,
   `anime_name` varchar(100) NOT NULL,
@@ -57,6 +60,7 @@ INSERT INTO `anime` (`anime_id`, `anime_name`, `anime_creator`, `anime_date`, `a
 -- Table structure for table `animelist`
 --
 
+DROP TABLE IF EXISTS `animelist`;
 CREATE TABLE `animelist` (
   `animelist_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
@@ -79,6 +83,7 @@ INSERT INTO `animelist` (`animelist_id`, `user_id`) VALUES
 -- Table structure for table `anime_in_list`
 --
 
+DROP TABLE IF EXISTS `anime_in_list`;
 CREATE TABLE `anime_in_list` (
   `anime_id` int(11) NOT NULL,
   `animelist_id` int(11) NOT NULL,
@@ -104,6 +109,7 @@ INSERT INTO `anime_in_list` (`anime_id`, `animelist_id`, `rating`, `watching_sta
 -- Table structure for table `message`
 --
 
+DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `message_id` int(11) NOT NULL,
   `sender` int(11) NOT NULL,
@@ -131,6 +137,7 @@ INSERT INTO `message` (`message_id`, `sender`, `receiver`, `message`, `timestamp
 -- Table structure for table `post_like`
 --
 
+DROP TABLE IF EXISTS `post_like`;
 CREATE TABLE `post_like` (
   `post_like_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -150,6 +157,7 @@ INSERT INTO `post_like` (`post_like_id`, `user_id`, `profile_post_id`) VALUES
 -- Table structure for table `profile`
 --
 
+DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `profile_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -180,6 +188,7 @@ INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
 -- Table structure for table `profile_post`
 --
 
+DROP TABLE IF EXISTS `profile_post`;
 CREATE TABLE `profile_post` (
   `profile_post_id` int(11) NOT NULL,
   `post` text NOT NULL,
@@ -203,6 +212,7 @@ INSERT INTO `profile_post` (`profile_post_id`, `post`, `date`, `user_id`) VALUES
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -233,6 +243,7 @@ INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
 -- Table structure for table `user_review`
 --
 
+DROP TABLE IF EXISTS `user_review`;
 CREATE TABLE `user_review` (
   `user_review_id` int(11) NOT NULL,
   `review` varchar(1000) NOT NULL,

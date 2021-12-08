@@ -173,26 +173,45 @@
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
-                </li>
-                <li class="nav-item">
-                    <!-- To go to the regular browse page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
-                </li>
+            <?php
+                    if ($_SESSION['role'] == 'admin') {
+                        echo '<li class="nav-item">
+                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
+                    </li>
+                    <!-- To go to ADD ANIME PAGE -->
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Anime/addAnime">add anime</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse anime page -->
+                        <a class="nav-link text-light" href="/User/adminBrowse">browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse page -->
+                        <a class="nav-link text-light" href="/User/regulars">regulars list</a>
+                    </li>';
+                    } else {
+                        echo '<li class="nav-item">
+                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse anime page -->
+                        <a class="nav-link text-light" href="/User/regularBrowse">browse</a>
+                    </li>';
+                    }
+                    ?>
+                
             </ul>
             <!-- This is for the search bar -->
-            <form class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" type="submit">
+            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" name="" type="submit">
                     <!-- Adding the search icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-search text-light" viewBox="0 0 16 16">
-                        <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes"
-                    aria-label="Search">
+                <!-- The input of the search. This is where the user input the things he wants to search -->
+                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
             </form>
         </div>
     </nav>

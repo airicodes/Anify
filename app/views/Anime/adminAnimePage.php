@@ -215,13 +215,14 @@
                                 <!-- The anime title -->
                                 <h2 class="text-center text-light mt-2"><?=$data["anime"]->anime_name;?></h2>
                                 <!-- The add anime button -->
+                                <form action="" method="POST">
                                     <button name="action" id="addAnimeButton" onclick="openForm()"
                                         class="btn btn-outline-info text-light align-self-center mt-3 p-2">Add to
                                         list</button>
                                         <button name="edit" type="submit" id="addAnimeButton" class="btn btn-outline-warning text-light align-self-center mt-3">Edit</button>
                                 <!-- The remove anime button -->
                                 <button name="delete" type="submit" id="addAnimeButton" class="btn btn-outline-danger text-light align-self-center mt-3">Remove</button>
-           
+                                </form>
 
 <div class="form-popup" id="myForm">
   <form action="" class="form-container" method='POST'>
