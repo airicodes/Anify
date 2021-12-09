@@ -190,7 +190,7 @@ class Profile extends \app\core\Controller {
             $newBio = trim($_POST["newBio"]);
 
             if (strlen($newUsername) > 14) {
-                $this->view("Profile/adminEditProfile", ["error" => "Maximum username length is 20 characters", "user" => $user, "profile" => $profile]);
+                $this->view("Profile/adminEditProfile", ["error" => "Maximum username length is 14 characters", "user" => $user, "profile" => $profile]);
                 return;
             }
 
@@ -320,7 +320,7 @@ class Profile extends \app\core\Controller {
             $newBio = trim($_POST["newBio"]);
 
             if (strlen($newUsername) > 14) {
-                $this->view("Profile/regularEditProfile", ["error" => "Maximum username length is 20 characters", "user" => $user, "profile" => $profile]);
+                $this->view("Profile/regularEditProfile", ["error" => "Maximum username length is 14 characters", "user" => $user, "profile" => $profile]);
                 return;
             }
 
@@ -552,8 +552,12 @@ class Profile extends \app\core\Controller {
         $user = $user->getUser($user_id);
         $review = $review->getReview($user_review_id, $user->user_id);
         $anime = $anime->getAnime($review->anime_id);
-
-        $this->view('Profile/OtherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
+        
+        if ($user->role == "admin") {
+            $this->view('Profile/OtherAdminProfileReviews', ["user" => $user, "review" => $review, "anime" => $anime]);
+        } else {
+            $this->view('Profile/OtherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
+        }
     }
 
     public function otherAdminProfileReviews($user_id) {
@@ -564,7 +568,7 @@ class Profile extends \app\core\Controller {
             $profile = $profile->getProfile($user_id);
             $reviews = $anime->getAllReviews($user_id);
     
-            if ($_SESSION['role'] == 'admin') {
+            if ($user->role == 'admin') {
                 $this->view("Profile/otherAdminProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
             } else {
                 $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
@@ -579,7 +583,7 @@ class Profile extends \app\core\Controller {
         $profile = $profile->getProfile($user_id);
         $reviews = $anime->getAllReviews($user_id);
 
-        if ($_SESSION['role'] == 'admin') {
+        if ($user->role  == 'admin') {
             $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
         } else {
             $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
@@ -753,7 +757,7 @@ class Profile extends \app\core\Controller {
                 $profile->updateProfile();
                 $user->username = $_POST["newUsername"];
                 $user->updateUsername();
-                header("location:".BASE."User/adminIndex");
+                header("location:".BASE."User/regulars");
             }
 
             return;

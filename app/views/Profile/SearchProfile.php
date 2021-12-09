@@ -134,14 +134,33 @@
         <a class="navbar-brand text-light" href="<?=BASE?>User/regularIndex"><h2>An<b id="ify">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <!-- To go to the about page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularAbout">about</a>
-                </li>
-                <li class="nav-item">
-                    <!-- To go to the regular browse page -->
-                    <a class="nav-link text-light" href="<?=BASE?>User/regularBrowse">browse</a>
-                </li>
+            <?php
+                    if ($_SESSION['role'] == 'admin') {
+                        echo '<li class="nav-item">
+                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
+                    </li>
+                    <!-- To go to ADD ANIME PAGE -->
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Anime/addAnime">add anime</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse anime page -->
+                        <a class="nav-link text-light" href="/User/adminBrowse">browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse page -->
+                        <a class="nav-link text-light" href="/User/regulars">regulars list</a>
+                    </li>';
+                    } else {
+                        echo '<li class="nav-item">
+                        <a class="nav-link text-light" href="/User/adminAbout">about</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- To go to the browse anime page -->
+                        <a class="nav-link text-light" href="/User/regularBrowse">browse</a>
+                    </li>';
+                    }
+                    ?>
             </ul>
             <!-- This is for the search bar -->
             <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
@@ -189,9 +208,11 @@
                                 <hr>
                                 <?php
                                 foreach ($data['users'] as $user) {
-                                    echo "<tr>
-                                           <td style='text-align:center;'> <a style='text-decoration:none;' class='text-light' href='/Profile/regularSearchProfile/$user->user_id'>$user->username</a><td>
+                                    if (!($user->user_id == $_SESSION["user_id"])) {
+                                        echo "<tr>
+                                        <td style='text-align:center;'> <a style='text-decoration:none;' class='text-light' href='/Profile/regularSearchProfile/$user->user_id'>$user->username</a><td>
                                         </tr>";
+                                    }
                                 }
                                 ?>
                             </tbody>

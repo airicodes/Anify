@@ -46,4 +46,12 @@ class Review extends \app\core\Model {
         $STMT = self::$_connection->prepare($SQL);
         $STMT->execute(["profile_post_id"=>$profile_post_id]);
     }
+
+    public function getAnimeReview($user_id, $anime_id) {
+        $SQL = "SELECT * FROM user_review WHERE user_id = :user_id AND anime_id = :anime_id";
+        $STMT = self::$_connection->prepare($SQL);
+        $STMT->execute(["user_id"=>$user_id, "anime_id" => $anime_id]);
+        $STMT->setFetchMode(\PDO::FETCH_CLASS, "app\\models\\Review");
+        return $STMT->fetch();
+    }
 }

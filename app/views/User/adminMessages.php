@@ -156,7 +156,7 @@
                     </svg>
                 </button>
                 <!-- The input of the search. This is where the user input the things he wants to search -->
-                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes/users" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search animes/users" aria-label="Search">
             </form>
         </div>
     </nav>

@@ -120,6 +120,11 @@
         #animeTitle a:hover {
             color: #E168BF;
         }
+
+        #error_messages {
+            color: red;
+            font-weight: bold;
+        }
         
 
     </style>
@@ -131,7 +136,7 @@
 <body id="body">
     <!-- This is for the navbar -->
     <nav class="navbar navbar-expand-lg p-3">
-        <a class="navbar-brand text-light" href=""><h2>An<b id="ify">ify</b></h2></a>
+        <a class="navbar-brand text-light" href="<?=BASE?>Main/index"><h2>An<b id="ify">ify</b></h2></a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -148,16 +153,21 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" type="submit">
+            <form action="/Main/searchAnimes" method="POST" class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" name="" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
                 <!-- The input of the search. This is where the user input the things he wants to search -->
-                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search users/mangas/animes" aria-label="Search">
+                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search for animes" aria-label="Search">
             </form>
+            <h5 id="error_messages">
+            <?php
+                echo $data["errorSearch"];
+            ?>
+            </h5>
             
         </div>
     </nav>
@@ -173,7 +183,7 @@
                             <tbody>
                                 <!-- Per message. We need to put a for loop then put this tr inside of it  -->
                                 <?php
-                                foreach ($data as $anime) {
+                                foreach ($data["anime"] as $anime) {
                                     echo "<tr>
                                             <td><img id='animeImage' src='$anime->picture_link' alt=''></td>
                                             <!-- Anime Title -->
