@@ -205,7 +205,7 @@
                         <!-- Manga List -->
                         <a class="nav-item mx-1 text-center nav-link text-light active disabled">messages</a>
                         <!-- Reviews -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/Reviews">reviews</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/reviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>

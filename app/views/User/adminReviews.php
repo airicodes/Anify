@@ -188,14 +188,15 @@
                 </li>
             </ul>
             <!-- This is for the search bar -->
-            <form class="d-flex justify-content-center">
-                <button class="btn" id="searchButton" type="submit">
+            <form action="/Profile/searchProfiles" method="POST" class="d-flex justify-content-center">
+                <button class="btn" id="searchButton" name="" type="submit">
                     <!-- Adding the search icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
                 </button>
-                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search animes/users" aria-label="Search">
+                <!-- The input of the search. This is where the user input the things he wants to search -->
+                <input id="searchInput" class="form-control me-2" name="searchInput" type="search" placeholder="Search animes/users" aria-label="Search">
             </form>
         </div>
     </nav>
@@ -244,7 +245,7 @@
                         <!-- Messages -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
                         <!-- Reviews -->
-                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="<?=BASE?>User/Reviews">reviews</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light active disabled" href="<?=BASE?>User/reviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>
@@ -269,7 +270,7 @@
                                         $anime = new \app\models\Anime();
                                         foreach ($data["reviews"] as $review) {
                                         $anime = $anime->getAnime($review->anime_id);
-                                          echo "<tr><td><a href='/User/EditReview/$review->user_review_id'>" . "Review of " . $anime->anime_name  . "</td>
+                                          echo "<tr><td><a href='/User/editReview/$review->user_review_id'>" . "Review of " . $anime->anime_name  . "</td>
                                                        </tr>";
                                         }
                                         ?>

@@ -237,7 +237,7 @@ class User extends \app\core\Controller {
             $profile = new \app\models\Profile();
             $profile = $profile->getProfile($_SESSION["user_id"]);
 
-            $this->view("User/adminIndex", ["user" => $user, "profile" => $profile, "posts" => $posts, "error" => ""]);
+            $this->view("User/adminIndex", ["user" => $user, "profile" => $profile, "posts" => $posts, "errorSearch" => "", "error" => ""]);
             return;
         }
 
@@ -268,7 +268,7 @@ class User extends \app\core\Controller {
             $profile = new \app\models\Profile();
             $profile = $profile->getProfile($_SESSION["user_id"]);
 
-            $this->view("User/regularIndex", ["user" => $user, "profile" => $profile, "error" => "", "posts" => $posts]);
+            $this->view("User/regularIndex", ["user" => $user, "profile" => $profile, "errorSearch" => "", "error" => "", "posts" => $posts]);
             return;
         }
 
@@ -401,7 +401,7 @@ class User extends \app\core\Controller {
         }
     }
 
-    public function EditAnimeList($anime_id) {
+    public function editAnimeList($anime_id) {
         $anime = new \app\models\Anime();
         $animelist = new \app\models\Animelist();
         $user = new \app\models\User();
@@ -420,10 +420,10 @@ class User extends \app\core\Controller {
                 return;
             }
         }
-        $this->view("User/EditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
+        $this->view("User/editAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime]);
     }
 
-    public function MakeReview($anime_id) {
+    public function makeReview($anime_id) {
         $anime = new \app\models\Anime();
         $review = new \app\models\Review();
         $animelist = new \app\models\Animelist();
@@ -435,7 +435,7 @@ class User extends \app\core\Controller {
         $anime = $anime->getAnimeFromList($anime_id, $animelist->animelist_id);
 
         if ($review->getAnimeReview($user->user_id, $anime_id) != null) {
-            $this->view("User/EditAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => 'You already made a review for this anime.']);
+            $this->view("User/editAnimeList", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => 'You already made a review for this anime.']);
             return;
         }
     
@@ -456,7 +456,7 @@ class User extends \app\core\Controller {
         $this->view("User/reviewAnime", ["user" => $user, "profile" => $profile, "anime" => $anime, "error" => ""]);
     }
 
-    public function EditReview($user_review_id) {
+    public function editReview($user_review_id) {
         $anime = new \app\models\Anime();
         $review = new \app\models\Review();
         $animelist = new \app\models\Animelist();
@@ -483,10 +483,10 @@ class User extends \app\core\Controller {
                 return;
             }
         }
-        $this->view("User/EditReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review, "error" => ""]);
+        $this->view("User/editReview", ["user" => $user, "profile" => $profile, "anime" => $anime, "review" => $review, "error" => ""]);
     }
 
-    public function Reviews() {
+    public function reviews() {
         $anime = new \app\models\Anime();
         $user = new \app\models\User();
         $user = $user->getUser($_SESSION["user_id"]);
@@ -657,7 +657,7 @@ class User extends \app\core\Controller {
         $this->view("User/deleteRegular", $user);
     }
 
-    public function RemoveAnimeFromList($anime_id) {
+    public function removeAnimeFromList($anime_id) {
         $anime = new \app\models\Anime();
         $animelist = new \app\models\Animelist();
         $user = new \app\models\User();

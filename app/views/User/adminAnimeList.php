@@ -244,7 +244,7 @@
                         <!-- Messages -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminMessages">messages</a>
                         <!-- Reviews -->
-                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/Reviews">reviews</a>
+                        <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/reviews">reviews</a>
                         <!-- Settings -->
                         <a class="nav-item mx-1 text-center nav-link text-light" href="<?=BASE?>User/adminSettings">settings</a>
                       </div>
@@ -273,9 +273,9 @@
                                            } else {
                                                $star =  "/app/background/nostar.png";
                                            }
-                                          echo "<tr><td><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
-                                           <td ><a href='/User/EditAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
-                                           <td><a  href='/User/EditAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
+                                          echo "<tr><td><a href='/User/editAnimeList/$anime->anime_id'>" . $anime->anime_name . "</td>
+                                           <td ><a href='/User/editAnimeList/$anime->anime_id'>" . $anime->watching_status . "</a></td>
+                                           <td><a  href='/User/editAnimeList/$anime->anime_id'>" . $anime->rating . "</a></td>
                                            <td><a href='/User/addFavAnime/" . $anime->anime_id . "'><img src='" .
                                            $star . "' alt=''></a></td>
                                                        </tr>";

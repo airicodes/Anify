@@ -185,7 +185,6 @@
                 <a class="text-decoration-none text-light" href="<?=BASE?>Main/register">Create an account</a>
                 <br>
                 <!-- A link for forgot password -->
-                <a class="text-decoration-none text-light" href="#">Forgot password</a>
             </div>
             <center>
                 <h4 class="mt-3" id="error_messages">

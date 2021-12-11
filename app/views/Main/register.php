@@ -130,7 +130,7 @@
                 <form action="" method="POST">
                     <!-- Where the user input his username -->
                     <input class="input" type="text" name="username" placeholder="username">
-                    <p class="text-light">20 characters minimum</p>
+                    <p class="text-light"></p><br>
                     <!-- Where the user  input his password-->
                     <input id="passwordInput" class="input" type="password" name="password" placeholder="password">
                     <!-- Confirming the password -->

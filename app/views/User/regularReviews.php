@@ -261,7 +261,7 @@
                                         $anime = new \app\models\Anime();
                                         foreach ($data["reviews"] as $review) {
                                         $anime = $anime->getAnime($review->anime_id);
-                                          echo "<tr><td><a href='/User/EditReview/$review->user_review_id'>" . "Review of " . $anime->anime_name  . "</td>
+                                          echo "<tr><td><a href='/User/editReview/$review->user_review_id'>" . "Review of " . $anime->anime_name  . "</td>
                                                        </tr>";
                                         }
                                         ?>

@@ -215,7 +215,6 @@
                                 <!-- The anime title -->
                                 <h2 class="text-center text-light mt-2"><?=$data["anime"]->anime_name;?></h2>
                                 <!-- The add anime button -->
-                                <form action="" method="POST">
                                     <button name="action" id="addAnimeButton" onclick="openForm()"
                                         class="btn btn-outline-info text-light align-self-center mt-3 p-2">Add to
                                         list</button>
