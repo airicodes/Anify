@@ -552,11 +552,10 @@ class Profile extends \app\core\Controller {
         $user = $user->getUser($user_id);
         $review = $review->getReview($user_review_id, $user->user_id);
         $anime = $anime->getAnime($review->anime_id);
-        
         if ($user->role == "admin") {
-            $this->view('Profile/OtherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
+            $this->view('Profile/otherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
         } else {
-            $this->view('Profile/OtherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
+            $this->view('Profile/otherProfileReview', ["user" => $user, "review" => $review, "anime" => $anime]);
         }
     }
 
@@ -584,7 +583,7 @@ class Profile extends \app\core\Controller {
         $reviews = $anime->getAllReviews($user_id);
 
         if ($user->role  == 'admin') {
-            $this->view("Profile/otherAdminProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
+            $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
         } else {
             $this->view("Profile/otherRegularProfileReviews", ["user" => $user, "profile" => $profile, "reviews" => $reviews]);
         }
@@ -604,7 +603,7 @@ class Profile extends \app\core\Controller {
         $message->receiver = $user_id;
         $message->read_status = "unread";
         $newMessage = trim($_POST["message"]);
-        if ($otherUser->role == "regular") {
+        if ($currentUser->role == "regular") {
             if (empty($newMessage)) {
                 $this->view("Profile/otherProfileMessage", ["user" => $otherUser, "profile" => $profile, "error"=>"Nothing was entered"]);
                 return;
