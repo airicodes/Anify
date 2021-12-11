@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2021 at 06:02 AM
+-- Generation Time: Dec 11, 2021 at 08:22 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -75,7 +75,8 @@ INSERT INTO `animelist` (`animelist_id`, `user_id`) VALUES
 (3, 36),
 (4, 37),
 (5, 38),
-(7, 40);
+(7, 40),
+(10, 43);
 
 -- --------------------------------------------------------
 
@@ -100,8 +101,10 @@ INSERT INTO `anime_in_list` (`anime_id`, `animelist_id`, `rating`, `watching_sta
 (3, 1, 5, 'watching', 'n'),
 (1, 4, 0, 'Watching', 'y'),
 (3, 4, 0, 'Finished', 'n'),
-(2, 1, 6, 'Planning', 'y'),
-(1, 7, 0, 'Planning', 'n');
+(1, 1, 0, 'Planning', 'n'),
+(2, 7, 0, 'Finished', 'n'),
+(1, 7, 10, 'watching', 'y'),
+(1, 10, 0, 'Planning', 'n');
 
 -- --------------------------------------------------------
 
@@ -129,7 +132,8 @@ INSERT INTO `message` (`message_id`, `sender`, `receiver`, `message`, `timestamp
 (6, 38, 37, 'im so done', '2021-12-06 04:37:56', 're read'),
 (7, 29, 37, 'Hello', '2021-12-06 06:03:06', 'unread'),
 (9, 29, 37, 'Hello vince', '2021-12-06 06:45:40', 'unread'),
-(10, 29, 37, 'hello v', '2021-12-06 07:52:43', 'unread');
+(10, 29, 37, 'hello v', '2021-12-06 07:52:43', 'unread'),
+(12, 40, 29, 'how are you', '2021-12-11 13:32:37', 're read');
 
 -- --------------------------------------------------------
 
@@ -170,17 +174,17 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`profile_id`, `user_id`, `bio`, `filename`) VALUES
-(3, 11, 'aaaaera', '/uploads/61aec11111cd4.png'),
+(3, 11, 'yayo', '/uploads/61b464b91821b.jpg'),
 (4, 12, 'No bio yet...', '/uploads/defaultAvatar.png'),
-(5, 13, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (8, 16, 'Ali Zoubeidi was here', '/uploads/defaultAvatar.png'),
 (10, 17, 'asdf', '/uploads/61a5b490d5064.jpg'),
 (18, 27, 'asdf', '/uploads/defaultAvatar.png'),
-(24, 29, 'Hi.', '/uploads/61ab0fa489f64.png'),
+(24, 29, 'Hi.', '/uploads/61b46424ae808.png'),
 (27, 36, 'No bio yet...', '/uploads/defaultAvatar.png'),
 (28, 37, 'JERBEAR IS GAY', '/uploads/defaultAvatar.png'),
 (29, 38, 'Vince', '/uploads/defaultAvatar.png'),
-(31, 40, 'No bio yet...', '/uploads/defaultAvatar.png');
+(31, 40, 'No bio yet...', '/uploads/defaultAvatar.png'),
+(34, 43, 'No bio yet...', '/uploads/61b4646aa8e76.jpg');
 
 -- --------------------------------------------------------
 
@@ -225,17 +229,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `hash`, `role`) VALUES
-(11, 'Jeremieea', '$2y$10$.jHKBRPadup9L0L/qa8vi.7.9eMUZowjFR7zO21SssVZiX7PhsNp6', 'regular'),
+(11, 'Jeyjey', '$2y$10$.jHKBRPadup9L0L/qa8vi.7.9eMUZowjFR7zO21SssVZiX7PhsNp6', 'regular'),
 (12, 'Vincent', '$2y$10$KzoArnqS9FwGBdLoYolli.N1ya68SksdUKvWgZut5vTpASBc7EEwW', 'regular'),
-(13, 'Jerbear', '$2y$10$t4ustspM3eXgCiHcqc843.FrotG81PElSwejN8eF.l9JbOPgZZw1W', 'regular'),
 (16, 'c', '$2y$10$oDFrcAeRadTzpMayFV2PtOIjJQhh6pgZORcPSxG7DubaUQxufhdne', 'regular'),
 (17, 'zaaaaaaaaaaaaaaaaaa', '$2y$10$hpxBHu1dAwpy1YVE5pto6eAWfT3LXofYi1IeCE.NKJywFA1f6RLQ6', 'regular'),
 (27, 'aliab', '$2y$10$D0PouWBVVSiW5Ig81z/Es.Er3tpD7u1zdb2XgiXQqkDhc4/MTtmIK', 'admin'),
-(29, 'airi', '$2y$10$vAgq7KKdDWY58zjamt3N3eIYMcON3WZqjNfJUFZdTOVez0OBfp8Te', 'admin'),
+(29, 'airi', '$2y$10$Z32Vh32p1z6abSLmVGCQku38MK4HvIrIF1EwCj1cychmcoCoiXdbW', 'admin'),
 (36, 'airii', '$2y$10$zUXSie1vSXAVL3xSkNULfeuNOGEEznu8gO5r7q0BYBBkZBtTjjWoW', 'regular'),
 (37, 'v', '$2y$10$wBCZKRI2JmcfJtpdyMVyze3mAKXW6pUx4roz/wS97KKjR/KX.mYuu', 'regular'),
 (38, 'vincebry', '$2y$10$Ov3GUIbH.Ne0h/qwCB34vOD1QD/mUybOv3gw8cufT3F7uS4Ao4.x6', 'regular'),
-(40, 'airiairi', '$2y$10$l1YxKHmAqY.jB91bpfblJe7k2soKqfEzWyH3LnXjOS95ZlhXwohKq', 'regular');
+(40, 'airiairi', '$2y$10$l1YxKHmAqY.jB91bpfblJe7k2soKqfEzWyH3LnXjOS95ZlhXwohKq', 'regular'),
+(43, 'airia', '$2y$10$yeUa9ZZvv7JOQltZG4hzfO9O82sfopIltKtLeePLTXJBeU3AHcGXm', 'regular');
 
 -- --------------------------------------------------------
 
@@ -256,7 +260,9 @@ CREATE TABLE `user_review` (
 --
 
 INSERT INTO `user_review` (`user_review_id`, `review`, `user_id`, `anime_id`) VALUES
-(2, 'a', 40, 1);
+(2, 'a', 40, 1),
+(4, 'hi', 29, 3),
+(6, 'asdasd', 43, 1);
 
 --
 -- Indexes for dumped tables
@@ -334,49 +340,49 @@ ALTER TABLE `user_review`
 -- AUTO_INCREMENT for table `anime`
 --
 ALTER TABLE `anime`
-  MODIFY `anime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `anime_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `animelist`
 --
 ALTER TABLE `animelist`
-  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `animelist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `post_like`
 --
 ALTER TABLE `post_like`
-  MODIFY `post_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `post_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `profile_post`
 --
 ALTER TABLE `profile_post`
-  MODIFY `profile_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `profile_post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `user_review`
 --
 ALTER TABLE `user_review`
-  MODIFY `user_review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
